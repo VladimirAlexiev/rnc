@@ -1,0 +1,487 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<title>README</title>
+<!-- 2015-08-24 Mon 22:17 -->
+<meta  http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta  name="generator" content="Org-mode" />
+<meta  name="author" content="Vladimir Alexiev" />
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { color: green; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  pre.src-sh:before    { content: 'sh'; }
+  pre.src-bash:before  { content: 'sh'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-R:before     { content: 'R'; }
+  pre.src-perl:before  { content: 'Perl'; }
+  pre.src-java:before  { content: 'Java'; }
+  pre.src-sql:before   { content: 'SQL'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.right  { text-align: center;  }
+  th.left   { text-align: center;   }
+  th.center { text-align: center; }
+  td.right  { text-align: right;  }
+  td.left   { text-align: left;   }
+  td.center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara:nth-child(2) { display: inline; }
+  .footpara { display: block; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  /*]]>*/-->
+</style>
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2013 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+<script type="text/javascript" src="http://orgmode.org/mathjax/MathJax.js"></script>
+<script type="text/javascript">
+<!--/*--><![CDATA[/*><!--*/
+    MathJax.Hub.Config({
+        // Only one of the two following lines, depending on user settings
+        // First allows browser-native MathML display, second forces HTML/CSS
+        //  config: ["MMLorHTML.js"], jax: ["input/TeX"],
+            jax: ["input/TeX", "output/HTML-CSS"],
+        extensions: ["tex2jax.js","TeX/AMSmath.js","TeX/AMSsymbols.js",
+                     "TeX/noUndefined.js"],
+        tex2jax: {
+            inlineMath: [ ["\\(","\\)"] ],
+            displayMath: [ ['$$','$$'], ["\\[","\\]"], ["\\begin{displaymath}","\\end{displaymath}"] ],
+            skipTags: ["script","noscript","style","textarea","pre","code"],
+            ignoreClass: "tex2jax_ignore",
+            processEscapes: false,
+            processEnvironments: true,
+            preview: "TeX"
+        },
+        showProcessingMessages: true,
+        displayAlign: "center",
+        displayIndent: "2em",
+
+        "HTML-CSS": {
+             scale: 100,
+             availableFonts: ["STIX","TeX"],
+             preferredFont: "TeX",
+             webFont: "TeX",
+             imageFont: "TeX",
+             showMathMenu: true,
+        },
+        MMLorHTML: {
+             prefer: {
+                 MSIE:    "MML",
+                 Firefox: "MML",
+                 Opera:   "HTML",
+                 other:   "HTML"
+             }
+        }
+    });
+/*]]>*///-->
+</script>
+</head>
+<body>
+<div id="content">
+<h1 class="title">README</h1>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#sec-1">1. RNC</a></li>
+<li><a href="#sec-2">2. RNC Tools</a>
+<ul>
+<li><a href="#sec-2-1">2.1. Emacs</a></li>
+<li><a href="#sec-2-2">2.2. rncfix</a></li>
+<li><a href="#sec-2-3">2.3. Scripts</a></li>
+</ul>
+</li>
+<li><a href="#sec-3">3. RNC Schemas</a></li>
+</ul>
+</div>
+</div>
+<p>
+(If this doesn't show nicely, see <a href="http://htmlpreview.github.io/?https://github.com/VladimirAlexiev/rnc/README.html">README.html</a>)
+</p>
+
+<div id="outline-container-sec-1" class="outline-2">
+<h2 id="sec-1"><span class="section-number-2">1</span> RNC</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+The ISO DSSSL group defines a number of XMl schema definition languages. Amongst them:
+</p>
+<ul class="org-ul">
+<li>XSD is the most verbose and unwieldy way for expressing a XML schema
+</li>
+<li>Then comes RelaxNG XML (RNG).
+</li>
+<li>RelaxNG Compact (RNC) is most compact and easy to understand.
+RNC is even easier to read than XMLspy diagrams, because it gives you a ready overview of the schema and convenient search.
+RNC clearly shows deeply nested "matroska" style schemas, like the screen shot below.
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-2" class="outline-2">
+<h2 id="sec-2"><span class="section-number-2">2</span> RNC Tools</h2>
+<div class="outline-text-2" id="text-2">
+<p>
+Tools for working with RNC include:
+</p>
+<ul class="org-ul">
+<li><a href="https://github.com/epiasini/XSDtoRNG">XSDtoRNG</a>, which converts XSD-&gt;RNG. It still does not cover all XSD cases and is in development, but does a decent job.
+<ul class="org-ul">
+<li>In particular, it converts all <code>xsd:include</code> to <code>rng:include</code> without caring whether the included schema is converted or not.
+And since it cannot handle some included schemas (eg OGC Features, which is a complex multi-file schema), you'll get errors about them.
+Comment out such includes.
+</li>
+<li>It also can't reliably identify which is the start element. I've added a string param for this,
+but if there are multiple start elements, you'll need to touch the schema manually. See LIDO below.
+</li>
+</ul>
+</li>
+<li><a href="https://code.google.com/p/jing-trang/downloads/detail?name=trang-20091111.zip&can=2&q=">trang</a> (<a href="https://htmlpreview.github.io/?https://raw.githubusercontent.com/relaxng/jing-trang/master/doc/jing.html">doc</a>), which converts RNG-&gt;RNC and other conversions
+</li>
+<li><a href="https://code.google.com/p/jing-trang/downloads/detail?name=jing-20091111.zip&can=2&q=">jing</a> (<a href="https://htmlpreview.github.io/?https://raw.githubusercontent.com/relaxng/jing-trang/master/trang/doc/trang-manual.html">manual</a>), which validates RNG and RNC. The source of both trang and jing is moved to <a href="https://github.com/relaxng/jing-trang">https://github.com/relaxng/jing-trang</a>
+<ul class="org-ul">
+<li>Note: if you get errors like this:
+<pre class="example">
+Exception in thread "main" java.lang.StackOverflowError
+ at com.thaiopensource.relaxng.pattern.BinaryPattern.checkRecursion(BinaryPattern.java:16)
+</pre>
+<p>
+for deeply nested schemas then you need to increase the java stack, eg
+</p>
+<pre class="example">
+java -Xss8M -jar c:/prog/jing-20091111/bin/jing.jar -c schema.rnc
+</pre>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+
+<div id="outline-container-sec-2-1" class="outline-3">
+<h3 id="sec-2-1"><span class="section-number-3">2.1</span> Emacs</h3>
+<div class="outline-text-3" id="text-2-1">
+<p>
+In emacs I use <a href="https://github.com/TreeRex/rnc-mode">rnc-mode</a>, flymake and jing to do syntax highlighting and "on the fly" syntax checking.
+  Use a <a href="https://github.com/TreeRex/rnc-mode/pulls">patched version</a> to set -Xss for jing as described above. 
+  Below you see the results of "on the fly" syntax checking at the word "JUNK":
+<img src="./img/RNC-flymake.png" alt="RNC-flymake.png" />
+</p>
+<ul class="org-ul">
+<li>I also use Emacs imenu to get a "table of contents" of the schema, and jump to the definition of the symbol at cursor.
+</li>
+</ul>
+
+<div class="figure">
+<p><img src="./img/RNC-imenu.png" alt="RNC-imenu.png" />
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-2-2" class="outline-3">
+<h3 id="sec-2-2"><span class="section-number-3">2.2</span> rncfix</h3>
+<div class="outline-text-3" id="text-2-2">
+<p>
+<a href="./bat/rncfix.pl">./bat/rncfix.pl</a> converts ugly RNC annotations, eg:
+</p>
+<pre class="example">
+a:documentation [
+"\x{a}" ~
+"  \x{a}" ~
+"   See http://www.w3.org/XML/1998/namespace.html and\x{a}" ~
+"   http://www.w3.org/TR/REC-xml for information about this namespace.\x{a}" ~
+"\x{a}" ~
+</pre>
+<p>
+to nice RNC comments, eg:
+</p>
+<pre class="example">
+##   See http://www.w3.org/XML/1998/namespace.html and
+##   http://www.w3.org/TR/REC-xml for information about this namespace.
+</pre>
+<p>
+It also makes a bunch of other cosmetic fixes that hopefully make reading the RNC easier, eg:
+</p>
+<ul class="org-ul">
+<li>put trailing <code>}+*</code> to the line above
+</li>
+<li>remove superfluous empty lines (commented or not)
+</li>
+<li>put empty line before definitions (word or comment at beginning of line)
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-2-3" class="outline-3">
+<h3 id="sec-2-3"><span class="section-number-3">2.3</span> Scripts</h3>
+<div class="outline-text-3" id="text-2-3">
+<p>
+<a href="./bat/">./bat/</a> includes batch files for Windows (the horror!) that I use under cygwin. 
+</p>
+<ul class="org-ul">
+<li><a href="./bat/xsd2rng.bat">./bat/xsd2rng.bat</a>: XSD-&gt;RNC using xsltproc and XSDtoRNG
+<pre class="example">
+xsd2rng ead
+</pre>
+</li>
+<li><a href="./bat/xsd2rnc.bat">./bat/xsd2rnc.bat</a>: XSD-&gt;RNC using xsltproc, XSDtoRNG.xsl, trang and rncfix
+<pre class="example">
+xsd2rnc ead
+</pre>
+</li>
+<li><a href="./bat/rncfix.bat">./bat/rncfix.bat</a>: runs rncfix
+</li>
+<li><a href="./bat/rng2rnc.bat">./bat/rng2rnc.bat</a>: RNG-&gt;RNC using trang and rncfix
+<pre class="example">
+rng2rnc ead
+</pre>
+</li>
+<li><a href="./bat/jing.bat">./bat/jing.bat</a>: runs jing to validate a RNG or RNC
+<pre class="example">
+jing -c ead.rnc
+</pre>
+</li>
+<li><a href="./bat/trang.bat">./bat/trang.bat</a>: runs trang to convert RNG-&gt;RNC
+<pre class="example">
+trang ead.rng ead.rnc
+</pre>
+</li>
+<li><a href="./bat/rnc-nocomment.bat">./bat/rnc-nocomment.bat</a>: removes all comments from RNC, making it more compact and easier to see the structure. But you need to already know what the elements mean
+<pre class="example">
+rnc-nocomment ead.rnc &gt; ead-nocomment.rnc
+</pre>
+</li>
+</ul>
+
+<p>
+They assume all files and trang.jar are put in c:\prog\bin; 
+except jing in c:\prog\jing-20091111\bin (has several dependencies):
+so you need to modify them for your setup.
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-3" class="outline-2">
+<h2 id="sec-3"><span class="section-number-2">3</span> RNC Schemas</h2>
+<div class="outline-text-2" id="text-3">
+<p>
+I have collected or converted the following RNC schemas related to GLAM (galleries, libraries, archives and museums):
+</p>
+<ul class="org-ul">
+<li><a href="https://github.com/SAA-SDT/eac-cpf-schema/blob/master/cpf.rnc">cpf.rnc</a> (<a href="./cpf-nocomment.rnc">nocomment</a>): EAC CPF version 20100301 (Encoded Archival Context: Corporations, People, Families) by Society of American Archivists
+</li>
+<li><a href="./ead.rnc">./ead.rnc</a> (<a href="./ead-nocomment.rnc">nocomment</a>): EAD 2002 version 20080421 (Encoded Archival Description) by Society of American Archivists and Library of Congress, converted by Vladimir Alexiev.
+<ul class="org-ul">
+<li>Uses the following prefixes
+</li>
+</ul>
+</li>
+</ul>
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="left" />
+
+<col  class="left" />
+
+<col  class="left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="left">prefix</th>
+<th scope="col" class="left">what</th>
+<th scope="col" class="left">example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="left"><code>e.</code></td>
+<td class="left">element definition</td>
+<td class="left"><code>e.chronlist</code> is element <code>chronlist</code>, which includes various attributes and a sequence of elements <code>chronitem</code></td>
+</tr>
+
+<tr>
+<td class="left"><code>a.</code></td>
+<td class="left">attribute definution</td>
+<td class="left"><code>a.identifier</code> is a simple attribute <code>identifier</code> that consists of an <code>xsd:token</code></td>
+</tr>
+
+<tr>
+<td class="left"><code>m.</code></td>
+<td class="left">element model</td>
+<td class="left"><code>m.inter.noquote</code> is alternative of <code>e.chronlist e.list e.table</code></td>
+</tr>
+
+<tr>
+<td class="left"><code>m.mixed</code></td>
+<td class="left">mixed element model</td>
+<td class="left"><code>m.mixed.basic</code> consists of text and/or <code>e.abbr e.emph e.expan</code> etc</td>
+</tr>
+
+<tr>
+<td class="left"><code>am.</code></td>
+<td class="left">attribute model (group)</td>
+<td class="left"><code>am.common.empty</code> consists of elements <code>id altrender audience</code></td>
+</tr>
+</tbody>
+</table>
+<ul class="org-ul">
+<li><a href="https://github.com/SAA-SDT/EAD3">EAD3</a>: upcoming revised version, developed natively in RNG. Schemas listed in increasing recency:
+<ul class="org-ul">
+<li><a href="https://raw.githubusercontent.com/SAA-SDT/EAD-Revision/develop/ead3.rng">https://raw.githubusercontent.com/SAA-SDT/EAD-Revision/develop/ead3.rng</a>: the namespace <a href="http://ead3.archivists.org/schema/">http://ead3.archivists.org/schema/</a> redirects to this
+</li>
+<li><a href="https://raw.githubusercontent.com/SAA-SDT/EAD2002toEAD3/develop/ead3.rng">https://raw.githubusercontent.com/SAA-SDT/EAD2002toEAD3/develop/ead3.rng</a>
+</li>
+<li><a href="https://raw.github.com/SAA-SDT/EAD-Revision/master/ead3.rng">https://raw.github.com/SAA-SDT/EAD-Revision/master/ead3.rng</a>
+</li>
+<li><a href="./ead3.rnc">./ead3.rnc</a> (<a href="./ead3-nocomment.rnc">nocomment</a>): converted from the most recent schema by Vladimir Alexiev
+</li>
+</ul>
+</li>
+<li><a href="./CDWAlite.rnc">./CDWAlite.rnc</a> (<a href="./CDWAlite-nocomment.rnc">nocomment</a>):  version 1.1 20060712 by ARTstor and J Paul Getty Trust, converted by Vladimir Alexiev
+</li>
+<li><a href="./lido.rnc">./lido.rnc</a> (<a href="./lido-nocomment.rnc">nocomment</a>): LIDO version 1.0 20101108 (Lightweight Information Describing Objects) by ICOM-CIDOC Working Group Data Harvesting and Interchange, converted by Vladimir Alexiev
+<ul class="org-ul">
+<li>I've corrected this which sets one start element, and introduces the parasitic name <code>starting_lidoWrap</code>
+<pre class="example">
+start |= starting_lidoWrap
+starting_lidoWrap =
+</pre>
+<p>
+to two start elements:
+</p>
+<pre class="example">
+start = lido | lidoWrap
+</pre>
+</li>
+<li>XSDtoRNG currently can't grok GML so I've commented out
+<pre class="example">
+# rng:include href="http://schemas.opengis.net/gml/3.1.1/base/feature.rng"
+</pre>
+<p>
+You'll get 3 errors at
+</p>
+<pre class="example">
+gmlComplexType = Point*, LineString*, Polygon*
+</pre>
+</li>
+</ul>
+</li>
+<li><a href="./xml.rnc">./xml.rnc</a>: defines <code>xml:</code> attributes <code>lang, base, space</code>. Used by LIDO, EAG.
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="author">Author: Vladimir Alexiev</p>
+<p class="date">Created: 2015-08-24 Mon 22:17</p>
+<p class="creator"><a href="http://www.gnu.org/software/emacs/">Emacs</a> 24.5.1 (<a href="http://orgmode.org">Org</a> mode 8.2.10)</p>
+<p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
+</div>
+</body>
+</html>

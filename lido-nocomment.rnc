@@ -1,0 +1,362 @@
+﻿default namespace lido = "http://www.lido-schema.org"
+namespace a = "http://relaxng.org/ns/compatibility/annotations/1.0"
+namespace doc = "http://www.mda.org.uk/spectrumXML/Documentation"
+namespace gml = "http://www.opengis.net/gml"
+namespace rng = "http://relaxng.org/ns/structure/1.0"
+namespace xsd = "http://www.w3.org/2001/XMLSchema"
+
+include "xml.rnc" inherit = xml
+
+
+start = lido | lidoWrap
+
+actorComplexType =
+  element actorID {identifierComplexType}*,
+  element nameActorSet {appellationComplexType}+,
+  element nationalityActor {conceptComplexType, attr_sortorder}*,
+  element vitalDatesActor {dateComplexType}?,
+  element genderActor {textComplexType}*,
+  attr_type
+
+actorInRoleComplexType =
+  element actor {actorComplexType},
+  element roleActor {conceptComplexType, attr_sortorder}*,
+  element attributionQualifierActor {textComplexType}*,
+  element extentActor {textComplexType}*
+
+actorInRoleSetComplexType =
+  element displayActorInRole {textComplexType}*,
+  element actorInRole {actorInRoleComplexType}?
+
+actorSetComplexType =
+  element displayActor {textComplexType}*,
+  element actor {actorComplexType}?
+
+attr_addedSearchTerm =
+  [ a:defaultValue = "no" ]
+  attribute addedSearchTerm {"yes" | "no"}?
+
+administrativeMetadata = element administrativeMetadata {administrativeMetadataComplexType}
+
+administrativeMetadataComplexType =
+  rightsWorkWrap?,
+  recordWrap,
+  resourceWrap?,
+  attribute xml:lang {xsd:language}
+
+appellationComplexType =
+  element appellationValue {
+    xsd:string,
+    attr_pref,
+    attribute xml:lang {xsd:language},
+    attr_encodinganalog,
+    attr_label}+,
+  element sourceAppellation {
+    xsd:string,
+    attribute xml:lang {xsd:language},
+    attr_encodinganalog,
+    attr_label}*
+
+classificationWrap = element classificationWrap {element classification {conceptComplexType, attr_type, attr_sortorder}*}
+
+conceptComplexType =
+  element conceptID {identifierComplexType}*,
+  element term {termComplexType}*
+
+dateComplexType =
+  element earliestDate {
+    xsd:string,
+    attr_type,
+    attr_source,
+    attr_encodinganalog,
+    attr_label}?,
+  element latestDate {
+    xsd:string,
+    attr_type,
+    attr_source,
+    attr_encodinganalog,
+    attr_label}?
+
+dateSetComplexType =
+  element displayDate {textComplexType}*,
+  element date {dateComplexType}?
+
+descriptiveMetadata =
+  element descriptiveMetadata {descriptiveMetadataComplexType}
+
+descriptiveMetadataComplexType =
+  objectClassificationWrap,
+  objectIdentificationWrap,
+  eventWrap?,
+  objectRelationWrap?,
+  attribute xml:lang {xsd:language}
+
+descriptiveNoteComplexType =
+  element descriptiveNoteID {identifierComplexType}*,
+  element descriptiveNoteValue {textComplexType}*,
+  element sourceDescriptiveNote {textComplexType}*,
+  attr_type,
+  attr_sortorder
+
+displayStateEditionWrap = element displayStateEditionWrap {
+    element displayState {textComplexType}*,
+    element displayEdition {textComplexType}*,
+    element sourceStateEdition {textComplexType}*}
+
+attr_encodinganalog = attribute encodinganalog {xsd:string}?
+
+eventComplexType =
+  element eventID {identifierComplexType}*,
+  element eventType {conceptComplexType},
+  element roleInEvent {conceptComplexType}*,
+  element eventName {appellationComplexType}*,
+  element eventActor {actorInRoleSetComplexType, attr_sortorder}*,
+  element culture {conceptComplexType, attr_sortorder}*,
+  element eventDate {dateSetComplexType}?,
+  element periodName {
+    conceptComplexType,
+    attr_type,
+    attr_sortorder}*,
+  element eventPlace {
+    placeSetComplexType,
+    attr_type,
+    attr_sortorder}*,
+  element eventMethod {conceptComplexType, attr_sortorder}*,
+  element eventMaterialsTech {materialsTechSetComplexType, attr_sortorder}*,
+  element thingPresent {objectSetComplexType, attr_sortorder}*,
+  element relatedEventSet {relatedEventSetComplexType, attr_sortorder}*,
+  element eventDescriptionSet {descriptiveNoteComplexType}*
+
+eventSetComplexType =
+  element displayEvent {textComplexType}*,
+  element event {eventComplexType}?
+
+eventWrap = element eventWrap {element eventSet {eventSetComplexType, attr_sortorder}*}
+
+attr_geographicalEntity = attribute geographicalEntity {xsd:string}?
+
+gmlComplexType = Point*, LineString*, Polygon*
+
+identifierComplexType =
+  xsd:string,
+  attr_pref,
+  attr_type,
+  attr_source,
+  attr_encodinganalog,
+  attr_label
+
+inscriptionsWrap = element inscriptionsWrap {element inscriptions {
+  element inscriptionTranscription {textComplexType}*,
+  element inscriptionDescription {descriptiveNoteComplexType}*,
+  attr_type,
+  attr_sortorder}*}
+
+attr_label = attribute label {xsd:string}?
+
+legalBodyRefComplexType =
+  element legalBodyID {identifierComplexType}*,
+  element legalBodyName {appellationComplexType}*,
+  element legalBodyWeblink {webResourceComplexType}*
+
+lido = element lido {lidoComplexType}
+
+lidoComplexType =
+  element lidoRecID {identifierComplexType}+,
+  element objectPublishedID {identifierComplexType}*,
+  element category {conceptComplexType}?,
+  element descriptiveMetadata {descriptiveMetadataComplexType}+,
+  element administrativeMetadata {administrativeMetadataComplexType}+,
+  attr_relatedencoding
+
+lidoWrap = element lidoWrap {
+  element lido {lidoComplexType, attr_sortorder}+,
+  attr_relatedencoding}
+
+materialsTechComplexType =
+  element termMaterialsTech {
+    conceptComplexType,
+    attr_type,
+    attr_sortorder}*,
+  element extentMaterialsTech {textComplexType}*,
+  element sourceMaterialsTech {textComplexType}*
+
+materialsTechSetComplexType =
+  element displayMaterialsTech {textComplexType}*,
+  element materialsTech {materialsTechComplexType}?
+
+measurementsSetComplexType =
+  element measurementType {textComplexType}+,
+  element measurementUnit {textComplexType}+,
+  element measurementValue {textComplexType}
+
+objectClassificationWrap = element objectClassificationWrap {
+  objectWorkTypeWrap,
+  classificationWrap?}
+
+objectComplexType =
+  element objectWebResource {webResourceComplexType}*,
+  element objectID {identifierComplexType}*,
+  element objectNote {textComplexType, attr_type}*
+
+objectDescriptionWrap = element objectDescriptionWrap {element objectDescriptionSet {descriptiveNoteComplexType}*}
+
+objectIdentificationWrap = element objectIdentificationWrap {
+  titleWrap,
+  inscriptionsWrap?,
+  repositoryWrap?,
+  displayStateEditionWrap?,
+  objectDescriptionWrap?,
+  objectMeasurementsWrap?}
+
+objectMeasurementsComplexType =
+  element measurementsSet {measurementsSetComplexType, attr_sortorder}*,
+  element extentMeasurements {textComplexType, attr_sortorder}*,
+  element qualifierMeasurements {textComplexType, attr_sortorder}*,
+  element formatMeasurements {textComplexType, attr_sortorder}*,
+  element shapeMeasurements {textComplexType, attr_sortorder}*,
+  element scaleMeasurements {textComplexType, attr_sortorder}*
+
+objectMeasurementsSetComplexType =
+  element displayObjectMeasurements {textComplexType}*,
+  element objectMeasurements {objectMeasurementsComplexType}?
+
+objectMeasurementsWrap = element objectMeasurementsWrap {element objectMeasurementsSet {objectMeasurementsSetComplexType, attr_sortorder}*}
+
+objectRelationWrap = element objectRelationWrap {subjectWrap?, relatedWorksWrap?}
+
+objectSetComplexType =
+  element displayObject {textComplexType}*,
+  element object {objectComplexType}?
+
+objectWorkTypeWrap = element objectWorkTypeWrap {element objectWorkType {conceptComplexType, attr_type, attr_sortorder}+}
+
+placeComplexType =
+  element placeID {identifierComplexType}*,
+  element namePlaceSet {appellationComplexType}*,
+  element gml {
+    gmlComplexType,
+    attribute xml:lang {xsd:language}}*,
+  element partOfPlace {placeComplexType}*,
+  element placeClassification {conceptComplexType, attr_type}*,
+  attr_politicalEntity,
+  attr_geographicalEntity
+
+placeSetComplexType =
+  element displayPlace {textComplexType}*,
+  element place {placeComplexType}?
+
+attr_politicalEntity = attribute politicalEntity {xsd:string}?
+
+attr_pref = attribute pref {xsd:string}?
+
+recordInfoSetComplexType =
+  element recordInfoID {identifierComplexType}*,
+  element recordInfoLink {webResourceComplexType}*,
+  element recordMetadataDate {textComplexType, attr_type, attr_source}*,
+  attr_type
+
+recordWrap = element recordWrap {
+  element recordID {identifierComplexType}+,
+  element recordType {conceptComplexType},
+  element recordSource {legalBodyRefComplexType, attr_type, attr_sortorder}+,
+  element recordRights {rightsComplexType, attr_sortorder}*,
+  element recordInfoSet {recordInfoSetComplexType}*}
+
+attr_relatedencoding = attribute relatedencoding {xsd:string}?
+
+relatedEventSetComplexType =
+  element relatedEvent {eventSetComplexType}?,
+  element relatedEventRelType {conceptComplexType}?
+
+relatedWorkSetComplexType =
+  element relatedWork {objectSetComplexType}?,
+  element relatedWorkRelType {conceptComplexType}?
+
+relatedWorksWrap = element relatedWorksWrap {element relatedWorkSet {relatedWorkSetComplexType, attr_sortorder}*}
+
+repositorySetComplexType =
+  element repositoryName {legalBodyRefComplexType}?,
+  element workID {
+    xsd:string,
+    attr_type,
+    attr_sortorder,
+    attr_encodinganalog,
+    attr_label}*,
+  element repositoryLocation {placeComplexType}?,
+  attr_type,
+  attr_sortorder
+
+repositoryWrap = element repositoryWrap {element repositorySet {repositorySetComplexType}*}
+
+resourceSetComplexType =
+  element resourceID {identifierComplexType}?,
+  element resourceRepresentation {
+    element linkResource {
+      webResourceComplexType,
+      attribute codecResource {xsd:string}?},
+    element resourceMeasurementsSet {measurementsSetComplexType}*,
+    attr_type}*,
+  element resourceType {conceptComplexType}?,
+  element resourceRelType {conceptComplexType}*,
+  element resourcePerspective {conceptComplexType}*,
+  element resourceDescription {textComplexType, attr_type, attr_sortorder}*,
+  element resourceDateTaken {dateSetComplexType}?,
+  element resourceSource {legalBodyRefComplexType, attr_type, attr_sortorder}*,
+  element rightsResource {rightsComplexType, attr_sortorder}*
+
+resourceWrap = element resourceWrap {element resourceSet {resourceSetComplexType, attr_sortorder}*}
+
+rightsComplexType =
+  element rightsType {conceptComplexType}*,
+  element rightsDate {dateComplexType}?,
+  element rightsHolder {legalBodyRefComplexType, attr_sortorder}*,
+  element creditLine {textComplexType}*
+
+rightsWorkWrap = element rightsWorkWrap {element rightsWorkSet {rightsComplexType, attr_sortorder}*}
+
+attr_sortorder = attribute sortorder {xsd:integer}?
+
+attr_source = attribute source {xsd:string}?
+
+subjectComplexType =
+  element extentSubject {textComplexType}*,
+  element subjectConcept {conceptComplexType, attr_sortorder}*,
+  element subjectActor {actorSetComplexType, attr_sortorder}*,
+  element subjectDate {dateSetComplexType, attr_sortorder}*,
+  element subjectEvent {eventSetComplexType, attr_sortorder}*,
+  element subjectPlace {placeSetComplexType, attr_sortorder}*,
+  element subjectObject {objectSetComplexType, attr_sortorder}*,
+  attr_type
+
+subjectSetComplexType =
+  element displaySubject {textComplexType}*,
+  element subject {subjectComplexType}?
+
+subjectWrap = element subjectWrap {
+  element subjectSet {subjectSetComplexType, attr_sortorder}*}
+
+termComplexType =
+  xsd:string,
+  attr_pref,
+  attr_addedSearchTerm,
+  attribute xml:lang {xsd:language},
+  attr_encodinganalog,
+  attr_label
+
+textComplexType =
+  xsd:string,
+  attribute xml:lang {xsd:language},
+  attr_encodinganalog,
+  attr_label
+
+titleWrap = element titleWrap {element titleSet {appellationComplexType, attr_type, attr_sortorder}+}
+
+attr_type = attribute type {xsd:string}?
+
+webResourceComplexType =
+  xsd:string,
+  attr_pref,
+  attribute formatResource {xsd:string}?,
+  attribute xml:lang {xsd:language},
+  attr_encodinganalog,
+  attr_label

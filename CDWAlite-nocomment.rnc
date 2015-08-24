@@ -1,0 +1,317 @@
+default namespace cdwalite = "http://www.getty.edu/CDWA/CDWALite"
+namespace a = "http://relaxng.org/ns/compatibility/annotations/1.0"
+namespace rng = "http://relaxng.org/ns/structure/1.0"
+namespace xsd = "http://www.w3.org/2001/XMLSchema"
+
+start = cdwaliteWrap
+
+cdwaliteWrap = element cdwaliteWrap {cdwalite+}
+
+cdwalite = element cdwalite {descriptiveMetadata, administrativeMetadata}
+
+administrativeMetadata = element administrativeMetadata {rightsWork*, recordWrap?, resourceWrap?}
+
+descriptiveMetadata = element descriptiveMetadata {
+  objectWorkTypeWrap,
+  titleWrap,
+  displayCreator,
+  indexingCreatorWrap,
+  displayMeasurements?,
+  indexingMeasurementsWrap?,
+  displayMaterialsTech,
+  indexingMaterialsTechWrap?,
+  displayStateEditionWrap?,
+  styleWrap?,
+  cultureWrap?,
+  displayCreationDate,
+  indexingDatesWrap,
+  locationWrap,
+  indexingSubjectWrap?,
+  classWrap?,
+  descriptiveNoteWrap?,
+  inscriptionsWrap?,
+  relatedWorksWrap?}
+
+resourceWrap = element resourceWrap {resourceSet*}
+
+attributionQualifierCreator = element attributionQualifierCreator {xsd:string}
+
+classification = element classification {xsd:string, attr_termsource, attr_termsourceID}
+
+classWrap = element classWrap {classification*}
+
+culture = element culture {xsd:string, attr_termsource, attr_termsourceID}
+
+cultureWrap = element cultureWrap {culture*}
+
+dateQualifier = element dateQualifier {xsd:string}
+
+descriptiveNote = element descriptiveNote {xsd:string}
+
+descriptiveNoteWrap = element descriptiveNoteWrap {descriptiveNoteSet*}
+
+descriptiveNoteSet = element descriptiveNoteSet {descriptiveNote?, sourceDescriptiveNote*}
+
+displayCreationDate = element displayCreationDate {xsd:string}
+
+displayCreator = element displayCreator {xsd:string}
+
+displayEdition = element displayEdition {xsd:string}
+
+displayMaterialsTech = element displayMaterialsTech {xsd:string}
+
+displayMeasurements = element displayMeasurements {xsd:string}
+
+displayState = element displayState {xsd:string}
+
+displayStateEditionWrap = element displayStateEditionWrap {displayState*, displayEdition*, sourceStateEdition*}
+
+earliestDate = element earliestDate {xsd:string, attr_termsource}
+
+extentMeasurements = element extentMeasurements {xsd:string}
+
+resourceID = element resourceID {xsd:string, attr_type}
+
+resourceRelType = element resourceRelType {xsd:string, attr_type}
+
+resourceType = element resourceType {xsd:string, attr_termsource, attr_termsourceID}
+
+rightsResource = element rightsResource {xsd:string, attr_type}
+
+resourceViewDescription = element resourceViewDescription {xsd:string, attr_type}
+
+resourceViewSubjectTerm = element resourceViewSubjectTerm {xsd:string, attr_termsource, attr_termsourceID, attr_type}
+
+resourceViewType = element resourceViewType {xsd:string, attr_termsource, attr_termsourceID}
+
+resourceViewDate = element resourceViewDate {
+  xsd:string,
+  attr_type,
+  attribute earliestdate {xsd:string}?,
+  attribute latestdate {xsd:string}?}
+
+resourceSource = element resourceSource {
+  xsd:string,
+  attr_type,
+  attribute earliestdate {xsd:string}?,
+  attribute latestdate {xsd:string}?}
+
+linkRelatedResource = element linkRelatedResource {relatedResourceRelType?, labelRelatedResource*, attr_linkscheme}
+
+relatedResourceRelType = element relatedResourceRelType {xsd:string}
+
+labelRelatedResource = element labelRelatedResource {xsd:string}
+
+resourceMetadataLoc = element resourceMetadataLoc {xsd:string, attr_type}
+
+indexingCreatorSet = element indexingCreatorSet {
+  nameCreatorSet+,
+  nationalityCreator*,
+  vitalDatesCreator*,
+  genderCreator?,
+  roleCreator+,
+  attributionQualifierCreator*,
+  extentCreator*}
+
+indexingCreatorWrap = element indexingCreatorWrap {indexingCreatorSet+}
+
+indexingDatesSet = element indexingDatesSet {dateQualifier*, earliestDate, latestDate}
+
+indexingDatesWrap = element indexingDatesWrap {indexingDatesSet+}
+
+indexingMaterialsTechSet = element indexingMaterialsTechSet {
+  termMaterialsTech*,
+  extentMaterialsTech*,
+  sourceMaterialsTech*,
+  attr_type}
+
+indexingMaterialsTechWrap = element indexingMaterialsTechWrap {indexingMaterialsTechSet*}
+
+indexingMeasurementsSet = element indexingMeasurementsSet {
+  measurementsSet*,
+  extentMeasurements*,
+  qualifierMeasurements*,
+  formatMeasurements*,
+  shapeMeasurements*,
+  scaleMeasurements*}
+
+indexingMeasurementsWrap = element indexingMeasurementsWrap {indexingMeasurementsSet*}
+
+inscriptions = element inscriptions {xsd:string}
+
+inscriptionsWrap = element inscriptionsWrap {inscriptions*}
+
+labelRelatedWork = element labelRelatedWork {xsd:string}
+
+latestDate = element latestDate {xsd:string, attr_termsource}
+
+linkResource = element linkResource {
+  xsd:string,
+  attr_type,
+  attribute formatResource {xsd:string}?}
+
+linkRelatedWork = element linkRelatedWork {xsd:string, attr_linkscheme}
+
+locRelatedWork = element locRelatedWork {
+  xsd:string,
+  attribute relWorkID {xsd:string}?,
+  attr_termsource,
+  attr_locID,
+  attr_locIDtype}
+
+locationName = element locationName {
+    xsd:string,
+    attr_type,
+    attr_termsource,
+    attr_termsourceID,
+    attr_locID,
+    attr_locIDtype}
+
+locationWrap = element locationWrap {locationSet+}
+
+locationSet = element locationSet {locationName, workID*}
+
+resourceSet = element resourceSet {
+  linkResource?,
+  resourceID?,
+  resourceRelType*,
+  resourceType*,
+  rightsResource*,
+  resourceViewDescription?,
+  resourceViewType*,
+  resourceViewSubjectTerm*,
+  resourceViewDate?,
+  resourceSource*,
+  linkRelatedResource*,
+  resourceMetadataLoc*}
+
+measurementsSet = element measurementsSet {
+  attribute unit {xsd:string}?,
+  attr_type,
+  attribute value {xsd:string}}
+
+nameCreator = element nameCreator {
+  xsd:string,
+  attr_termsource,
+  attribute type {"personalName" | "corporateName"}?,
+  attr_termsourceID}
+
+nameCreatorSet = element nameCreatorSet {nameCreator, sourceNameCreator*}
+
+nationalityCreator = element nationalityCreator {xsd:string}
+
+genderCreator = element genderCreator {xsd:string}
+
+objectWorkType = element objectWorkType {xsd:string, attr_termsource, attr_termsourceID}
+
+objectWorkTypeWrap = element objectWorkTypeWrap {objectWorkType+}
+
+qualifierMeasurements = element qualifierMeasurements {xsd:string}
+
+shapeMeasurements = element shapeMeasurements {xsd:string}
+
+formatMeasurements = element formatMeasurements {xsd:string}
+
+scaleMeasurements = element scaleMeasurements {xsd:string}
+
+recordID = element recordID {xsd:string, attr_type}
+
+recordSource = element recordSource {xsd:string}
+
+recordType = element recordType {xsd:string}
+
+recordWrap = element recordWrap {recordID+, recordType, recordSource*, recordInfoWrap*}
+
+relatedWorkRelType = element relatedWorkRelType {xsd:string}
+
+relatedWorkSet = element relatedWorkSet {
+  linkRelatedWork*,
+  relatedWorkRelType?,
+  labelRelatedWork*,
+  locRelatedWork*}
+
+relatedWorksWrap = element relatedWorksWrap {relatedWorkSet*}
+
+rightsWork = element rightsWork {xsd:string, attr_type}
+
+roleCreator = element roleCreator {xsd:string, attr_termsource, attr_termsourceID}
+
+sourceDescriptiveNote = element sourceDescriptiveNote {xsd:string}
+
+sourceMaterialsTech = element sourceMaterialsTech {xsd:string}
+
+sourceNameCreator = element sourceNameCreator {xsd:string}
+
+sourceStateEdition = element sourceStateEdition {xsd:string}
+
+sourceTitle = element sourceTitle {xsd:string}
+
+style = element style {xsd:string, attr_termsource, attr_termsourceID}
+
+styleWrap = element styleWrap {style*}
+
+indexingSubjectSet = element indexingSubjectSet {extentSubject?, subjectTerm*, attr_type}
+
+indexingSubjectWrap = element indexingSubjectWrap {indexingSubjectSet*}
+
+subjectTerm = element subjectTerm {xsd:string, attr_type, attr_termsource, attr_termsourceID}
+
+termMaterialsTech = element termMaterialsTech {xsd:string, attr_termsource}
+
+title = element title {xsd:string, attr_pref, attr_lang, attr_type, attr_langtermsource}
+
+titleSet = element titleSet {title, sourceTitle*}
+
+titleWrap = element titleWrap {titleSet+}
+
+vitalDatesCreator = element vitalDatesCreator {
+  xsd:string,
+  attribute birthDate {xsd:string}?,
+  attribute deathDate {xsd:string}?,
+  attr_termsource}
+
+workID = element workID {xsd:string, attr_type}
+
+attr_termsource = attribute termsource {xsd:string}?
+
+attr_termsourceID = attribute termsourceID {xsd:string}?
+
+attr_linkscheme = attribute linkscheme {xsd:string}?
+
+attr_locID = attribute locID {xsd:string}?
+
+attr_locIDtype = attribute locIDtype {xsd:string}?
+
+attr_pref = attribute pref {xsd:string}?
+
+attr_type = attribute type {xsd:string}?
+
+attr_langtermsource = attribute langtermsource {xsd:string}?
+
+attr_indentifier = attribute indentifier {xsd:string}?
+
+attr_lang = attribute lang {xsd:string}?
+
+extentCreator = element extentCreator {xsd:string}
+
+extentMaterialsTech = element extentMaterialsTech {xsd:string}
+
+extentSubject = element extentSubject {xsd:string}
+
+recordInfoWrap = element recordInfoWrap {
+  recordInfoID*,
+  recordInfoLink*,
+  recordRelID*,
+  recordMetadataLoc*,
+  recordMetadataDate*,
+  attr_type}
+
+recordInfoID = element recordInfoID {xsd:string, attr_type}
+
+recordInfoLink = element recordInfoLink {xsd:string}
+
+recordRelID = element recordRelID {xsd:string, attr_type}
+
+recordMetadataLoc = element recordMetadataLoc {xsd:string, attr_type}
+
+recordMetadataDate = element recordMetadataDate {xsd:string, attr_type, attr_termsource}

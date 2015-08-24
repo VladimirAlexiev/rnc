@@ -1,0 +1,1123 @@
+namespace a = "http://relaxng.org/ns/compatibility/annotations/1.0"
+default namespace ns1 = "http://ead3.archivists.org/schema/"
+namespace rng = "http://relaxng.org/ns/structure/1.0"
+
+div {
+  # include "ead_revised_defs.rng"
+  div {
+    # ELEMENTS
+    e.ead =
+      element ead {
+        am.common, a.relatedencoding?, a.base?, e.control, e.archdesc}
+    # control
+    e.control =
+      element control {
+        am.common,
+        a.encodinganalog?,
+        a.relatedencoding?,
+        a.base?,
+        attribute langencoding {
+          "iso639-1" | "iso639-2b" | "iso639-3" | "otherlangencoding"}?,
+        attribute scriptencoding {
+          "iso15924" | "otherscriptencoding"}?,
+        attribute dateencoding {"iso8601" | "otherdateencoding"}?,
+        attribute countryencoding {
+          "iso3166-1" | "othercountryencoding"}?,
+        attribute repositoryencoding {
+          "iso15511" | "otherrepositoryencoding"}?,
+        element recordid {
+          am.common,
+          a.encodinganalog?,
+          attribute instanceurl {xsd:anyURI}?,
+          text},
+        element otherrecordid {
+          am.common, a.encodinganalog?, a.localtype?, text}*,
+        element representation {
+          am.common,
+          a.encodinganalog?,
+          am.simplelink,
+          a.localtype?,
+          text}*,
+        element filedesc {
+          am.common,
+          a.encodinganalog?,
+          element titlestmt {
+            am.common,
+            a.encodinganalog?,
+            e.titleproper+,
+            e.subtitle*,
+            e.author*,
+            e.sponsor*},
+          element editionstmt {
+            am.common, a.encodinganalog?, (e.edition | e.p)+}?,
+          element publicationstmt {
+            am.common,
+            a.encodinganalog?,
+            (e.publisher | e.date | e.address | e.num | e.p)+}?,
+          element seriesstmt {
+            am.common, a.encodinganalog?, (e.titleproper | e.num | e.p)+}?,
+          element notestmt {
+            am.common, a.encodinganalog?, e.controlnote+}?},
+        element maintenancestatus {
+          am.common,
+          a.encodinganalog?,
+          attribute value {
+            "revised"
+            | "deleted"
+            | "new"
+            | "deletedsplit"
+            | "deletedmerged"
+            | "deletedreplaced"
+            | "cancelled"
+            | "derived"},
+          text},
+        element publicationstatus {
+          am.common,
+          a.encodinganalog?,
+          attribute value {"inprocess" | "approved" | "published"},
+          text}?,
+        e.maintenanceagency,
+        element languagedeclaration {
+          am.common,
+          a.encodinganalog?,
+          e.language,
+          e.script,
+          e.descriptivenote?}*,
+        element conventiondeclaration {
+          am.common,
+          a.encodinganalog?,
+          e.abbr?,
+          e.citation,
+          e.descriptivenote?}*,
+        element localtypedeclaration {
+          am.common,
+          a.encodinganalog?,
+          e.abbr?,
+          e.citation,
+          e.descriptivenote?}*,
+        element localcontrol {
+          am.common,
+          a.encodinganalog?,
+          a.localtype?,
+          element term {
+            am.common,
+            a.encodinganalog?,
+            a.transliteration?,
+            a.lastdatetimeverified?,
+            am.access.no.normal,
+            text}?,
+          (e.datesingle | e.daterange)?}*,
+        element maintenancehistory {
+          am.common,
+          a.encodinganalog?,
+          element maintenanceevent {
+            am.common,
+            a.encodinganalog?,
+            element eventtype {
+              am.common,
+              a.encodinganalog?,
+              attribute value {
+                "created"
+                | "revised"
+                | "deleted"
+                | "cancelled"
+                | "derived"
+                | "updated"
+                | "unknown"},
+              text},
+            element eventdatetime {
+              am.common,
+              a.encodinganalog?,
+              attribute standarddatetime {
+                xsd:date {maxInclusive = "2099-12-31"}
+                | xsd:gYear {maxInclusive = "2099"}
+                | xsd:gYearMonth {maxInclusive = "2099-12"}
+                | xsd:dateTime {maxInclusive = "2099-12-31T23:59:59"}}?,
+              text},
+            element agenttype {
+              am.common,
+              a.encodinganalog?,
+              attribute value {"human" | "machine" | "unknown"},
+              text},
+            element agent {am.common, a.encodinganalog?, text},
+            element eventdescription {
+              am.common, a.encodinganalog?, a.localtype?, text}*}+},
+        element sources {
+          am.common,
+          a.encodinganalog?,
+          a.localtype?,
+          a.base?,
+          element source {
+            am.common,
+            a.encodinganalog?,
+            a.lastdatetimeverified?,
+            am.simplelink,
+            element sourceentry {
+              am.common, a.encodinganalog?, a.transliteration?, text}*,
+            e.objectxmlwrap?,
+            e.descriptivenote?}+}?}
+    e.titleproper =
+      element titleproper {
+        am.common,
+        a.localtype?,
+        a.render?,
+        a.encodinganalog?,
+        m.mixed.basic}
+    e.subtitle =
+      element subtitle {
+        am.common, a.localtype?, a.encodinganalog?, m.mixed.basic}
+    e.author =
+      element author {
+        am.common, a.localtype?, a.encodinganalog?, m.mixed.basic}
+    e.sponsor =
+      element sponsor {
+        am.common, a.localtype?, a.encodinganalog?, m.mixed.basic}
+    e.edition =
+      element edition {
+        am.common, a.localtype?, a.encodinganalog?, m.mixed.basic}
+    e.publisher =
+      element publisher {
+        am.common, a.localtype?, a.encodinganalog?, m.mixed.basic}
+    e.controlnote =
+      element controlnote {
+        am.common, a.localtype?, a.encodinganalog?, m.blocks+}
+    e.maintenanceagency =
+      element maintenanceagency {
+        am.common,
+        a.encodinganalog?,
+        am.countrycode,
+        element agencycode {
+          am.common, a.encodinganalog?, a.localtype?, text}?,
+        element otheragencycode {
+          am.common, a.encodinganalog?, a.localtype?, text}*,
+        element agencyname {
+          am.common, a.encodinganalog?, a.localtype?, text}+,
+        e.descriptivenote?}
+    e.citation =
+      element citation {
+        am.common,
+        a.encodinganalog?,
+        am.simplelink,
+        a.lastdatetimeverified?,
+        m.mixed.basic}
+    # ARCHDESC
+    e.archdesc =
+      element archdesc {
+        am.common,
+        a.localtype?,
+        a.relatedencoding?,
+        am.desc.base,
+        a.level,
+        a.base?,
+        e.did,
+        (m.desc.base | e.dsc)*}
+    # did
+    e.did =
+      element did {am.common, a.encodinganalog?, e.head?, m.did+}
+    e.abstract =
+      element abstract {
+        am.common,
+        a.localtype?,
+        a.label?,
+        a.encodinganalog?,
+        m.mixed.basic.plus.access}
+    e.container =
+      element container {
+        am.common,
+        a.label?,
+        a.localtype?,
+        a.encodinganalog?,
+        a.parent?,
+        attribute containerid {xsd:NMTOKEN}?,
+        m.mixed.basic}
+    e.dao =
+      element dao {
+        am.common,
+        a.encodinganalog?,
+        a.localtype?,
+        a.label?,
+        am.simplelink,
+        a.identifier?,
+        a.link.xpointer?,
+        a.entityref?,
+        attribute daotype {
+          "borndigital" | "derived" | "unknown" | "otherdaotype"},
+        attribute otherdaotype {xsd:token}?,
+        a.coverage?,
+        e.descriptivenote?}
+    e.daoset =
+      element daoset {
+        am.common,
+        a.localtype?,
+        a.encodinganalog?,
+        a.label?,
+        a.coverage?,
+        a.base?,
+        e.dao,
+        e.dao+,
+        e.descriptivenote?}
+    e.didnote =
+      element didnote {
+        am.common,
+        a.localtype?,
+        a.label?,
+        a.encodinganalog?,
+        m.mixed.basic}
+    e.langmaterial =
+      element langmaterial {
+        am.common,
+        a.label?,
+        a.encodinganalog?,
+        (e.language | e.languageset)+,
+        e.descriptivenote?}
+    e.materialspec =
+      element materialspec {
+        am.common,
+        a.label?,
+        a.encodinganalog?,
+        a.localtype?,
+        m.mixed.basic}
+    e.physdescset =
+      element physdescset {
+        am.common,
+        a.label?,
+        a.encodinganalog?,
+        attribute parallel {av.boolean}?,
+        a.coverage?,
+        e.physdescstructured,
+        e.physdescstructured+}
+    e.physdesc =
+      element physdesc {
+        am.common,
+        a.localtype?,
+        a.label?,
+        a.encodinganalog?,
+        m.mixed.basic}
+    e.physloc =
+      element physloc {
+        am.common,
+        a.localtype?,
+        a.label?,
+        a.encodinganalog?,
+        a.parent?,
+        m.mixed.basic}
+    e.origination =
+      element origination {
+        am.common,
+        a.localtype?,
+        a.label?,
+        a.encodinganalog?,
+        (e.corpname | e.famname | e.name | e.persname)+}
+    e.physdescstructured =
+      element physdescstructured {
+        am.common,
+        a.label?,
+        a.encodinganalog?,
+        attribute physdescstructuredtype {
+          "carrier"
+          | "materialtype"
+          | "spaceoccupied"
+          | "otherphysdescstructuredtype"},
+        attribute otherphysdescstructuredtype {xsd:token}?,
+        a.coverage,
+        element quantity {
+          am.common,
+          a.encodinganalog?,
+          attribute approximate {av.boolean}?,
+          text},
+        element unittype {
+          am.common, a.encodinganalog?, am.access.no.normal, text},
+        (e.physfacet | e.dimensions)*,
+        e.descriptivenote?}
+    e.repository =
+      element repository {
+        am.common,
+        a.localtype?,
+        a.label?,
+        a.encodinganalog?,
+        (e.corpname | e.famname | e.name | e.persname)+,
+        e.address?}
+    e.unitdate =
+      element unitdate {
+        am.common,
+        a.label?,
+        a.unitdatetype,
+        a.datechar?,
+        a.certainty?,
+        am.dates.era,
+        am.dates.calendar,
+        am.date.normal,
+        a.encodinganalog?,
+        m.mixed.basic}
+    e.unitdatestructured =
+      element unitdatestructured {
+        am.common,
+        a.label?,
+        a.unitdatetype,
+        a.datechar?,
+        a.certainty?,
+        a.encodinganalog?,
+        am.dates.era,
+        am.dates.calendar,
+        (e.datesingle | e.daterange | e.dateset)}
+    e.unittitle =
+      element unittitle {
+        am.common,
+        a.label?,
+        a.encodinganalog?,
+        a.localtype?,
+        attribute normal {xsd:token}?,
+        m.mixed.basic.plus.access}
+    e.unitid =
+      element unitid {
+        am.common,
+        a.localtype?,
+        a.label?,
+        am.countrycode,
+        attribute repositorycode {xsd:token}?,
+        attribute identifier {text}?,
+        a.encodinganalog?,
+        m.mixed.basic}
+    # archdesc notes
+    e.accessrestrict =
+      element accessrestrict {
+        am.common,
+        a.encodinganalog?,
+        a.localtype?,
+        e.head?,
+        (m.blocks | e.accessrestrict)+}
+    e.accruals =
+      element accruals {
+        am.common,
+        a.localtype?,
+        a.encodinganalog?,
+        e.head?,
+        (m.blocks | e.accruals)+}
+    e.acqinfo =
+      element acqinfo {
+        am.common,
+        a.localtype?,
+        a.encodinganalog?,
+        e.head?,
+        (m.blocks | e.acqinfo)+}
+    e.altformavail =
+      element altformavail {
+        am.common,
+        a.encodinganalog?,
+        a.localtype?,
+        e.head?,
+        (m.blocks | e.altformavail)+}
+    e.appraisal =
+      element appraisal {
+        am.common,
+        a.localtype?,
+        a.encodinganalog?,
+        e.head?,
+        (m.blocks | e.appraisal)+}
+    e.arrangement =
+      element arrangement {
+        am.common,
+        a.localtype?,
+        a.encodinganalog?,
+        e.head?,
+        (m.blocks | e.arrangement)+}
+    e.bibliography =
+      element bibliography {
+        am.common,
+        a.localtype?,
+        a.encodinganalog?,
+        e.head?,
+        (m.blocks | e.bibliography | e.archref | e.bibref)+}
+    e.bioghist =
+      element bioghist {
+        am.common,
+        a.localtype?,
+        a.encodinganalog?,
+        e.head?,
+        (m.blocks | e.bioghist)+}
+    e.controlaccess =
+      element controlaccess {
+        am.common,
+        a.localtype?,
+        a.encodinganalog?,
+        e.head?,
+        (m.blocks | m.access | e.controlaccess)+}
+    e.custodhist =
+      element custodhist {
+        am.common,
+        a.localtype?,
+        a.encodinganalog?,
+        e.head?,
+        (m.blocks | e.custodhist)+}
+    e.fileplan =
+      element fileplan {
+        am.common,
+        a.localtype?,
+        a.encodinganalog?,
+        e.head?,
+        (m.blocks | e.fileplan)+}
+    e.index =
+      element index {
+        am.common,
+        a.localtype?,
+        a.encodinganalog?,
+        e.head?,
+        m.blocks*,
+        ((e.listhead?, e.indexentry+) | e.index+)}
+    e.indexentry =
+      element indexentry {
+        am.common,
+        (element namegrp {am.common, m.access+}
+         | m.access),
+        (element ptrgrp {am.common, m.refs+}
+         | m.refs)?,
+        e.indexentry*}
+    e.legalstatus =
+      element legalstatus {
+        am.common,
+        a.encodinganalog?,
+        a.localtype?,
+        e.head?,
+        (m.blocks | e.legalstatus)+}
+    e.odd =
+      element odd {
+        am.common,
+        a.localtype?,
+        a.encodinganalog?,
+        e.head?,
+        (m.blocks | e.odd)+}
+    e.originalsloc =
+      element originalsloc {
+        am.common,
+        a.encodinganalog?,
+        a.localtype?,
+        e.head?,
+        (m.blocks | e.originalsloc)+}
+    e.otherfindaid =
+      element otherfindaid {
+        am.common,
+        a.localtype?,
+        a.encodinganalog?,
+        e.head?,
+        (m.blocks | e.otherfindaid | e.archref | e.bibref)+}
+    e.phystech =
+      element phystech {
+        am.common,
+        a.encodinganalog?,
+        a.localtype?,
+        e.head?,
+        (m.blocks | e.phystech)+}
+    e.prefercite =
+      element prefercite {
+        am.common,
+        a.localtype?,
+        a.encodinganalog?,
+        e.head?,
+        (m.blocks | e.prefercite)+}
+    e.processinfo =
+      element processinfo {
+        am.common,
+        a.localtype?,
+        a.encodinganalog?,
+        e.head?,
+        (m.blocks | e.processinfo)+}
+    e.relatedmaterial =
+      element relatedmaterial {
+        am.common,
+        a.localtype?,
+        a.encodinganalog?,
+        e.head?,
+        (m.blocks | e.relatedmaterial | e.archref | e.bibref)+}
+    e.scopecontent =
+      element scopecontent {
+        am.common,
+        a.localtype?,
+        a.encodinganalog?,
+        e.head?,
+        (m.blocks | e.scopecontent)+}
+    e.separatedmaterial =
+      element separatedmaterial {
+        am.common,
+        a.localtype?,
+        a.encodinganalog?,
+        e.head?,
+        (m.blocks | e.separatedmaterial | e.archref | e.bibref)+}
+    e.userestrict =
+      element userestrict {
+        am.common,
+        a.encodinganalog?,
+        a.localtype?,
+        e.head?,
+        (m.blocks | e.userestrict)+}
+    # controlaccess elements
+    e.corpname =
+      element corpname {
+        am.common,
+        am.access,
+        a.localtype?,
+        a.encodinganalog?,
+        a.relator?,
+        e.part+}
+    e.famname =
+      element famname {
+        am.common,
+        am.access,
+        a.localtype?,
+        a.encodinganalog?,
+        a.relator?,
+        e.part+}
+    e.function =
+      element function {
+        am.common,
+        am.access,
+        a.encodinganalog?,
+        a.localtype?,
+        a.relator?,
+        e.part+}
+    e.genreform =
+      element genreform {
+        am.common,
+        am.access,
+        a.encodinganalog?,
+        a.localtype?,
+        a.relator?,
+        e.part+}
+    e.geogname =
+      element geogname {
+        am.common,
+        am.access,
+        a.localtype?,
+        a.encodinganalog?,
+        a.relator?,
+        e.part+,
+        element geographiccoordinates {
+          am.common,
+          attribute coordinatesystem {xsd:token},
+          text}*}
+    e.name =
+      element name {
+        am.common,
+        am.access,
+        a.localtype?,
+        a.encodinganalog?,
+        a.relator?,
+        e.part+}
+    e.occupation =
+      element occupation {
+        am.common,
+        am.access,
+        a.encodinganalog?,
+        a.localtype?,
+        a.relator?,
+        e.part+}
+    e.persname =
+      element persname {
+        am.common,
+        am.access,
+        a.localtype?,
+        a.encodinganalog?,
+        a.relator?,
+        e.part+}
+    e.subject =
+      element subject {
+        am.common,
+        am.access,
+        a.encodinganalog?,
+        a.localtype?,
+        a.relator?,
+        e.part+}
+    e.title =
+      element title {
+        am.common,
+        a.localtype?,
+        am.access,
+        a.encodinganalog?,
+        a.relator?,
+        a.render?,
+        e.part+}
+    e.part =
+      element part {
+        am.common,
+        a.encodinganalog?,
+        a.localtype?,
+        am.access.no.normal,
+        m.mixed.basic}
+    # BLOCKS
+    # p
+    e.p = element p {am.common, m.para.content}
+    # blockquote
+    e.blockquote =
+      element blockquote {am.common, (m.inter.noquote | e.p)+}
+    # chronlist
+    e.chronlist =
+      element chronlist {
+        am.common,
+        a.localtype?,
+        a.encodinganalog?,
+        e.head?,
+        e.listhead?,
+        element chronitem {
+          am.common,
+          a.localtype?,
+          (e.datesingle | e.daterange | e.dateset),
+          ((e.geogname?, e.event)
+           | element chronitemset {am.common, e.geogname*, e.event+}+)}+}
+    e.event = element event {am.common, a.localtype?, m.para.content}
+    # list
+    e.list =
+      element list {
+        am.common,
+        attribute listtype {"deflist" | "unordered" | "ordered"}?,
+        attribute mark {
+          "disc" | "circle" | "square" | "none" | "inherit"}?,
+        attribute numeration {
+          "decimal"
+          | "decimal-leading-zero"
+          | "lower-roman"
+          | "upper-roman"
+          | "lower-greek"
+          | "lower-latin"
+          | "upper-latin"
+          | "armenian"
+          | "georgian"
+          | "lower-alpha"
+          | "upper-alpha"
+          | "inherit"}?,
+        e.head?,
+        (e.item+
+         | (e.listhead?,
+            element defitem {
+              am.common,
+              element label {am.common, m.mixed.basic},
+              e.item}+))}
+    e.item = element item {am.common, m.para.content}
+    e.listhead =
+      element listhead {
+        am.common,
+        element head01 {am.common, m.mixed.basic}?,
+        element head02 {am.common, m.mixed.basic}?,
+        element head03 {am.common, m.mixed.basic}?}
+    # table
+    e.table =
+      element table {
+        am.common,
+        attribute frame {
+          "top" | "bottom" | "topbot" | "all" | "sides" | "none"}?,
+        a.colsep?,
+        a.rowsep?,
+        attribute pgwide {av.boolean}?,
+        e.head?,
+        element tgroup {
+          am.common,
+          attribute cols {xsd:NMTOKEN},
+          a.colsep?,
+          a.rowsep?,
+          a.align?,
+          element colspec {
+            attribute colnum {xsd:NMTOKEN}?,
+            a.colname?,
+            attribute colwidth {xsd:token}?,
+            a.colsep?,
+            a.rowsep?,
+            a.align?,
+            a.char?,
+            a.charoff?,
+            empty}*,
+          e.thead?,
+          element tbody {am.common, a.valign?, e.row+}}+}
+    e.row =
+      element row {
+        am.common,
+        a.rowsep?,
+        a.valign?,
+        element entry {
+          am.common,
+          a.colname?,
+          attribute namest {xsd:NMTOKEN}?,
+          attribute nameend {xsd:NMTOKEN}?,
+          attribute morerows {xsd:NMTOKEN}?,
+          a.colsep?,
+          a.rowsep?,
+          a.align?,
+          a.char?,
+          a.charoff?,
+          a.valign?,
+          m.para.content}+}
+    e.thead = element thead {am.common, a.valign?, e.row+}
+    # language blocks
+    e.language =
+      element language {
+        am.common,
+        a.encodinganalog?,
+        a.label?,
+        attribute langcode {xsd:NMTOKEN}?,
+        text}
+    e.languageset =
+      element languageset {
+        am.common,
+        a.encodinganalog?,
+        e.language+,
+        e.script+,
+        e.descriptivenote?}
+    e.script =
+      element script {
+        am.common,
+        a.encodinganalog?,
+        a.label?,
+        attribute scriptcode {xsd:NMTOKEN}?,
+        text}
+    # physdescstructured blocks
+    e.dimensions =
+      element dimensions {
+        am.common,
+        a.encodinganalog?,
+        a.localtype?,
+        attribute unit {xsd:token}?,
+        (text | m.mixed.basic.elements | e.dimensions)*}
+    e.physfacet =
+      element physfacet {
+        am.common,
+        a.encodinganalog?,
+        am.access.no.normal,
+        a.localtype?,
+        m.mixed.basic.plus.access}
+    # other blocks
+    e.address =
+      element address {
+        am.common,
+        element addressline {am.common, a.localtype?, m.mixed.basic}+}
+    e.archref =
+      element archref {
+        am.common, a.encodinganalog?, m.mixed.basic.plus.access}
+    e.bibref =
+      element bibref {
+        am.common, a.encodinganalog?, m.mixed.basic.plus.access}
+    e.descriptivenote =
+      element descriptivenote {am.common, a.encodinganalog?, e.p+}
+    e.footnote =
+      element footnote {
+        am.common,
+        a.localtype?,
+        a.link.show?,
+        a.link.actuate?,
+        m.blocks+}
+    e.head =
+      element head {
+        am.common,
+        attribute althead {xsd:token}?,
+        m.mixed.basic}
+    # DATES
+    e.datesingle =
+      element datesingle {am.common, a.localtype?, m.datesingle}
+    e.daterange =
+      element daterange {
+        am.common,
+        a.localtype?,
+        element fromdate {am.common, a.localtype?, m.datesingle}?,
+        element todate {am.common, a.localtype?, m.datesingle}?}
+    e.dateset =
+      element dateset {
+        am.common,
+        a.localtype?,
+        (e.datesingle | e.daterange),
+        (e.datesingle | e.daterange)+}
+    # MIXED CONTENT
+    e.abbr =
+      element abbr {
+        am.common,
+        attribute expan {xsd:string}?,
+        text}
+    e.date =
+      element date {
+        am.common,
+        a.localtype?,
+        am.dates.era,
+        am.dates.calendar,
+        am.date.normal,
+        a.certainty?,
+        a.encodinganalog?,
+        m.mixed.basic}
+    e.emph = element emph {am.common, a.render?, m.mixed.basic}
+    e.expan =
+      element expan {
+        am.common,
+        attribute abbr {xsd:token}?,
+        text}
+    e.foreign = element foreign {am.common, a.render?, text}
+    e.lb = element lb {empty}
+    e.num =
+      element num {
+        am.common, a.localtype?, a.encodinganalog?, m.mixed.basic}
+    e.quote = element quote {am.common, a.localtype?, m.mixed.basic}
+    e.ptr =
+      element ptr {
+        am.common.empty, am.internal.ptr, a.entityref?, empty}
+    e.ref =
+      element ref {
+        am.common,
+        am.internal.ptr,
+        a.entityref?,
+        (text
+         | e.abbr
+         | e.expan
+         | e.emph
+         | e.lb
+         | e.ptr
+         | e.quote
+         | e.num
+         | e.footnote
+         | e.date
+         | m.access)*}
+    # DSC
+    e.dsc =
+      element dsc {
+        am.common,
+        attribute dsctype {
+          "analyticover" | "combined" | "in-depth" | "otherdsctype"}?,
+        attribute otherdsctype {xsd:token}?,
+        a.encodinganalog?,
+        (e.head?, m.blocks*),
+        e.thead?,
+        m.cOrC01?}
+    e.c = element c {m.c.base, (e.thead?, e.c+)*}
+    e.c01 = element c01 {m.c.base, (e.thead?, e.c02+)*}
+    e.c02 = element c02 {m.c.base, (e.thead?, e.c03+)*}
+    e.c03 = element c03 {m.c.base, (e.thead?, e.c04+)*}
+    e.c04 = element c04 {m.c.base, (e.thead?, e.c05+)*}
+    e.c05 = element c05 {m.c.base, (e.thead?, e.c06+)*}
+    e.c06 = element c06 {m.c.base, (e.thead?, e.c07+)*}
+    e.c07 = element c07 {m.c.base, (e.thead?, e.c08+)*}
+    e.c08 = element c08 {m.c.base, (e.thead?, e.c09*)*}
+    e.c09 = element c09 {m.c.base, (e.thead?, e.c10+)*}
+    e.c10 = element c10 {m.c.base, (e.thead?, e.c11+)*}
+    e.c11 = element c11 {m.c.base, (e.thead?, e.c12+)*}
+    e.c12 = element c12 {m.c.base}
+    # RELATIONS
+    e.relations =
+      element relations {
+        am.common,
+        a.encodinganalog?,
+        a.localtype?,
+        a.base?,
+        element relation {
+          am.common,
+          a.encodinganalog?,
+          attribute relationtype {
+            "cpfrelation"
+            | "resourcerelation"
+            | "functionrelation"
+            | "otherrelationtype"},
+          attribute otherrelationtype {xsd:token}?,
+          a.lastdatetimeverified?,
+          am.simplelink,
+          element relationentry {
+            am.common,
+            a.encodinganalog?,
+            a.localtype?,
+            a.transliteration?,
+            text}*,
+          e.objectxmlwrap?,
+          (e.datesingle | e.daterange | e.dateset)?,
+          e.geogname?,
+          e.descriptivenote?}+}
+    e.objectxmlwrap = element objectxmlwrap {am.common, e.anyname}
+    e.anyname =
+      element * - ns1:* {
+        attribute * {text}*,
+        (text | e.anyname)*}
+    # ELEMENT MODELS
+    m.blocks = m.inter | e.p
+    m.inter = m.inter.noquote | e.blockquote
+    m.inter.noquote = e.chronlist | e.list | e.table
+    m.cOrC01 = e.c+ | e.c01+
+    m.c.base = am.desc.c, e.head?, e.did, m.desc.base*
+    m.access =
+      e.persname
+      | e.corpname
+      | e.famname
+      | e.geogname
+      | e.name
+      | e.occupation
+      | e.subject
+      | e.genreform
+      | e.function
+      | e.title
+    m.datesingle =
+      attribute standarddate {xsd:token}?,
+      attribute notbefore {xsd:token}?,
+      attribute notafter {xsd:token}?,
+      m.mixed.basic
+    m.desc.base =
+      e.accessrestrict
+      | e.accruals
+      | e.acqinfo
+      | e.altformavail
+      | e.appraisal
+      | e.arrangement
+      | e.bibliography
+      | e.bioghist
+      | e.controlaccess
+      | e.custodhist
+      | e.fileplan
+      | e.index
+      | e.legalstatus
+      | e.odd
+      | e.originalsloc
+      | e.otherfindaid
+      | e.phystech
+      | e.prefercite
+      | e.processinfo
+      | e.relatedmaterial
+      | e.relations
+      | e.scopecontent
+      | e.separatedmaterial
+      | e.userestrict
+    m.did =
+      e.abstract
+      | e.container
+      | e.dao
+      | e.daoset
+      | e.didnote
+      | e.langmaterial
+      | e.materialspec
+      | e.origination
+      | e.physdescset
+      | e.physdesc
+      | e.physdescstructured
+      | e.physloc
+      | e.repository
+      | e.unitdate
+      | e.unitdatestructured
+      | e.unitid
+      | e.unittitle
+    m.refs = e.ptr | e.ref
+    # MIXED CONTENT MODELS
+    m.mixed.basic.elements =
+      e.abbr | e.emph | e.expan | e.foreign | e.lb | e.ptr | e.ref
+    m.mixed.basic = (text | m.mixed.basic.elements)*
+    m.mixed.basic.plus.elements =
+      m.mixed.basic.elements | e.date | e.footnote | e.num | e.quote
+    m.mixed.basic.plus.access =
+      (text
+       | m.mixed.basic.elements
+       | m.access
+       | e.date
+       | e.footnote
+       | e.num
+       | e.quote)*
+    m.para.content =
+      (text | m.mixed.basic.plus.elements | m.access | e.list)*
+    # ATTRIBUTE MODELS
+    am.internal.ptr =
+      attribute target {xsd:IDREF}?,
+      a.link.xpointer?,
+      am.simplelink
+    am.simplelink =
+      a.link.href?,
+      a.link.role?,
+      a.link.arcrole?,
+      a.link.title?,
+      a.link.show?,
+      a.link.actuate?
+    am.common.empty =
+      attribute id {xsd:ID}?,
+      attribute altrender {xsd:token}?,
+      attribute audience {"external" | "internal"}?
+    am.common =
+      am.common.empty,
+      attribute lang {xsd:NMTOKEN}?,
+      attribute script {xsd:NMTOKEN}?
+    am.desc.base =
+      attribute otherlevel {xsd:token}?,
+      a.encodinganalog?
+    am.desc.c = am.common, a.base?, a.level?, am.desc.base
+    am.access = am.access.no.normal, a.normal?
+    am.access.no.normal =
+      attribute source {xsd:token}?,
+      attribute rules {xsd:NMTOKEN}?,
+      a.identifier?
+    # ATTRIBUTE DEFINITIONS
+    # xlink-modelled attributes
+    a.link.actuate =
+      attribute actuate {"onload" | "onrequest" | "other" | "none"}
+    a.link.arcrole = attribute arcrole {xsd:anyURI}
+    a.link.href = attribute href {xsd:token}
+    a.link.role = attribute linkrole {xsd:anyURI}
+    a.link.show =
+      attribute show {"new" | "replace" | "embed" | "other" | "none"}
+    a.link.title = attribute linktitle {xsd:token}
+    # other linking-related attributes
+    a.base = attribute base {xsd:anyURI}
+    a.identifier = attribute identifier {xsd:token}
+    a.parent = attribute parent {xsd:IDREFS}
+    a.relator = attribute relator {xsd:token}
+    a.link.xpointer = attribute xpointer {xsd:token}
+    a.entityref = attribute entityref {xsd:ENTITY}
+    # display attributes
+    a.align =
+      attribute align {
+        "left" | "right" | "center" | "justify" | "char"}
+    a.valign = attribute valign {"top" | "middle" | "bottom"}
+    a.render =
+      attribute render {
+        "altrender"
+        | "bold"
+        | "bolddoublequote"
+        | "bolditalic"
+        | "boldsinglequote"
+        | "boldsmcaps"
+        | "boldunderline"
+        | "doublequote"
+        | "italic"
+        | "nonproport"
+        | "singlequote"
+        | "smcaps"
+        | "sub"
+        | "super"
+        | "underline"}
+    a.label = attribute label {xsd:string}
+    # date attributes
+    am.dates.calendar = attribute calendar {xsd:NMTOKEN}?
+    am.dates.era = attribute era {xsd:NMTOKEN}?
+    am.date.normal = a.normal?
+    a.lastdatetimeverified =
+      attribute lastdatetimeverified {
+        xsd:date {maxInclusive = "2099-12-31"}
+        | xsd:gYear {maxInclusive = "2099"}
+        | xsd:gYearMonth {maxInclusive = "2099-12"}
+        | xsd:dateTime {maxInclusive = "2099-12-31T23:59:59"}}
+    a.datechar = attribute datechar {xsd:token}
+    a.certainty = attribute certainty {xsd:NMTOKEN}
+    a.normal = attribute normal {xsd:token}
+    # typing attributes
+    a.encodinganalog = attribute encodinganalog {xsd:token}
+    a.level =
+      attribute level {
+        "class"
+        | "collection"
+        | "file"
+        | "fonds"
+        | "item"
+        | "otherlevel"
+        | "recordgrp"
+        | "series"
+        | "subfonds"
+        | "subgrp"
+        | "subseries"}
+    a.localtype = attribute localtype {xsd:token}
+    a.relatedencoding = attribute relatedencoding {xsd:token}
+    a.unitdatetype = attribute unitdatetype {"bulk" | "inclusive"}?
+    # table attributes
+    a.char = attribute char {xsd:token}
+    a.charoff = attribute charoff {xsd:NMTOKEN}
+    a.colname = attribute colname {xsd:NMTOKEN}
+    a.colsep = attribute colsep {av.boolean}
+    a.rowsep = attribute rowsep {av.boolean}
+    # other attributes
+    a.coverage = attribute coverage {"whole" | "part"}
+    am.countrycode = attribute countrycode {xsd:NMTOKEN}?
+    a.transliteration = attribute transliteration {xsd:NMTOKEN}
+    # ATTRIBUTE VALUE LISTS
+    av.boolean = "true" | "false"}}
+
+start = e.ead
