@@ -30,10 +30,13 @@ Tools for working with RNC include:
 ** Emacs
 In emacs I use [[https://github.com/TreeRex/rnc-mode][rnc-mode]], flymake and jing to do syntax highlighting and "on the fly" syntax checking.
 Use a [[https://github.com/TreeRex/rnc-mode/pulls][patched rnc-mode]] to set -Xss for jing as described above. 
+
 Below you see the results of "on the fly" syntax checking at the word "JUNK":
+
 [[./img/RNC-flymake.png]]
 
 I also use Emacs imenu to get a "table of contents" of the schema, and jump to the definition of the symbol at cursor.
+
 [[./img/RNC-imenu.png]]
 
 ** rncfix
@@ -90,7 +93,7 @@ I have collected or converted the following RNC schemas related to GLAM (galleri
   - https://raw.githubusercontent.com/SAA-SDT/EAD2002toEAD3/develop/ead3.rng
   - https://raw.github.com/SAA-SDT/EAD-Revision/master/ead3.rng
   - [[./ead3.rnc]] ([[./ead3-nocomment.rnc][nocomment]]): converted from the most recent schema by Vladimir Alexiev
-- [[./CDWAlite.rnc]] ([[./CDWAlite-nocomment.rnc][nocomment]]):  version 1.1 20060712 by ARTstor and J Paul Getty Trust, converted by Vladimir Alexiev
+- [[./CDWAlite.rnc]] ([[./CDWAlite-nocomment.rnc][nocomment]]): CDWA version 1.1 20060712 (Categories for the Description of Works of Art) by ARTstor and J Paul Getty Trust, converted by Vladimir Alexiev
 - [[./lido.rnc]] ([[./lido-nocomment.rnc][nocomment]]): LIDO version 1.0 20101108 (Lightweight Information Describing Objects) by ICOM-CIDOC Working Group Data Harvesting and Interchange, converted by Vladimir Alexiev
 - [[./xml.rnc]]: defines ~xml:~ attributes ~lang, base, space~. Used by LIDO, EAG.
 
