@@ -4,7 +4,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
 <title>README</title>
-<!-- 2015-08-24 Mon 22:17 -->
+<!-- 2015-08-25 Tue 05:30 -->
 <meta  http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta  name="generator" content="Org-mode" />
 <meta  name="author" content="Vladimir Alexiev" />
@@ -197,23 +197,27 @@ for the JavaScript code in this tag.
 </div>
 </div>
 <p>
-(If this doesn't show nicely, see <a href="http://htmlpreview.github.io/?https://github.com/VladimirAlexiev/rnc/README.html">README.html</a>)
+Source: <a href="https://github.com/VladimirAlexiev/rnc">https://github.com/VladimirAlexiev/rnc</a>.
+</p>
+
+<p>
+<a href="http://htmlpreview.github.io/?https://github.com/VladimirAlexiev/rnc/blob/master/README.html">README.html</a>: better readable version
 </p>
 
 <div id="outline-container-sec-1" class="outline-2">
 <h2 id="sec-1"><span class="section-number-2">1</span> RNC</h2>
 <div class="outline-text-2" id="text-1">
 <p>
-The ISO DSSSL group defines a number of XMl schema definition languages. Amongst them:
+The ISO DSSSL group defines a number of XML schema definition languages. Amongst them:
 </p>
 <ul class="org-ul">
-<li>XSD is the most verbose and unwieldy way for expressing a XML schema
+<li>XSD is the most verbose and unwieldy way for understanding a XML schema
 </li>
 <li>Then comes RelaxNG XML (RNG).
 </li>
 <li>RelaxNG Compact (RNC) is most compact and easy to understand.
 RNC is even easier to read than XMLspy diagrams, because it gives you a ready overview of the schema and convenient search.
-RNC clearly shows deeply nested "matroska" style schemas, like the screen shot below.
+RNC clearly shows deeply nested "matroska" style schemas, like the screen shots below.
 </li>
 </ul>
 </div>
@@ -226,7 +230,7 @@ RNC clearly shows deeply nested "matroska" style schemas, like the screen shot b
 Tools for working with RNC include:
 </p>
 <ul class="org-ul">
-<li><a href="https://github.com/epiasini/XSDtoRNG">XSDtoRNG</a>, which converts XSD-&gt;RNG. It still does not cover all XSD cases and is in development, but does a decent job.
+<li><a href="https://github.com/epiasini/XSDtoRNG">XSDtoRNG.xsl</a>, which converts XSD-&gt;RNG. It still does not cover all XSD cases and is in development, but does a decent job.
 <ul class="org-ul">
 <li>In particular, it converts all <code>xsd:include</code> to <code>rng:include</code> without caring whether the included schema is converted or not.
 And since it cannot handle some included schemas (eg OGC Features, which is a complex multi-file schema), you'll get errors about them.
@@ -237,10 +241,12 @@ but if there are multiple start elements, you'll need to touch the schema manual
 </li>
 </ul>
 </li>
-<li><a href="https://code.google.com/p/jing-trang/downloads/detail?name=trang-20091111.zip&can=2&q=">trang</a> (<a href="https://htmlpreview.github.io/?https://raw.githubusercontent.com/relaxng/jing-trang/master/doc/jing.html">doc</a>), which converts RNG-&gt;RNC and other conversions
+<li><a href="https://jing-trang.googlecode.com/files/trang-20091111.zip">trang</a> (<a href="https://htmlpreview.github.io/?https://raw.githubusercontent.com/relaxng/jing-trang/master/doc/jing.html">doc</a>), which converts RNG-&gt;RNC and other conversions
 </li>
-<li><a href="https://code.google.com/p/jing-trang/downloads/detail?name=jing-20091111.zip&can=2&q=">jing</a> (<a href="https://htmlpreview.github.io/?https://raw.githubusercontent.com/relaxng/jing-trang/master/trang/doc/trang-manual.html">manual</a>), which validates RNG and RNC. The source of both trang and jing is moved to <a href="https://github.com/relaxng/jing-trang">https://github.com/relaxng/jing-trang</a>
+<li><a href="https://jing-trang.googlecode.com/files/jing-20091111.zip">jing</a> (<a href="https://htmlpreview.github.io/?https://raw.githubusercontent.com/relaxng/jing-trang/master/trang/doc/trang-manual.html">manual</a>), which validates RNG and RNC.
 <ul class="org-ul">
+<li>The binaries are at google code, the source of both trang and jing is moved to <a href="https://github.com/relaxng/jing-trang">https://github.com/relaxng/jing-trang</a>
+</li>
 <li>Note: if you get errors like this:
 <pre class="example">
 Exception in thread "main" java.lang.StackOverflowError
@@ -263,19 +269,15 @@ java -Xss8M -jar c:/prog/jing-20091111/bin/jing.jar -c schema.rnc
 <div class="outline-text-3" id="text-2-1">
 <p>
 In emacs I use <a href="https://github.com/TreeRex/rnc-mode">rnc-mode</a>, flymake and jing to do syntax highlighting and "on the fly" syntax checking.
-  Use a <a href="https://github.com/TreeRex/rnc-mode/pulls">patched version</a> to set -Xss for jing as described above. 
-  Below you see the results of "on the fly" syntax checking at the word "JUNK":
+Use a <a href="https://github.com/TreeRex/rnc-mode/pulls">patched rnc-mode</a> to set -Xss for jing as described above. 
+Below you see the results of "on the fly" syntax checking at the word "JUNK":
 <img src="./img/RNC-flymake.png" alt="RNC-flymake.png" />
 </p>
-<ul class="org-ul">
-<li>I also use Emacs imenu to get a "table of contents" of the schema, and jump to the definition of the symbol at cursor.
-</li>
-</ul>
 
-<div class="figure">
-<p><img src="./img/RNC-imenu.png" alt="RNC-imenu.png" />
+<p>
+I also use Emacs imenu to get a "table of contents" of the schema, and jump to the definition of the symbol at cursor.
+<img src="./img/RNC-imenu.png" alt="RNC-imenu.png" />
 </p>
-</div>
 </div>
 </div>
 
@@ -301,7 +303,7 @@ to nice RNC comments, eg:
 ##   http://www.w3.org/TR/REC-xml for information about this namespace.
 </pre>
 <p>
-It also makes a bunch of other cosmetic fixes that hopefully make reading the RNC easier, eg:
+It also does a bunch of other cosmetic fixes that hopefully make the RNC easier to read, eg:
 </p>
 <ul class="org-ul">
 <li>put trailing <code>}+*</code> to the line above
@@ -332,6 +334,9 @@ xsd2rnc ead
 </pre>
 </li>
 <li><a href="./bat/rncfix.bat">./bat/rncfix.bat</a>: runs rncfix
+<pre class="example">
+rncfix ead-tmp.rnc &gt; ead.rnc
+</pre>
 </li>
 <li><a href="./bat/rng2rnc.bat">./bat/rng2rnc.bat</a>: RNG-&gt;RNC using trang and rncfix
 <pre class="example">
@@ -406,7 +411,7 @@ I have collected or converted the following RNC schemas related to GLAM (galleri
 
 <tr>
 <td class="left"><code>a.</code></td>
-<td class="left">attribute definution</td>
+<td class="left">attribute definition</td>
 <td class="left"><code>a.identifier</code> is a simple attribute <code>identifier</code> that consists of an <code>xsd:token</code></td>
 </tr>
 
@@ -445,20 +450,28 @@ I have collected or converted the following RNC schemas related to GLAM (galleri
 <li><a href="./CDWAlite.rnc">./CDWAlite.rnc</a> (<a href="./CDWAlite-nocomment.rnc">nocomment</a>):  version 1.1 20060712 by ARTstor and J Paul Getty Trust, converted by Vladimir Alexiev
 </li>
 <li><a href="./lido.rnc">./lido.rnc</a> (<a href="./lido-nocomment.rnc">nocomment</a>): LIDO version 1.0 20101108 (Lightweight Information Describing Objects) by ICOM-CIDOC Working Group Data Harvesting and Interchange, converted by Vladimir Alexiev
+</li>
+<li><a href="./xml.rnc">./xml.rnc</a>: defines <code>xml:</code> attributes <code>lang, base, space</code>. Used by LIDO, EAG.
+</li>
+</ul>
+
+<p>
+For LIDO and CDWA I made some manual corrections
+</p>
 <ul class="org-ul">
-<li>I've corrected this which sets one start element, and introduces the parasitic name <code>starting_lidoWrap</code>
+<li>This sets one start element, and introduces the parasitic name "starting<sub>lidoWrap</sub>"
 <pre class="example">
 start |= starting_lidoWrap
 starting_lidoWrap =
 </pre>
 <p>
-to two start elements:
+Corrected to two start elements:
 </p>
 <pre class="example">
 start = lido | lidoWrap
 </pre>
 </li>
-<li>XSDtoRNG currently can't grok GML so I've commented out
+<li>XSDtoRNG currently can't grok the OGC GML schema so I've commented out
 <pre class="example">
 # rng:include href="http://schemas.opengis.net/gml/3.1.1/base/feature.rng"
 </pre>
@@ -469,9 +482,22 @@ You'll get 3 errors at
 gmlComplexType = Point*, LineString*, Polygon*
 </pre>
 </li>
-</ul>
-</li>
-<li><a href="./xml.rnc">./xml.rnc</a>: defines <code>xml:</code> attributes <code>lang, base, space</code>. Used by LIDO, EAG.
+<li>Moved some comments up, and collapsed simple definitions into one line, eg:
+<pre class="example">
+administrativeMetadata =
+  element administrativeMetadata {
+         ## Definition: Holds the administrative metadata for an object / work record. 
+         ## How to record: The attribute xml:lang is mandatory ...
+    administrativeMetadataComplexType}
+</pre>
+<p>
+becomes
+</p>
+<pre class="example">
+## Definition: Holds the administrative metadata for an object / work record. 
+## How to record: The attribute xml:lang is mandatory ...
+administrativeMetadata = element administrativeMetadata {administrativeMetadataComplexType}
+</pre>
 </li>
 </ul>
 </div>
@@ -479,7 +505,7 @@ gmlComplexType = Point*, LineString*, Polygon*
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Vladimir Alexiev</p>
-<p class="date">Created: 2015-08-24 Mon 22:17</p>
+<p class="date">Created: 2015-08-25 Tue 05:30</p>
 <p class="creator"><a href="http://www.gnu.org/software/emacs/">Emacs</a> 24.5.1 (<a href="http://orgmode.org">Org</a> mode 8.2.10)</p>
 <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>

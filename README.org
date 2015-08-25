@@ -1,23 +1,26 @@
-(If this doesn't show nicely, see [[http://htmlpreview.github.io/?https://github.com/VladimirAlexiev/rnc/README.html][README.html]])
+Source: https://github.com/VladimirAlexiev/rnc.
+
+[[http://htmlpreview.github.io/?https://github.com/VladimirAlexiev/rnc/blob/master/README.html][README.html]]: better readable version
 
 * RNC
-The ISO DSSSL group defines a number of XMl schema definition languages. Amongst them:
-- XSD is the most verbose and unwieldy way for expressing a XML schema
+The ISO DSSSL group defines a number of XML schema definition languages. Amongst them:
+- XSD is the most verbose and unwieldy way for understanding a XML schema
 - Then comes RelaxNG XML (RNG).
 - RelaxNG Compact (RNC) is most compact and easy to understand.
   RNC is even easier to read than XMLspy diagrams, because it gives you a ready overview of the schema and convenient search.
-  RNC clearly shows deeply nested "matroska" style schemas, like the screen shot below.
+  RNC clearly shows deeply nested "matroska" style schemas, like the screen shots below.
 
 * RNC Tools
 Tools for working with RNC include:
-- [[https://github.com/epiasini/XSDtoRNG][XSDtoRNG]], which converts XSD->RNG. It still does not cover all XSD cases and is in development, but does a decent job.
+- [[https://github.com/epiasini/XSDtoRNG][XSDtoRNG.xsl]], which converts XSD->RNG. It still does not cover all XSD cases and is in development, but does a decent job.
   - In particular, it converts all ~xsd:include~ to ~rng:include~ without caring whether the included schema is converted or not.
     And since it cannot handle some included schemas (eg OGC Features, which is a complex multi-file schema), you'll get errors about them.
     Comment out such includes.
   - It also can't reliably identify which is the start element. I've added a string param for this,
     but if there are multiple start elements, you'll need to touch the schema manually. See LIDO below.
-- [[https://code.google.com/p/jing-trang/downloads/detail?name=trang-20091111.zip&can=2&q=][trang]] ([[https://htmlpreview.github.io/?https://raw.githubusercontent.com/relaxng/jing-trang/master/doc/jing.html][doc]]), which converts RNG->RNC and other conversions
-- [[https://code.google.com/p/jing-trang/downloads/detail?name=jing-20091111.zip&can=2&q=][jing]] ([[https://htmlpreview.github.io/?https://raw.githubusercontent.com/relaxng/jing-trang/master/trang/doc/trang-manual.html][manual]]), which validates RNG and RNC. The source of both trang and jing is moved to https://github.com/relaxng/jing-trang
+- [[https://jing-trang.googlecode.com/files/trang-20091111.zip][trang]] ([[https://htmlpreview.github.io/?https://raw.githubusercontent.com/relaxng/jing-trang/master/doc/jing.html][doc]]), which converts RNG->RNC and other conversions
+- [[https://jing-trang.googlecode.com/files/jing-20091111.zip][jing]] ([[https://htmlpreview.github.io/?https://raw.githubusercontent.com/relaxng/jing-trang/master/trang/doc/trang-manual.html][manual]]), which validates RNG and RNC.
+  - The binaries are at google code, the source of both trang and jing is moved to https://github.com/relaxng/jing-trang
   - Note: if you get errors like this:
     : Exception in thread "main" java.lang.StackOverflowError
     :  at com.thaiopensource.relaxng.pattern.BinaryPattern.checkRecursion(BinaryPattern.java:16)
@@ -26,10 +29,11 @@ Tools for working with RNC include:
 
 ** Emacs
 In emacs I use [[https://github.com/TreeRex/rnc-mode][rnc-mode]], flymake and jing to do syntax highlighting and "on the fly" syntax checking.
-  Use a [[https://github.com/TreeRex/rnc-mode/pulls][patched version]] to set -Xss for jing as described above. 
-  Below you see the results of "on the fly" syntax checking at the word "JUNK":
+Use a [[https://github.com/TreeRex/rnc-mode/pulls][patched rnc-mode]] to set -Xss for jing as described above. 
+Below you see the results of "on the fly" syntax checking at the word "JUNK":
 [[./img/RNC-flymake.png]]
-- I also use Emacs imenu to get a "table of contents" of the schema, and jump to the definition of the symbol at cursor.
+
+I also use Emacs imenu to get a "table of contents" of the schema, and jump to the definition of the symbol at cursor.
 [[./img/RNC-imenu.png]]
 
 ** rncfix
@@ -43,7 +47,7 @@ In emacs I use [[https://github.com/TreeRex/rnc-mode][rnc-mode]], flymake and ji
 to nice RNC comments, eg:
 : ##   See http://www.w3.org/XML/1998/namespace.html and
 : ##   http://www.w3.org/TR/REC-xml for information about this namespace.
-It also makes a bunch of other cosmetic fixes that hopefully make reading the RNC easier, eg:
+It also does a bunch of other cosmetic fixes that hopefully make the RNC easier to read, eg:
 - put trailing ~}+*~ to the line above
 - remove superfluous empty lines (commented or not)
 - put empty line before definitions (word or comment at beginning of line)
@@ -55,6 +59,7 @@ It also makes a bunch of other cosmetic fixes that hopefully make reading the RN
 - [[./bat/xsd2rnc.bat]]: XSD->RNC using xsltproc, XSDtoRNG.xsl, trang and rncfix
   : xsd2rnc ead
 - [[./bat/rncfix.bat]]: runs rncfix
+  : rncfix ead-tmp.rnc > ead.rnc
 - [[./bat/rng2rnc.bat]]: RNG->RNC using trang and rncfix
   : rng2rnc ead
 - [[./bat/jing.bat]]: runs jing to validate a RNG or RNC
@@ -76,7 +81,7 @@ I have collected or converted the following RNC schemas related to GLAM (galleri
 | prefix    | what                    | example                                                                                                        |
 |-----------+-------------------------+----------------------------------------------------------------------------------------------------------------|
 | ~e.~      | element definition      | ~e.chronlist~ is element ~chronlist~, which includes various attributes and a sequence of elements ~chronitem~ |
-| ~a.~      | attribute definution    | ~a.identifier~ is a simple attribute ~identifier~ that consists of an ~xsd:token~                              |
+| ~a.~      | attribute definition    | ~a.identifier~ is a simple attribute ~identifier~ that consists of an ~xsd:token~                              |
 | ~m.~      | element model           | ~m.inter.noquote~ is alternative of ~e.chronlist e.list e.table~                                               |
 | ~m.mixed~ | mixed element model     | ~m.mixed.basic~ consists of text and/or ~e.abbr e.emph e.expan~ etc                                            |
 | ~am.~     | attribute model (group) | ~am.common.empty~ consists of elements ~id altrender audience~                                                 |
@@ -87,13 +92,29 @@ I have collected or converted the following RNC schemas related to GLAM (galleri
   - [[./ead3.rnc]] ([[./ead3-nocomment.rnc][nocomment]]): converted from the most recent schema by Vladimir Alexiev
 - [[./CDWAlite.rnc]] ([[./CDWAlite-nocomment.rnc][nocomment]]):  version 1.1 20060712 by ARTstor and J Paul Getty Trust, converted by Vladimir Alexiev
 - [[./lido.rnc]] ([[./lido-nocomment.rnc][nocomment]]): LIDO version 1.0 20101108 (Lightweight Information Describing Objects) by ICOM-CIDOC Working Group Data Harvesting and Interchange, converted by Vladimir Alexiev
-  - I've corrected this which sets one start element, and introduces the parasitic name ~starting_lidoWrap~
-    : start |= starting_lidoWrap
-    : starting_lidoWrap =
-    to two start elements:
-    : start = lido | lidoWrap
-  - XSDtoRNG currently can't grok GML so I've commented out
-    : # rng:include href="http://schemas.opengis.net/gml/3.1.1/base/feature.rng"
-    You'll get 3 errors at
-    : gmlComplexType = Point*, LineString*, Polygon*
 - [[./xml.rnc]]: defines ~xml:~ attributes ~lang, base, space~. Used by LIDO, EAG.
+
+For LIDO and CDWA I made some manual corrections
+- This sets one start element, and introduces the parasitic name "starting_lidoWrap"
+  : start |= starting_lidoWrap
+  : starting_lidoWrap =
+  Corrected to two start elements:
+  : start = lido | lidoWrap
+- XSDtoRNG currently can't grok the OGC GML schema so I've commented out
+  : # rng:include href="http://schemas.opengis.net/gml/3.1.1/base/feature.rng"
+  You'll get 3 errors at
+  : gmlComplexType = Point*, LineString*, Polygon*
+- Moved some comments up, and collapsed simple definitions into one line, eg:
+  : administrativeMetadata =
+  :   element administrativeMetadata {
+  :          ## Definition: Holds the administrative metadata for an object / work record. 
+  :          ## How to record: The attribute xml:lang is mandatory ...
+  :     administrativeMetadataComplexType}
+  becomes
+  : ## Definition: Holds the administrative metadata for an object / work record. 
+  : ## How to record: The attribute xml:lang is mandatory ...
+  : administrativeMetadata = element administrativeMetadata {administrativeMetadataComplexType}
+
+
+
+
