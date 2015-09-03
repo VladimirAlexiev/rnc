@@ -1,0 +1,478 @@
+default namespace = "http://www.archivesportaleurope.net/Portal/profiles/eag_2012/"
+namespace a = "http://relaxng.org/ns/compatibility/annotations/1.0"
+namespace xsi = "http://www.w3.org/2001/XMLSchema-instance"
+namespace sch = "http://purl.oclc.org/dsdl/schematron"
+namespace xlink = "http://www.w3.org/1999/xlink"
+
+start = eag_eag
+
+sch:ns [ prefix = "tei" uri = "http://www.tei-c.org/ns/1.0" ]
+eag_macro.standardDateTime =
+  xsd:date { maxInclusive = "2099-12-31" }
+  | xsd:gYear { maxInclusive = "2099" }
+  | xsd:gYearMonth { maxInclusive = "2099-12" }
+  | xsd:dateTime { maxInclusive = "2099-12-31T23:59:59" }
+eag_macro.standardDate =
+  xsd:date { maxInclusive = "2099-12-31" }
+  | xsd:gYear { maxInclusive = "2099" }
+  | xsd:gYearMonth { maxInclusive = "2099-12" }
+eag_macro.language = xsd:token {
+  pattern = "(abk|ace|ach|ada|ady|egy|afh|afr|ain|aka|akk|alb|ale|alg|alt|tut|ang|fro|goh|sga|nwc|non|pro|peo|amh|anp|apa|ara|arg|arc|arp|arn|arw|arm|rup|aze|asm|ast|ath|aus|map|ave|awa|ava|aym|ind|ban|bat|bam|bai|bad|bnt|bnt|bas|bak|baq|btk|bis|bej|bal|bem|ben|ber|bho|bih|bik|byn|bur|bla|zbl|nob|bos|bra|bre|bug|bul|bua|cad|ceb|cha|cmc|chr|chy|chb|chi|chn|chp|cho|cre|dan|day|dak|aar|dar|del|ger|din|doi|dgr|dra|dua|dyu|bin|efi|mis|eka|elx|tvl|eng|myv|epo|est|ewe|ewo|fao|fat|fij|fin|fiu|fon|fre|fry|fur|ful|gla|glg|lug|gaa|gay|gba|gez|geo|gem|gil|gon|gor|got|grb|grc|kal|grn|guj|hai|hat|afa|hau|haw|heb|her|hit|hil|him|hin|hmo|hup|iba|ibo|ido|ijo|ilo|smn|nai|sai|cai|inc|ine|inh|ina|ile|iku|ipk|ira|gle|iro|ice|ita|sah|jpn|jav|yid|lad|jrb|jpr|kbd|kab|kac|xal|kam|khm|kan|kau|kaa|krc|krl|kar|car|kaz|kas|csb|cat|cau|kaw|zxx|cel|kha|khi|kik|kmb|chu|kir|tlh|kom|kon|kok|cop|kor|cor|cos|kos|kpe|crp|cpe|cpf|cpp|crh|hrv|kro|kum|art|kur|cus|gwi|kut|kua|wel|lah|iii|lam|lao|lat|lez|lav|lim|lin|lit|jbo|lub|lua|lui|smj|lun|luo|lus|ltz|mad|mag|mai|mak|mac|mlg|may|mal|div|man|mlt|mdr|mnc|mno|glv|mao|mar|mah|mwr|mas|myn|umb|mul|mni|men|hmn|mic|min|mwl|enm|frm|gmh|mga|dum|pal|moh|mdf|mon|lol|mkh|mos|mun|mus|nah|nau|nav|nde|nbl|ndo|nap|nep|gre|tpi|syr|new|nia|und|nds|dut|dsb|nic|ssa|niu|nqo|nyn|nog|frr|sme|nor|nub|nym|nya|nno|nyo|nzi|hsb|oji|oci|kru|ori|orm|osa|ota|oss|rap|frs|oto|pau|pli|pam|pan|pag|fan|pap|paa|pus|nso|per|phi|phn|fil|pol|pon|por|pra|que|roh|raj|rar|qaa-qtz|rom|roa|loz|rum|run|rus|kin|smi|kho|sal|sam|smo|sad|sag|san|sat|srd|sas|shn|sna|sco|swe|gsw|sel|sem|srp|srr|sid|snd|sin|sit|sio|scn|sms|den|sla|slo|slv|sog|som|son|snk|wen|spa|srn|sma|sot|suk|sux|sun|sus|swa|ssw|syc|tgk|tgl|tah|tmh|tam|tat|tel|tem|ter|tet|tha|tai|tib|tig|tir|tiv|tli|tkl|tog|ton|chk|chg|cze|chm|che|chv|tsi|tso|tsn|tur|tum|tup|tuk|tyv|twi|udm|uga|uig|ukr|hun|urd|uzb|vai|ven|vie|vol|wak|wal|wln|war|was|bel|wol|vot|xho|yao|yap|yor|ypk|znd|zap|zza|sgn|zen|zha|zul|zun)"}
+eag_eag = element eag {
+  (eag_control, eag_archguide, eag_relations?),
+  eag_att.lang.attributes,
+  [ a:defaultValue = "external" ]
+  attribute audience {"internal" | "external"},
+  attribute xml:base { xsd:anyURI }?,
+  attribute xsi:schemaLocation { text }?,
+  empty}
+eag_control = element control {
+  eag_recordId,
+  eag_otherRecordId*,
+  eag_maintenanceAgency,
+  eag_maintenanceStatus,
+  eag_maintenanceHistory,
+  eag_languageDeclarations?,
+  eag_conventionDeclaration*,
+  eag_localControl?,
+  eag_localTypeDeclaration?,
+  eag_publicationStatus?,
+  eag_sources?}
+eag_recordId = element recordId {
+  xsd:NMTOKEN {
+    pattern = "((AF|AX|AL|DZ|AS|AD|AO|AI|AQ|AG|AR|AM|AW|AU|AT|AZ|BS|BH|BD|BB|BY|BE|BZ|BJ|BM|BT|BO|BA|BW|BV|BR|IO|BN|BG|BF|BI|KH|CM|CA|CV|KY|CF|TD|CL|CN|CX|CC|CO|KM|CG|CD|CK|CR|CI|HR|CU|CY|CZ|DK|DJ|DM|DO|EC|EG|SV|GQ|ER|EE|ET|FK|FO|FJ|FI|FR|GF|PF|TF|GA|GM|GE|DE|GH|GI|GR|GL|GD|GP|GU|GT|GN|GW|GY|HT|HM|VA|HN|HK|HU|IS|IN|ID|IR|IQ|IE|IL|IT|JM|JP|JO|KZ|KE|KI|KP|KR|KW|KG|LA|LV|LB|LS|LR|LY|LI|LT|LU|MO|MK|MG|MW|MY|MV|ML|MT|MH|MQ|MR|MU|YT|MX|FM|MD|MC|MN|MS|MA|MZ|MM|NA|NR|NP|NL|AN|NC|NZ|NI|NE|NG|NU|NF|MP|NO|OM|PK|PW|PS|PA|PG|PY|PE|PH|PN|PL|PT|PR|QA|RE|RO|RU|RW|SH|KN|LC|PM|VC|WS|SM|ST|SA|SN|CS|SC|SL|SG|SK|SI|SB|SO|ZA|GS|ES|LK|SD|SR|SJ|SZ|SE|CH|SY|TW|TJ|TZ|TH|TL|TG|TK|TO|TT|TN|TR|TM|TC|TV|UG|UA|AE|GB|US|UM|UY|UZ|VU|VE|VN|VG|VI|WF|EH|YE|ZM|ZW|RS|ME|EU)|([a-zA-Z]{1})|([a-zA-Z]{3,4}))(-[a-zA-Z0-9:/\-]{1,11})"},
+  eag_att.EAGsource.attributes,
+  empty}
+eag_otherRecordId = element otherRecordId {
+  text,
+  eag_att.EAGsource.attributes,
+  eag_att.localType.attributes,
+  empty}
+eag_maintenanceAgency = element maintenanceAgency {
+  eag_agencyCode,
+  eag_agencyName,
+  (eag_otherAgencyCode, eag_descriptiveNote)*}
+eag_agencyCode = element agencyCode { text, eag_att.EAGsource.attributes, empty }
+eag_agencyName = element agencyName {
+  text, eag_att.lang.attributes, eag_att.EAGsource.attributes, empty}
+eag_otherAgencyCode = element otherAgencyCode {
+  text,
+  eag_att.EAGsource.attributes,
+  eag_att.localType.attributes,
+  empty}
+eag_descriptiveNote = element descriptiveNote { eag_p+ }
+eag_p = element p {text, eag_att.EAGsource.attributes, eag_att.lang.attributes, empty}
+eag_maintenanceStatus = element maintenanceStatus {
+  "new" | "cancelled" | "deleted" | "deletedReplaced" | "deletedMerged" | "deletedSplit" | "derived" | "revised"}
+eag_maintenanceHistory = element maintenanceHistory { eag_maintenanceEvent+ }
+eag_maintenanceEvent = element maintenanceEvent {
+  eag_agent, eag_agentType, eag_eventDateTime, eag_eventType}
+eag_agent = element agent {
+  text, eag_att.lang.attributes, eag_att.EAGsource.attributes, empty}
+eag_agentType = element agentType { "human" | "machine" }
+eag_eventDateTime = element eventDateTime {
+  text,
+  eag_att.EAGsource.attributes,
+  eag_att.standardDateTime.attributes,
+  empty}
+eag_eventType = element eventType {
+  "created" | "revised" | "deleted" | "cancelled" | "derived" | "updated" | "published"}
+eag_languageDeclarations = element languageDeclarations { eag_languageDeclaration+ }
+eag_languageDeclaration = element languageDeclaration {
+  eag_language, eag_script, eag_descriptiveNote*}
+eag_language = element language {
+  text,
+  eag_att.lang.attributes,
+  eag_att.EAGsource.attributes,
+  eag_att.languageCode.attributes,
+  empty}
+eag_script = element script {
+  text,
+  eag_att.scriptCode.attributes,
+  eag_att.lang.attributes,
+  eag_att.EAGsource.attributes,
+  empty}
+eag_conventionDeclaration = element conventionDeclaration {eag_abbreviation*, eag_citation, eag_descriptiveNote*}
+eag_abbreviation = element abbreviation { text, eag_att.EAGsource.attributes, empty }
+eag_citation = element citation {
+  text,
+  eag_att.lastDateTimeVerified.attributes,
+  eag_att.href.attributes,
+  eag_att.lang.attributes,
+  eag_att.EAGsource.attributes,
+  empty}
+eag_localControl = element localControl {
+  (eag_term*, (eag_date | eag_dateRange)*),
+  eag_att.localType.attributes,
+  empty}
+eag_term = element term {
+  ("simple" | "extended"),
+  eag_att.lastDateTimeVerified.attributes,
+  eag_att.scriptCode.attributes,
+  eag_att.transliteration.attributes,
+  eag_att.lang.attributes,
+  eag_att.EAGsource.attributes,
+  eag_att.vocabularySource.attributes,
+  empty}
+eag_date = element date {
+  text,
+  eag_att.date.attributes,
+  eag_att.localType.attributes,
+  eag_att.lang.attributes,
+  eag_att.EAGsource.attributes,
+  empty}
+eag_dateRange = element dateRange {(eag_fromDate, eag_toDate), eag_att.localType.attributes, empty}
+eag_fromDate = element fromDate {
+  text,
+  eag_att.lang.attributes,
+  eag_att.date.attributes,
+  eag_att.EAGsource.attributes,
+  empty}
+eag_toDate = element toDate {
+  text,
+  eag_att.lang.attributes,
+  eag_att.date.attributes,
+  eag_att.EAGsource.attributes,
+  empty}
+eag_localTypeDeclaration = element localTypeDeclaration {
+  eag_citation, (eag_abbreviation, eag_descriptiveNote)?}
+eag_publicationStatus = element publicationStatus { "inProcess" | "approved" }
+eag_sources = element sources { eag_source }
+eag_source = element source {
+  (eag_sourceEntry, (eag_objectBinWrap | eag_objectXMLWrap), eag_descriptiveNote)?,
+  eag_att.lastDateTimeVerified.attributes,
+  eag_att.href.attributes,
+  empty}
+eag_sourceEntry = element sourceEntry {
+  text,
+  eag_att.scriptCode.attributes,
+  eag_att.transliteration.attributes,
+  eag_att.lang.attributes,
+  eag_att.EAGsource.attributes,
+  empty}
+eag_objectBinWrap = element objectBinWrap { xsd:base64Binary }
+eag_objectXMLWrap = element objectXMLWrap { text }
+eag_archguide = element archguide { eag_identity, eag_desc }
+eag_identity = element identity {
+  eag_repositorid?,
+  eag_otherRepositorId?,
+  eag_autform+,
+  eag_parform*,
+  eag_nonpreform*,
+  eag_repositoryType*}
+eag_repositorid = element repositorid {
+  empty,
+  eag_att.countrycode.attributes,
+  eag_att.EAGsource.attributes,
+  attribute repositorycode {xsd:token {
+    pattern = "((AF|AX|AL|DZ|AS|AD|AO|AI|AQ|AG|AR|AM|AW|AU|AT|AZ|BS|BH|BD|BB|BY|BE|BZ|BJ|BM|BT|BO|BA|BW|BV|BR|IO|BN|BG|BF|BI|KH|CM|CA|CV|KY|CF|TD|CL|CN|CX|CC|CO|KM|CG|CD|CK|CR|CI|HR|CU|CY|CZ|DK|DJ|DM|DO|EC|EG|SV|GQ|ER|EE|ET|FK|FO|FJ|FI|FR|GF|PF|TF|GA|GM|GE|DE|GH|GI|GR|GL|GD|GP|GU|GT|GN|GW|GY|HT|HM|VA|HN|HK|HU|IS|IN|ID|IR|IQ|IE|IL|IT|JM|JP|JO|KZ|KE|KI|KP|KR|KW|KG|LA|LV|LB|LS|LR|LY|LI|LT|LU|MO|MK|MG|MW|MY|MV|ML|MT|MH|MQ|MR|MU|YT|MX|FM|MD|MC|MN|MS|MA|MZ|MM|NA|NR|NP|NL|AN|NC|NZ|NI|NE|NG|NU|NF|MP|NO|OM|PK|PW|PS|PA|PG|PY|PE|PH|PN|PL|PT|PR|QA|RE|RO|RU|RW|SH|KN|LC|PM|VC|WS|SM|ST|SA|SN|CS|SC|SL|SG|SK|SI|SB|SO|ZA|GS|ES|LK|SD|SR|SJ|SZ|SE|CH|SY|TW|TJ|TZ|TH|TL|TG|TK|TO|TT|TN|TR|TM|TC|TV|UG|UA|AE|GB|US|UM|UY|UZ|VU|VE|VN|VG|VI|WF|EH|YE|ZM|ZW|RS|ME|EU)|([a-zA-Z]{1})|([a-zA-Z]{3,4}))(-[a-zA-Z0-9:/\-]{1,11})"}}?,
+  empty}
+eag_otherRepositorId = element otherRepositorId { text, eag_att.EAGsource.attributes, empty }
+eag_autform = element autform {
+  text, eag_att.lang.attributes, eag_att.EAGsource.attributes, empty}
+eag_parform = element parform {
+  text, eag_att.lang.attributes, eag_att.EAGsource.attributes, empty}
+eag_nonpreform = element nonpreform {
+  (text | eag_useDates?)*,
+  eag_att.lang.attributes,
+  eag_att.EAGsource.attributes,
+  empty}
+eag_useDates = element useDates {
+  (eag_dateSet | eag_dateRange | eag_date),
+  eag_att.lang.attributes,
+  eag_att.EAGsource.attributes,
+  empty}
+eag_dateSet = element dateSet {
+  (eag_date | eag_dateRange), (eag_date | eag_dateRange)+}
+eag_repositoryType = element repositoryType {
+      "National archives"
+    | "Regional archives"
+    | "County/local authority archives"
+    | "Municipal archives"
+    | "Specialised government archives"
+    | "Private persons and family archives"
+    | "Church and religious archives"
+    | "Business archives"
+    | "University and research archives"
+    | "Media archives"
+    | "Archives of political parties, of popular/labour movement and other non-governmental organisations, associations, agencies and foundations"
+    | "Specialised non-governmental archives and archives of other cultural (heritage) institutions"}
+eag_desc = element desc { eag_repositories }
+eag_repositories = element repositories { eag_repository+ }
+eag_repository = element repository {
+  eag_repositoryName*,
+  eag_repositoryRole?,
+  eag_geogarea,
+  eag_location+,
+  eag_telephone*,
+  eag_fax*,
+  eag_email*,
+  eag_webpage*,
+  eag_directions*,
+  eag_repositorhist?,
+  eag_repositorfound?,
+  eag_repositorsup?,
+  eag_buildinginfo?,
+  eag_adminhierarchy?,
+  eag_holdings?,
+  eag_timetable,
+  eag_access,
+  eag_accessibility+,
+  eag_services?,
+  eag_descriptiveNote?}
+eag_repositoryName = element repositoryName {
+  text, eag_att.lang.attributes, eag_att.EAGsource.attributes, empty}
+eag_repositoryRole = element repositoryRole {"Branch" | "Head quarter" | "Interim archive"}
+eag_geogarea = element geogarea {
+      "Africa"
+    | "Antarctica"
+    | "Asia"
+    | "Australia"
+    | "Europe"
+    | "North America"
+    | "South America"}
+eag_location = element location {
+  eag_country,
+  eag_firstdem?,
+  eag_secondem?,
+  eag_municipalityPostalcode,
+  eag_localentity?,
+  eag_street,
+  eag_att.geocoordinates.attributes,
+  attribute localType {"visitors address" | "postal address"},
+  empty}
+eag_country = element country {
+  text, eag_att.lang.attributes, eag_att.EAGsource.attributes, empty}
+eag_firstdem = element firstdem {
+  text, eag_att.lang.attributes, eag_att.EAGsource.attributes, empty}
+eag_secondem = element secondem {
+  text, eag_att.lang.attributes, eag_att.EAGsource.attributes, empty}
+eag_municipalityPostalcode = element municipalityPostalcode {
+  text, eag_att.lang.attributes, eag_att.EAGsource.attributes, empty}
+eag_localentity = element localentity {
+  text, eag_att.lang.attributes, eag_att.EAGsource.attributes, empty}
+eag_street = element street {
+  text, eag_att.lang.attributes, eag_att.EAGsource.attributes, empty}
+eag_telephone = element telephone { text, eag_att.EAGsource.attributes, empty }
+eag_fax = element fax { text, eag_att.EAGsource.attributes, empty }
+eag_email = element email {
+  text,
+  eag_att.href.attributes,
+  eag_att.lang.attributes,
+  eag_att.EAGsource.attributes,
+  empty}
+eag_webpage = element webpage {
+  text,
+  eag_att.href.attributes,
+  eag_att.lang.attributes,
+  eag_att.EAGsource.attributes,
+  empty}
+eag_directions = element directions {
+  (text | eag_citation)*,
+  eag_att.lang.attributes,
+  eag_att.EAGsource.attributes,
+  empty}
+eag_repositorhist = element repositorhist { eag_descriptiveNote }
+eag_repositorfound = element repositorfound { eag_date, eag_rule+ }
+eag_rule = element rule {
+  text, eag_att.lang.attributes, eag_att.EAGsource.attributes, empty}
+eag_repositorsup = element repositorsup { eag_date, eag_rule+ }
+eag_buildinginfo = element buildinginfo {
+  eag_building?, eag_repositorarea?, eag_lengthshelf?}
+eag_building = element building { eag_descriptiveNote }
+eag_repositorarea = element repositorarea { eag_num }
+eag_num = element num {
+  text,
+  eag_att.EAGsource.attributes,
+  attribute unit {"squaremetre" | "linearmetre" | "site" | "book" | "title"},
+  empty}
+eag_lengthshelf = element lengthshelf { eag_num }
+eag_adminhierarchy = element adminhierarchy { eag_adminunit+ }
+eag_adminunit = element adminunit {
+  text, eag_att.lang.attributes, eag_att.EAGsource.attributes, empty}
+eag_holdings = element holdings {
+  eag_descriptiveNote?,
+  eag_m.dates_alternation?,
+  eag_extent?,
+  eag_actingMaintenanceForGroup*}
+eag_extent = element extent { eag_num }
+eag_actingMaintenanceForGroup = element actingMaintenanceForGroup { eag_actingMaintenanceFor }
+eag_actingMaintenanceFor = element actingMaintenanceFor { (eag_nameEntry, eag_placeEntry)* }
+eag_nameEntry = element nameEntry {
+  eag_part,
+  (eag_useDates, eag_authorizedForm, eag_alternativeForm)*,
+  attribute localType {"authorized" | "alternative" | "preferred" | "abbreviation" | "other"}?,
+  empty}
+eag_part = element part {
+  text,
+  eag_att.lang.attributes,
+  eag_att.EAGsource.attributes,
+  attribute localType {"corpname" | "famname" | "persname"}?,
+  empty}
+eag_authorizedForm = element authorizedForm { xsd:NMTOKEN }
+eag_alternativeForm = element alternativeForm { xsd:NMTOKEN }
+eag_placeEntry = element placeEntry {
+  text,
+  eag_att.countryCode.attributes,
+  eag_att.geocoordinates.attributes,
+  eag_att.localType.attributes,
+  eag_att.scriptCode.attributes,
+  eag_att.EAGsource.attributes,
+  eag_att.transliteration.attributes,
+  eag_att.lang.attributes,
+  eag_att.vocabularySource.attributes,
+  empty}
+eag_timetable = element timetable { eag_opening+, eag_closing* }
+eag_opening = element opening {
+  text, eag_att.lang.attributes, eag_att.EAGsource.attributes, empty}
+eag_closing = element closing {
+  text, eag_att.lang.attributes, eag_att.EAGsource.attributes, empty}
+eag_access = element access {
+  eag_restaccess*, eag_termsOfUse*, eag_att.question.attributes, empty}
+eag_restaccess = element restaccess {
+  text, eag_att.lang.attributes, eag_att.EAGsource.attributes, empty}
+eag_termsOfUse = element termsOfUse {
+  text,
+  eag_att.lang.attributes,
+  eag_att.href.attributes,
+  eag_att.EAGsource.attributes,
+  empty}
+eag_accessibility = element accessibility {
+  text,
+  eag_att.lang.attributes,
+  eag_att.question.attributes,
+  eag_att.EAGsource.attributes,
+  empty}
+eag_services = element services {
+  eag_searchroom?,
+  eag_library?,
+  eag_internetAccess?,
+  eag_techservices?,
+  eag_recreationalServices?}
+eag_searchroom = element searchroom {
+  eag_contact?,
+  eag_workPlaces?,
+  eag_computerPlaces?,
+  eag_microfilmPlaces?,
+  eag_webpage*,
+  eag_photographAllowance?,
+  eag_readersTicket*,
+  eag_advancedOrders*,
+  eag_researchServices*}
+eag_contact = element contact { eag_telephone*, eag_email*, eag_nameEntry* }
+eag_workPlaces = element workPlaces { eag_num }
+eag_computerPlaces = element computerPlaces { eag_num, eag_descriptiveNote? }
+eag_microfilmPlaces = element microfilmPlaces { eag_num }
+eag_photographAllowance = element photographAllowance {
+  "depending on the material" | "no" | "yes" | "yes (without flash)"}
+eag_readersTicket = element readersTicket {
+  text,
+  eag_att.href.attributes,
+  eag_att.lang.attributes,
+  eag_att.EAGsource.attributes,
+  empty}
+eag_advancedOrders = element advancedOrders {
+  text,
+  eag_att.href.attributes,
+  eag_att.lang.attributes,
+  eag_att.EAGsource.attributes,
+  empty}
+eag_researchServices = element researchServices { eag_descriptiveNote }
+eag_library = element library {
+  eag_contact?,
+  eag_webpage*,
+  (eag_monographicpub, eag_serialpub)?,
+  eag_att.question.attributes,
+  empty}
+eag_monographicpub = element monographicpub { eag_num }
+eag_serialpub = element serialpub { eag_num }
+eag_internetAccess = element internetAccess {
+  eag_descriptiveNote?, eag_att.question.attributes, empty}
+eag_techservices = element techservices { (eag_restorationlab, eag_reproductionser)? }
+eag_restorationlab = element restorationlab {
+  eag_descriptiveNote?,
+  eag_contact?,
+  eag_webpage*,
+  eag_att.question.attributes,
+  empty}
+eag_reproductionser = element reproductionser {
+  (eag_descriptiveNote, eag_contact)?,
+  eag_webpage*,
+  (eag_microformser, eag_photographser, eag_digitalser, eag_photocopyser)?,
+  eag_att.question.attributes,
+  empty}
+eag_microformser = element microformser { empty, eag_att.question.attributes, empty }
+eag_photographser = element photographser { empty, eag_att.question.attributes, empty }
+eag_digitalser = element digitalser { empty, eag_att.question.attributes, empty }
+eag_photocopyser = element photocopyser { empty, eag_att.question.attributes, empty }
+eag_recreationalServices = element recreationalServices {
+  eag_refreshment?,
+  eag_exhibition*,
+  eag_toursSessions*,
+  eag_otherServices*}
+eag_refreshment = element refreshment { eag_descriptiveNote }
+eag_exhibition = element exhibition { eag_descriptiveNote?, eag_webpage? }
+eag_toursSessions = element toursSessions { eag_descriptiveNote?, eag_webpage? }
+eag_otherServices = element otherServices { eag_descriptiveNote?, eag_webpage? }
+eag_relations = element relations { eag_resourceRelation*, eag_eagRelation* }
+eag_resourceRelation = element resourceRelation {
+  eag_relationEntry*,
+  (eag_descriptiveNote, eag_eagRelation, eag_objectBinWrap, eag_objectXMLWrap)?,
+  (eag_m.dates_alternation, eag_placeEntry)*,
+  eag_att.lastDateTimeVerified.attributes,
+  eag_att.href.attributes,
+  attribute resourceRelationType {"creatorOf" | "subjectOf" | "other"},
+  empty}
+eag_relationEntry = element relationEntry {
+  text,
+  eag_att.localType.attributes,
+  eag_att.lang.attributes,
+  eag_att.scriptCode.attributes,
+  eag_att.transliteration.attributes,
+  eag_att.EAGsource.attributes,
+  empty}
+eag_eagRelation = element eagRelation {
+  eag_relationEntry*,
+  eag_descriptiveNote?,
+  eag_m.dates_alternation?,
+  eag_att.lastDateTimeVerified.attributes,
+  eag_att.href.attributes,
+  attribute eagRelationType {"hierarchical-child" | "hierarchical-parent" | "temporal-earlier" | "temporal-later" | "associative"}?,
+  empty}
+eag_m.dates_alternation = eag_date | eag_dateRange | eag_dateSet
+eag_att.EAGsource.attributes = eag_att.EAGsource.attribute.source
+eag_att.EAGsource.attribute.source = attribute source { xsd:anyURI }?
+eag_att.localType.attributes = eag_att.localType.attribute.localType
+eag_att.localType.attribute.localType = attribute localType { xsd:anyURI }?
+eag_att.href.attributes = eag_att.href.attribute.href
+eag_att.href.attribute.href = attribute href { xsd:anyURI }?
+eag_att.geocoordinates.attributes = eag_att.geocoordinates.attribute.latitude, eag_att.geocoordinates.attribute.longitude
+eag_att.geocoordinates.attribute.latitude = attribute latitude { xsd:NMTOKEN }?
+eag_att.geocoordinates.attribute.longitude = attribute longitude { xsd:NMTOKEN }?
+eag_att.vocabularySource.attributes = eag_att.vocabularySource.attribute.vocabularySource
+eag_att.vocabularySource.attribute.vocabularySource = attribute vocabularySource { xsd:anyURI }?
+eag_att.question.attributes = eag_att.question.attribute.question
+eag_att.question.attribute.question = attribute question {"yes" | "no"}
+eag_att.lang.attributes = eag_att.lang.attribute.xmllang
+eag_att.lang.attribute.xmllang = attribute xml:lang { eag_macro.language }?
+eag_att.languageCode.attributes = eag_att.languageCode.attribute.languageCode
+eag_att.languageCode.attribute.languageCode = attribute languageCode { eag_macro.language }
+eag_att.scriptCode.attributes = eag_att.scriptCode.attribute.scriptCode
+eag_att.scriptCode.attribute.scriptCode = attribute scriptCode {xsd:token {
+  pattern = "(Afak|Aghb|Ahom|Arab|Armi|Armn|Avst|Bali|Bamu|Bass|Batk|Beng|Blis|Bopo|Brah|Brai|Bugi|Buhd|Cakm|Cans|Cari|Cham|Cher|Cirt|Copt|Cprt|Cyrl|Cyrs|Deva|Dsrt|Dupl|Egyd|Egyh|Egyp|Elba|Ethi|Geok|Geor|Glag|Goth|Gran|Grek|Gujr|Guru|Hang|Hani|Hano|Hans|Hant|Hatr|Hebr|Hira|Hluw|Hmng|Hrkt|Hung|Inds|Ital|Java|Jpan|Jurc|Kali|Kana|Khar|Khmr|Khoj|Knda|Kore|Kpel|Kthi|Lana|Laoo|Latf|Latg|Latn|Lepc|Limb|Lina|Linb|Lisu|Loma|Lyci|Lydi|Mahj|Mand|Mani|Maya|Mend|Merc|Mero|Mlym|Modi|Mong|Moon|Mroo|Mtei|Mult|Mymr|Narb|Nbat|Nkgb|Nkoo|Nshu|Ogam|Olck|Orkh|Orya|Osma|Palm|Pauc|Perm|Phag|Phli|Phlp|Phlv|Phnx|Plrd|Prti|Qaaa|Qabx|Rjng|Roro|Runr|Samr|Sara|Sarb|Saur|Sgnw|Shaw|Shrd|Sidd|Sind|Sinh|Sora|Sund|Sylo|Syrc|Syre|Syrj|Syrn|Tagb|Takr|Tale|Talu|Taml|Tang|Tavt|Telu|Teng|Tfng|Tglg|Thaa|Thai|Tibt|Tirh|Ugar|Vaii|Visp|Wara|Wole|Xpeo|Xsux|Yiii|Zinh|Zmth|Zsym|Zxxx|Zyyy|Zzzz)"}}?
+eag_att.transliteration.attributes = eag_att.transliteration.attribute.transliteration
+eag_att.transliteration.attribute.transliteration = attribute transliteration { xsd:NMTOKEN }?
+eag_att.countrycode.attributes = eag_att.countrycode.attribute.countrycode
+eag_att.countrycode.attribute.countrycode = attribute countrycode {xsd:token {
+  pattern = "(AF|AX|AL|DZ|AS|AD|AO|AI|AQ|AG|AR|AM|AW|AU|AT|AZ|BS|BH|BD|BB|BY|BE|BZ|BJ|BM|BT|BO|BA|BW|BV|BR|IO|BN|BG|BF|BI|KH|CM|CA|CV|KY|CF|TD|CL|CN|CX|CC|CO|KM|CG|CD|CK|CR|CI|HR|CU|CY|CZ|DK|DJ|DM|DO|EC|EG|SV|GQ|ER|EE|ET|FK|FO|FJ|FI|FR|GF|PF|TF|GA|GM|GE|DE|GH|GI|GR|GL|GD|GP|GU|GT|GN|GW|GY|HT|HM|VA|HN|HK|HU|IS|IN|ID|IR|IQ|IE|IL|IT|JM|JP|JO|KZ|KE|KI|KP|KR|KW|KG|LA|LV|LB|LS|LR|LY|LI|LT|LU|MO|MK|MG|MW|MY|MV|ML|MT|MH|MQ|MR|MU|YT|MX|FM|MD|MC|MN|MS|MA|MZ|MM|NA|NR|NP|NL|AN|NC|NZ|NI|NE|NG|NU|NF|MP|NO|OM|PK|PW|PS|PA|PG|PY|PE|PH|PN|PL|PT|PR|QA|RE|RO|RU|RW|SH|KN|LC|PM|VC|WS|SM|ST|SA|SN|CS|SC|SL|SG|SK|SI|SB|SO|ZA|GS|ES|LK|SD|SR|SJ|SZ|SE|CH|SY|TW|TJ|TZ|TH|TL|TG|TK|TO|TT|TN|TR|TM|TC|TV|UG|UA|AE|GB|US|UM|UY|UZ|VU|VE|VN|VG|VI|WF|EH|YE|ZM|ZW|RS|ME|EU)"}}
+eag_att.countryCode.attributes = eag_att.countryCode.attribute.countryCode
+eag_att.countryCode.attribute.countryCode = attribute countryCode {xsd:token {
+  pattern = "(AF|AX|AL|DZ|AS|AD|AO|AI|AQ|AG|AR|AM|AW|AU|AT|AZ|BS|BH|BD|BB|BY|BE|BZ|BJ|BM|BT|BO|BA|BW|BV|BR|IO|BN|BG|BF|BI|KH|CM|CA|CV|KY|CF|TD|CL|CN|CX|CC|CO|KM|CG|CD|CK|CR|CI|HR|CU|CY|CZ|DK|DJ|DM|DO|EC|EG|SV|GQ|ER|EE|ET|FK|FO|FJ|FI|FR|GF|PF|TF|GA|GM|GE|DE|GH|GI|GR|GL|GD|GP|GU|GT|GN|GW|GY|HT|HM|VA|HN|HK|HU|IS|IN|ID|IR|IQ|IE|IL|IT|JM|JP|JO|KZ|KE|KI|KP|KR|KW|KG|LA|LV|LB|LS|LR|LY|LI|LT|LU|MO|MK|MG|MW|MY|MV|ML|MT|MH|MQ|MR|MU|YT|MX|FM|MD|MC|MN|MS|MA|MZ|MM|NA|NR|NP|NL|AN|NC|NZ|NI|NE|NG|NU|NF|MP|NO|OM|PK|PW|PS|PA|PG|PY|PE|PH|PN|PL|PT|PR|QA|RE|RO|RU|RW|SH|KN|LC|PM|VC|WS|SM|ST|SA|SN|CS|SC|SL|SG|SK|SI|SB|SO|ZA|GS|ES|LK|SD|SR|SJ|SZ|SE|CH|SY|TW|TJ|TZ|TH|TL|TG|TK|TO|TT|TN|TR|TM|TC|TV|UG|UA|AE|GB|US|UM|UY|UZ|VU|VE|VN|VG|VI|WF|EH|YE|ZM|ZW|RS|ME|EU)"}}?
+eag_att.standardDateTime.attributes = eag_att.standardDateTime.attribute.standardDateTime
+eag_att.standardDateTime.attribute.standardDateTime = attribute standardDateTime { eag_macro.standardDateTime }?
+eag_att.lastDateTimeVerified.attributes = eag_att.lastDateTimeVerified.attribute.lastDateTimeVerified
+eag_att.lastDateTimeVerified.attribute.lastDateTimeVerified = attribute lastDateTimeVerified { eag_macro.standardDateTime }?
+eag_att.date.attributes = eag_att.date.attribute.standardDate, eag_att.date.attribute.notBefore, eag_att.date.attribute.notAfter
+eag_att.date.attribute.standardDate = attribute standardDate { eag_macro.standardDate }?
+eag_att.date.attribute.notBefore = attribute notBefore { eag_macro.standardDate }?
+eag_att.date.attribute.notAfter = attribute notAfter { eag_macro.standardDate }?

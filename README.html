@@ -4,7 +4,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
 <title>README</title>
-<!-- 2015-08-25 Tue 05:38 -->
+<!-- 2015-09-03 Thu 18:41 -->
 <meta  http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta  name="generator" content="Org-mode" />
 <meta  name="author" content="Vladimir Alexiev" />
@@ -88,6 +88,29 @@
     { background-color: #ffff00; color: #000000; font-weight: bold; }
   /*]]>*/-->
 </style>
+
+<style type="text/css">
+h1,h2,h3,h4,h5,h6,h7 {font-family: Arial}
+// don't want empty lines in auto-postamble
+.author, .date, .creator {-webkit-margin-before: 0em; -webkit-margin-after: 0em}
+// style for #+BEGIN_ABSTRACT
+.abstract {margin: 1em; padding: 1em; border: 1px solid black}
+.abstract:before {content: "Abstract: "; font-weight: bold}
+// center the preamble (author name) and make it bigger
+#preamble p { font-size: 110%%; margin-left: auto; margin-right: auto; text-align: center; }
+// table headers aligned same as table data
+th.left     {text-align:left}
+th.right    {text-align:right}
+// table horizontal & vertical borders. First value is top & bottom, second is left & right. http://www.w3schools.com/css/css_border.asp
+th, td {border-width: 1px; border-style: solid solid; border-spacing: 2px 2px; padding:4px 2px}
+// colored TODO keywords
+.CANCELED   {color: blue}
+.MAYBE      {color: blue}
+.POSTPONED  {color: blue}
+.INPROGRESS {color: orange}
+.NEXT       {color: orange}
+.IER        {color: orange}
+</style>
 <script type="text/javascript">
 /*
 @licstart  The following is the entire license notice for the
@@ -134,48 +157,6 @@ for the JavaScript code in this tag.
  }
 /*]]>*///-->
 </script>
-<script type="text/javascript" src="http://orgmode.org/mathjax/MathJax.js"></script>
-<script type="text/javascript">
-<!--/*--><![CDATA[/*><!--*/
-    MathJax.Hub.Config({
-        // Only one of the two following lines, depending on user settings
-        // First allows browser-native MathML display, second forces HTML/CSS
-        //  config: ["MMLorHTML.js"], jax: ["input/TeX"],
-            jax: ["input/TeX", "output/HTML-CSS"],
-        extensions: ["tex2jax.js","TeX/AMSmath.js","TeX/AMSsymbols.js",
-                     "TeX/noUndefined.js"],
-        tex2jax: {
-            inlineMath: [ ["\\(","\\)"] ],
-            displayMath: [ ['$$','$$'], ["\\[","\\]"], ["\\begin{displaymath}","\\end{displaymath}"] ],
-            skipTags: ["script","noscript","style","textarea","pre","code"],
-            ignoreClass: "tex2jax_ignore",
-            processEscapes: false,
-            processEnvironments: true,
-            preview: "TeX"
-        },
-        showProcessingMessages: true,
-        displayAlign: "center",
-        displayIndent: "2em",
-
-        "HTML-CSS": {
-             scale: 100,
-             availableFonts: ["STIX","TeX"],
-             preferredFont: "TeX",
-             webFont: "TeX",
-             imageFont: "TeX",
-             showMathMenu: true,
-        },
-        MMLorHTML: {
-             prefer: {
-                 MSIE:    "MML",
-                 Firefox: "MML",
-                 Opera:   "HTML",
-                 other:   "HTML"
-             }
-        }
-    });
-/*]]>*///-->
-</script>
 </head>
 <body>
 <div id="content">
@@ -192,7 +173,17 @@ for the JavaScript code in this tag.
 <li><a href="#sec-2-3">2.3. Scripts</a></li>
 </ul>
 </li>
-<li><a href="#sec-3">3. RNC Schemas</a></li>
+<li><a href="#sec-3">3. RNC Schemas</a>
+<ul>
+<li><a href="#sec-3-1">3.1. EAD</a></li>
+<li><a href="#sec-3-2">3.2. EAD3</a></li>
+<li><a href="#sec-3-3">3.3. EAC CPF</a></li>
+<li><a href="#sec-3-4">3.4. EAG</a></li>
+<li><a href="#sec-3-5">3.5. CDWA</a></li>
+<li><a href="#sec-3-6">3.6. LIDO</a></li>
+<li><a href="#sec-3-7">3.7. CONA</a></li>
+</ul>
+</li>
 </ul>
 </div>
 </div>
@@ -374,8 +365,8 @@ rnc-nocomment ead.rnc &gt; ead-nocomment.rnc
 </ul>
 
 <p>
-They assume all files and trang.jar are put in c:\prog\bin; 
-except jing in c:\prog\jing-20091111\bin (has several dependencies):
+They assume all files and trang.jar are put in c:; 
+except jing in c:-20091111(has several dependencies):
 so you need to modify them for your setup.
 </p>
 </div>
@@ -386,19 +377,19 @@ so you need to modify them for your setup.
 <h2 id="sec-3"><span class="section-number-2">3</span> RNC Schemas</h2>
 <div class="outline-text-2" id="text-3">
 <p>
-I have collected or converted the following RNC schemas related to GLAM (galleries, libraries, archives and museums):
+I have collected or converted the following RNC schemas related to GLAM (galleries, libraries, archives and museums)
 </p>
-<ul class="org-ul">
-<li><a href="https://github.com/SAA-SDT/eac-cpf-schema/blob/master/cpf.rnc">cpf.rnc</a> (<a href="./cpf-nocomment.rnc">nocomment</a>): EAC CPF version 20100301 (Encoded Archival Context: Corporations, People, Families) by Society of American Archivists
-</li>
-<li><a href="./ead.rnc">./ead.rnc</a> (<a href="./ead-nocomment.rnc">nocomment</a>): EAD 2002 version 20080421 (Encoded Archival Description) by Society of American Archivists and Library of Congress, converted by Vladimir Alexiev.
-<ul class="org-ul">
-<li>Uses the following prefixes
-</li>
-</ul>
-</li>
-</ul>
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+</div>
+
+<div id="outline-container-sec-3-1" class="outline-3">
+<h3 id="sec-3-1"><span class="section-number-3">3.1</span> EAD</h3>
+<div class="outline-text-3" id="text-3-1">
+<p>
+<a href="./ead.rnc">./ead.rnc</a> (<a href="./ead-nocomment.rnc">nocomment</a>): EAD 2002 version 20080421 (Encoded Archival Description) by Society of American Archivists and Library of Congress, converted by Vladimir Alexiev.
+EAD is used widely by archival institutions and projects, including APex (Arvhives Portal Europe) and EHRI (European Holocaust Research Infrastructure).
+Uses the following prefixes:
+</p>
+<table border="1" cellspacing="0" cellpadding="2" rules="all" frame="box">
 
 
 <colgroup>
@@ -447,8 +438,14 @@ I have collected or converted the following RNC schemas related to GLAM (galleri
 </tr>
 </tbody>
 </table>
-<ul class="org-ul">
-<li><a href="https://github.com/SAA-SDT/EAD3">EAD3</a>: upcoming revised version, developed natively in RNG. Schemas listed in increasing recency:
+</div>
+</div>
+<div id="outline-container-sec-3-2" class="outline-3">
+<h3 id="sec-3-2"><span class="section-number-3">3.2</span> EAD3</h3>
+<div class="outline-text-3" id="text-3-2">
+<p>
+<a href="https://github.com/SAA-SDT/EAD3">EAD3</a>: upcoming revised version, developed natively in RNG. Schemas listed in increasing recency:
+</p>
 <ul class="org-ul">
 <li><a href="https://raw.githubusercontent.com/SAA-SDT/EAD-Revision/develop/ead3.rng">https://raw.githubusercontent.com/SAA-SDT/EAD-Revision/develop/ead3.rng</a>: the namespace <a href="http://ead3.archivists.org/schema/">http://ead3.archivists.org/schema/</a> redirects to this
 </li>
@@ -459,20 +456,66 @@ I have collected or converted the following RNC schemas related to GLAM (galleri
 <li><a href="./ead3.rnc">./ead3.rnc</a> (<a href="./ead3-nocomment.rnc">nocomment</a>): converted from the most recent schema by Vladimir Alexiev
 </li>
 </ul>
+</div>
+</div>
+<div id="outline-container-sec-3-3" class="outline-3">
+<h3 id="sec-3-3"><span class="section-number-3">3.3</span> EAC CPF</h3>
+<div class="outline-text-3" id="text-3-3">
+<p>
+<a href="https://github.com/SAA-SDT/eac-cpf-schema/blob/master/cpf.rnc">cpf.rnc</a> (<a href="./cpf-nocomment.rnc">nocomment</a>): EAC CPF version 20100301 (Encoded Archival Context: Corporations, People, Families) by Society of American Archivists.
+CPF is a complement to EAD, describing agents that archival materials originate from.
+</p>
+</div>
+</div>
+<div id="outline-container-sec-3-4" class="outline-3">
+<h3 id="sec-3-4"><span class="section-number-3">3.4</span> EAG</h3>
+<div class="outline-text-3" id="text-3-4">
+<ul class="org-ul">
+<li><a href="./eag.rng">./eag.rng</a>
 </li>
-<li><a href="./CDWAlite.rnc">./CDWAlite.rnc</a> (<a href="./CDWAlite-nocomment.rnc">nocomment</a>): CDWA version 1.1 20060712 (Categories for the Description of Works of Art) by ARTstor and J Paul Getty Trust, converted by Vladimir Alexiev
-</li>
-<li><a href="./lido.rnc">./lido.rnc</a> (<a href="./lido-nocomment.rnc">nocomment</a>): LIDO version 1.0 20101108 (Lightweight Information Describing Objects) by ICOM-CIDOC Working Group Data Harvesting and Interchange, converted by Vladimir Alexiev
-</li>
-<li><a href="./xml.rnc">./xml.rnc</a>: defines <code>xml:</code> attributes <code>lang, base, space</code>. Used by LIDO, EAG.
+<li><a href="./eag.rnc">./eag.rnc</a> (<a href="./eag-nocomment.rnc">nocomment</a>): EAG 2012 version 0.1e 20120828 (Encoded Archival Guide), APEx project (www.apex-project.eu), converted by Vladimir Alexiev.
 </li>
 </ul>
+<p>
+EAG is used for describing archival institutions. See <a href="http://www.apex-project.eu/images/docs/EAG_2012_description.html">description</a>. 
+The above is generated from eag_2012.xsd. An alternative official RNC exists, marked as follows:
+</p>
+<pre class="example">
+# Schema generated from ODD source 2015-03-06T09:33:00Z.
+# Edition: Version 2.7.0. Last updated on
+#       16th September 2014, revision 13036
+# Edition Location: http://www.tei-c.org/Vault/P5/Version 2.7.0/
+</pre>
+</div>
+</div>
+<div id="outline-container-sec-3-5" class="outline-3">
+<h3 id="sec-3-5"><span class="section-number-3">3.5</span> CDWA</h3>
+<div class="outline-text-3" id="text-3-5">
+<p>
+<a href="./CDWAlite.rnc">./CDWAlite.rnc</a> (<a href="./CDWAlite-nocomment.rnc">nocomment</a>): CDWA version 1.1 20060712 (Categories for the Description of Works of Art) by ARTstor and J Paul Getty Trust, converted by Vladimir Alexiev.
+CDWA is used for describing museum objects and works of art, corresponding to the <a href="http://cco.vrafoundation.org">CCO</a> content standard.
+</p>
+</div>
+</div>
+<div id="outline-container-sec-3-6" class="outline-3">
+<h3 id="sec-3-6"><span class="section-number-3">3.6</span> LIDO</h3>
+<div class="outline-text-3" id="text-3-6">
+<ul class="org-ul">
+<li><a href="./lido.rnc">./lido.rnc</a> (<a href="./lido-nocomment.rnc">nocomment</a>): LIDO version 1.0 20101108 (Lightweight Information Describing Objects) by ICOM-CIDOC Working Group Data Harvesting and Interchange, converted by Vladimir Alexiev
+</li>
+<li><a href="./xml.rnc">./xml.rnc</a>: defines <code>xml:</code> attributes <code>lang, base, space</code>. Used by LIDO &amp; EAG.
+</li>
+</ul>
+
+<p>
+LIDO is also used to describe museum objects and works of art. It's based on CDWA and MuseumDat and is quite more complex.
+</p>
 
 <p>
 For LIDO and CDWA I made some manual corrections
 </p>
 <ul class="org-ul">
-<li>This sets one start element, and introduces the parasitic name "starting<sub>lidoWrap</sub>"
+<li>This sets one start element, and introduces the parasitic name "starting_lidoWrap"
 <pre class="example">
 start |= starting_lidoWrap
 starting_lidoWrap =
@@ -515,11 +558,20 @@ administrativeMetadata = element administrativeMetadata {administrativeMetadataC
 </ul>
 </div>
 </div>
+<div id="outline-container-sec-3-7" class="outline-3">
+<h3 id="sec-3-7"><span class="section-number-3">3.7</span> CONA</h3>
+<div class="outline-text-3" id="text-3-7">
+<p>
+I've also converted Getty's CONA schema to RNC, contact me if you would like to work with it
+</p>
+</div>
+</div>
+</div>
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Vladimir Alexiev</p>
-<p class="date">Created: 2015-08-25 Tue 05:38</p>
-<p class="creator"><a href="http://www.gnu.org/software/emacs/">Emacs</a> 24.5.1 (<a href="http://orgmode.org">Org</a> mode 8.2.10)</p>
+<p class="date">Created: 2015-09-03 Thu 18:41</p>
+<p class="creator"><a href="http://www.gnu.org/software/emacs/">Emacs</a> 25.0.50.1 (<a href="http://orgmode.org">Org</a> mode 8.2.10)</p>
 <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>

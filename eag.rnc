@@ -1,0 +1,435 @@
+# EAG 2012 Schema
+# Version: 0.1e
+# Date: 20120828
+# Editor: APEx project (www.apex-project.eu)
+
+default namespace = "http://www.archivesportaleurope.eu/profiles/eag/"
+namespace a = "http://relaxng.org/ns/compatibility/annotations/1.0"
+namespace rng = "http://relaxng.org/ns/structure/1.0"
+
+include "xml.rnc" inherit = xml
+start = starting_eag
+starting_eag = element eag {control, archguide, relations, audience}
+audience = attribute audience {"external" | "internal"}
+href = attribute href {xsd:anyURI}?
+a.xml.common =
+  attribute xml:id {text},
+  attribute xml:lang {xsd:language}
+a.xml.common.base =
+  a.xml.common,
+  attribute xml:base {text}
+# ###############
+#     CONTROL
+# ################
+control =
+  element control {
+    recordId,
+    otherRecordId*,
+    maintenanceAgency,
+    maintenanceStatus,
+    maintenanceHistory,
+    languageDeclarations?,
+    conventionDeclaration*,
+    localControl*,
+    localTypeDeclaration*,
+    publicationStatus?,
+    sources?,
+    a.xml.common.base}
+recordId =
+  element recordId {
+    xsd:NMTOKEN,
+    attribute xml:id {text}}
+otherRecordId =
+  element otherRecordId {
+    xsd:string,
+    attribute xml:id {text},
+    localType}
+localType = attribute localType {xsd:anyURI}?
+maintenanceAgency =
+  element maintenanceAgency {
+    agencyCode, agencyName, otherAgencyCode*, descriptiveNote?}
+maintenanceStatus =
+  element maintenanceStatus {
+    ("cancelled"
+     | "deleted"
+     | "deletedMerged"
+     | "deletedReplaced"
+     | "deletedSplit"
+     | "derived"
+     | "new"
+     | "revised"),
+    attribute xml:id {text}}
+maintenanceHistory =
+  element maintenanceHistory {maintenanceEvent+, a.xml.common}
+maintenanceEvent =
+  element maintenanceEvent {
+    agent, agentType, eventDateTime, eventType, a.xml.common}
+eventType =
+  element eventType {
+    ("created"
+     | "revised"
+     | "deleted"
+     | "cancelled"
+     | "derived"
+     | "updated"
+     | "published"),
+    attribute xml:id {text}}
+eventDateTime =
+  element eventDateTime {
+    a.xml.common,
+    attribute standardDateTime {m.data.standardDateTime}?}
+m.data.standardDateTime =
+  xsd:date {maxInclusive = "2099-12-31"}
+  | xsd:gYear {maxInclusive = "2099"}
+  | xsd:gYearMonth {maxInclusive = "2099-12"}
+  | xsd:dateTime {maxInclusive = "2099-12-31T23:59:59"}
+agentType =
+  element agentType {
+    ("human" | "machine"),
+    attribute xml:id {text}}
+agent = element agent {a.xml.common}
+languageDeclarations =
+  element languageDeclarations {languageDeclaration+}
+languageDeclaration =
+  element languageDeclaration {
+    language, script, descriptiveNote?, a.xml.common}
+language =
+  element language {
+    a.xml.common,
+    attribute languageCode {
+      xsd:string {pattern = "[a-z]{3}"}}}
+script = element script {a.xml.common, a.scriptCode}
+a.scriptCode =
+  attribute scriptCode {
+    xsd:string {pattern = "[A-Z][a-z]{3}"}}?
+conventionDeclaration =
+  element conventionDeclaration {
+    abbreviation?, citation+, descriptiveNote?, a.xml.common}
+abbreviation = element abbreviation {text}
+citation =
+  element citation {
+    a.xml.common,
+    href,
+    attribute lastDateTimeVerified {m.data.standardDateTime}?}
+localControl =
+  element localControl {
+    term*, (date | dateRange)?, a.xml.common, localType}
+term =
+  element term {
+    ("simple" | "extended"),
+    attribute xml:id {text},
+    m.entryLanguageAttributes,
+    attribute lastDateTimeVerified {m.data.standardDateTime}?,
+    attribute vocabularySource {xsd:anyURI}?}
+m.entryLanguageAttributes =
+  a.scriptCode,
+  attribute xml:lang {xsd:language},
+  attribute transliteration {xsd:NMTOKEN}?
+date =
+  element date {
+    a.xml.common,
+    attribute localType {xsd:anyURI}?,
+    m.dateSingle}
+m.dateSingle =
+  attribute standardDate {m.data.standardDate}?,
+  attribute notBefore {m.data.standardDate}?,
+  attribute notAfter {m.data.standardDate}?
+dateRange =
+  element dateRange {
+    fromDate,
+    toDate,
+    a.xml.common,
+    attribute localType {xsd:anyURI}?}
+fromDate = element fromDate {a.xml.common, m.dateSingle}
+toDate = element toDate {a.xml.common, m.dateSingle}
+m.data.standardDate =
+  xsd:date {maxInclusive = "2099-12-31"}
+  | xsd:gYear {maxInclusive = "2099"}
+  | xsd:gYearMonth {maxInclusive = "2099-12"}
+localTypeDeclaration =
+  element localTypeDeclaration {
+    citation, abbreviation?, descriptiveNote?, a.xml.common}
+publicationStatus =
+  element publicationStatus {
+    ("inProcess" | "approved"),
+    attribute xml:id {text}}
+sources = element sources {source+, a.xml.common.base}
+source =
+  element source {
+    sourceEntry?,
+    (objectXMLWrap | objectBinWrap)?,
+    descriptiveNote?,
+    attribute xml:id {text},
+    attribute lastDateTimeVerified {m.data.standardDateTime}?,
+    href}
+sourceEntry =
+  element sourceEntry {
+    attribute xml:id {text},
+    m.entryLanguageAttributes}
+objectXMLWrap =
+  element objectXMLWrap {
+    e.anyName,
+    attribute xml:id {text}}
+objectBinWrap =
+  element objectBinWrap {
+    xsd:base64Binary,
+    attribute xml:id {text}}
+e.anyName = element * {text}
+agencyCode =
+  element agencyCode {
+    attribute xml:id {text}}
+agencyName = element agencyName {a.xml.common}
+otherAgencyCode =
+  element otherAgencyCode {
+    localType,
+    attribute xml:id {text}}
+descriptiveNote = element descriptiveNote {p+, a.xml.common}
+p = element p {a.xml.common}
+# ##################
+#     ARCHGUIDE
+# ###################
+archguide = element archguide {identity, desc}
+identity =
+  element identity {
+    repositorid,
+    otherRepositorId,
+    autform+,
+    parform*,
+    nonpreform*,
+    repositoryType*}
+repositorid =
+  element repositorid {
+    attribute countrycode {xsd:NMTOKEN},
+    attribute repositorycode {xsd:NMTOKEN}}
+otherRepositorId = element otherRepositorId {text}
+autform =
+  element autform {
+    attribute xml:lang {xsd:language}}
+parform =
+  element parform {
+    attribute xml:lang {xsd:language}}
+nonpreform =
+  element nonpreform {
+    useDates,
+    attribute xml:lang {xsd:language}}
+useDates = element useDates {m.dates}
+m.dates = date | dateRange | dateSet
+dateSet = element dateSet {(date | dateRange), (date | dateRange)+}
+repositoryType =
+  element repositoryType {
+    "National archives"
+    | "Regional archives"
+    | "Country/local authority archives"
+    | "Municipal archives"
+    | "Specialised government archives"
+    | "Private persons and family archives"
+    | "Church and religious archives"
+    | "Business archives"
+    | "University and research archives"
+    | "Media archives"
+    | "Archives of political parties, of popular/labour movement and other non-governmental organisations, associations, agencies and foundations"
+    | "Specialised non-governmental archives and archives of other cultural (heritage) institutions"}
+desc = element desc {repositories}
+repositories = element repositories {repository+}
+repository =
+  element repository {
+    repositoryName*,
+    repositoryRole?,
+    geogarea,
+    location+,
+    telephone*,
+    fax*,
+    email*,
+    webpage*,
+    directions*,
+    repositorhist?,
+    repositorfound?,
+    repositorsup?,
+    buildinginfo?,
+    adminhierarchy?,
+    holdings?,
+    timetable,
+    access,
+    accessibility+,
+    services?,
+    descriptiveNote?}
+repositoryName =
+  element repositoryName {
+    attribute xml:lang {xsd:language}}
+repositoryRole =
+  element repositoryRole {
+    xsd:string "Branch"
+    | xsd:string "Head quarter"
+    | xsd:string "Interim archive"}
+geogarea =
+  element geogarea {
+    "Africa"
+    | "Antarctica"
+    | "Asia"
+    | "Australia"
+    | "Europe"
+    | "North America"
+    | "South America"}
+location =
+  element location {
+    country,
+    firstdem?,
+    secondem?,
+    municipalityPostalcode,
+    localentity?,
+    street,
+    localType,
+    attribute longitude {xsd:NMTOKEN}?,
+    attribute latitude {xsd:NMTOKEN}?}
+country =
+  element country {
+    attribute xml:lang {xsd:language}}
+firstdem =
+  element firstdem {
+    attribute xml:lang {xsd:language}}
+secondem =
+  element secondem {
+    attribute xml:lang {xsd:language}}
+municipalityPostalcode =
+  element municipalityPostalcode {
+    attribute xml:lang {xsd:language}}
+localentity =
+  element localentity {
+    attribute xml:lang {xsd:language}}
+street =
+  element street {
+    attribute xml:lang {xsd:language}}
+telephone = element telephone {text}
+fax = element fax {text}
+email = element email {href}
+webpage = element webpage {href}
+directions =
+  element directions {
+    citation*,
+    attribute xml:lang {xsd:language}}
+repositorhist = element repositorhist {descriptiveNote}
+repositorfound = element repositorfound {date, rule}
+repositorsup = element repositorsup {date, rule}
+rule =
+  element rule {
+    attribute xml:lang {xsd:language}}
+buildinginfo =
+  element buildinginfo {building?, repositorarea?, lengthshelf?}
+building = element building {descriptiveNote}
+repositorarea = element repositorarea {num}
+lengthshelf = element lengthshelf {num}
+num =
+  element num {
+    attribute unit {
+      "squaremetre" | "linearmetre" | "site" | "book" | "title"}}
+adminhierarchy = element adminhierarchy {adminunit+}
+adminunit =
+  element adminunit {
+    attribute xml:lang {xsd:language}}
+holdings = element holdings {descriptiveNote?, m.dates?, extent?}
+extent = element extent {num}
+timetable = element timetable {opening, closing?}
+opening = element opening {text}
+closing =
+  element closing {
+    attribute standardDate {m.data.standardDate}?}
+access = element access {restaccess*, termsOfUse*, question}
+question = attribute question {"yes" | "no"}
+restaccess =
+  element restaccess {
+    attribute xml:lang {xsd:language}}
+termsOfUse =
+  element termsOfUse {
+    attribute xml:lang {xsd:language},
+    href}
+accessibility =
+  element accessibility {
+    attribute xml:lang {xsd:language},
+    question}
+services =
+  element services {
+    searchroom,
+    library?,
+    internetAccess?,
+    techservices?,
+    recreationalServices?}
+searchroom =
+  element searchroom {
+    contact?,
+    workPlaces,
+    computerPlaces?,
+    microfilmPlaces?,
+    webpage*,
+    photographAllowance?,
+    readersTicket*,
+    advancedOrders*,
+    researchServices*}
+contact = element contact {telephone*, email*}
+workPlaces = element workPlaces {num}
+computerPlaces = element computerPlaces {num, descriptiveNote}
+microfilmPlaces = element microfilmPlaces {num}
+photographAllowance =
+  element photographAllowance {
+    "depending on the material" | "no" | "yes" | "yes (without flash)"}
+readersTicket =
+  element readersTicket {
+    href,
+    attribute xml:lang {xsd:language}}
+advancedOrders =
+  element advancedOrders {
+    href,
+    attribute xml:lang {xsd:language}}
+researchServices = element researchServices {descriptiveNote}
+library =
+  element library {contact?, webpage*, monographicpub?, serialpub?}
+monographicpub = element monographicpub {num}
+serialpub = element serialpub {num}
+internetAccess = element internetAccess {descriptiveNote?, question}
+techservices = element techservices {restorationlab?, reproductionser}
+restorationlab =
+  element restorationlab {
+    descriptiveNote?, contact?, webpage*, question}
+reproductionser =
+  element reproductionser {
+    descriptiveNote?,
+    contact?,
+    webpage*,
+    microformser?,
+    photographser?,
+    digitalser?,
+    photocopyser?,
+    question}
+microformser = element microformser {question}
+photographser = element photographser {question}
+digitalser = element digitalser {question}
+photocopyser = element photocopyser {question}
+recreationalServices =
+  element recreationalServices {
+    refreshment?, exhibition*, toursSessions*, otherServices*}
+refreshment = element refreshment {descriptiveNote}
+exhibition = element exhibition {descriptiveNote?, webpage?}
+toursSessions = element toursSessions {descriptiveNote?, webpage?}
+otherServices = element otherServices {descriptiveNote?, webpage?}
+# ##################
+#     RELATIONS
+# ###################
+relations = element relations {resourceRelation*, eagRelation*}
+resourceRelation =
+  element resourceRelation {
+    relationEntry,
+    descriptiveNote?,
+    attribute resourceRelationType {
+      "creatorOf" | "subjectOf" | "other"},
+    href}
+relationEntry = element relationEntry {text}
+eagRelation =
+  element eagRelation {
+    relationEntry*,
+    descriptiveNote?,
+    attribute eagRelationType {
+      "hierarchical-child"
+      | "hierarchical-parent"
+      | "temporal-earlier"
+      | "temporal-later"
+      | "associative"},
+    href}
