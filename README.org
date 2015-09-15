@@ -18,8 +18,8 @@ Tools for working with RNC include:
     Comment out such includes.
   - It also can't reliably identify which is the start element. I've added a string param for this,
     but if there are multiple start elements, you'll need to touch the schema manually. See LIDO below.
-- [[https://jing-trang.googlecode.com/files/trang-20091111.zip][trang]] ([[https://htmlpreview.github.io/?https://raw.githubusercontent.com/relaxng/jing-trang/master/doc/jing.html][doc]]), which converts RNG->RNC and other conversions
-- [[https://jing-trang.googlecode.com/files/jing-20091111.zip][jing]] ([[https://htmlpreview.github.io/?https://raw.githubusercontent.com/relaxng/jing-trang/master/trang/doc/trang-manual.html][manual]]), which validates RNG and RNC.
+- [[https://jing-trang.googlecode.com/files/trang-20091111.zip][trang]] ([[https://htmlpreview.github.io/?https://raw.githubusercontent.com/relaxng/jing-trang/master/trang/doc/trang-manual.html][manual]]), which converts RNG->RNC and other conversions
+- [[https://jing-trang.googlecode.com/files/jing-20091111.zip][jing]] ([[https://htmlpreview.github.io/?https://raw.githubusercontent.com/relaxng/jing-trang/master/doc/jing.html][doc]]), which validates RNG and RNC.
   - The binaries are at google code, the source of both trang and jing is moved to https://github.com/relaxng/jing-trang
   - Note: if you get errors like this:
     : Exception in thread "main" java.lang.StackOverflowError
@@ -27,9 +27,21 @@ Tools for working with RNC include:
     for deeply nested schemas then you need to increase the java stack, eg
     : java -Xss8M -jar c:/prog/jing-20091111/bin/jing.jar -c schema.rnc
 
-** Emacs
+** Emacs rnc-mode
 In emacs I use [[https://github.com/TreeRex/rnc-mode][rnc-mode]], flymake and jing to do syntax highlighting and "on the fly" syntax checking.
 Use a [[https://github.com/TreeRex/rnc-mode/pulls][patched rnc-mode]] to set -Xss for jing as described above. 
+I use a setup like this:
+#+BEGIN_SRC elisp
+(setq
+  rnc-enable-flymake t
+  rnc-jing-jar-file "c:/prog/jing-20091111/bin/jing.jar"
+  rnc-jing-java-options "-Xss8M" ; increase stack size to 8M, else get
+    ;; Exception in thread "main" java.lang.StackOverflowError
+    ;; at com.thaiopensource.relaxng.pattern.BinaryPattern.checkRecursion(BinaryPattern.java:16)
+  rnc-enable-imenu t
+  rnc-indent-level 2
+)
+#+END_SRC
 
 Below you see the results of "on the fly" syntax checking at the word "JUNK":
 
@@ -38,6 +50,34 @@ Below you see the results of "on the fly" syntax checking at the word "JUNK":
 I also use Emacs imenu to get a "table of contents" of the schema, and jump to the definition of the symbol at cursor.
 
 [[./img/RNC-imenu.png]]
+
+** Emacs flycheck
+rnc-mode uses flymake to check syntax on the fly.
+However, [[https://www.masteringemacs.org/article/spotlight-flycheck-a-flymake-replacement][flymake has been superseded by flycheck]], because it makes it a lot easier to define checkers and supersedes packages like smart-compile.
+
+Install it with the package manager, then set it up like this:
+#+BEGIN_SRC elisp
+(flycheck-define-checker rnc-jing
+  "RNC syntax checker using jing.
+Home: https://github.com/relaxng/jing-trang (was https://jing-trang.googlecode.com).
+Binary: https://jing-trang.googlecode.com/files/jing-20091111.zip.
+Manual: https://htmlpreview.github.io/?https://raw.githubusercontent.com/relaxng/jing-trang/master/doc/jing.html"
+  :command ("java"
+            "-Xss8M" ; increase stack size to 8M, else get
+            ;; Exception in thread "main" java.lang.StackOverflowError
+            ;; at com.thaiopensource.relaxng.pattern.BinaryPattern.checkRecursion(BinaryPattern.java:16)
+            "-jar" "c:/prog/jing-20091111/bin/jing.jar" "-c" source)
+  :error-patterns
+  ((error line-start (file-name) ":" line ":" column ": " (or "error" "fatal") ": " (message) line-end)
+   (error "fatal" ":" (message) line-end)
+   (info line-start (file-name) ":" line ":" column ": " (message) line-end))
+  :modes rnc-mode)
+(add-to-list 'flycheck-checkers 'rnc-jing)
+
+(global-flycheck-mode)
+#+END_SRC
+
+Don't forget to set ~rnc-enable-flymake nil~ to avoid conflicts.
 
 ** rncfix
 [[./bat/rncfix.pl]] converts ugly RNC annotations, eg:
