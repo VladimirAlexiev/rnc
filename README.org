@@ -1,4 +1,6 @@
- Source: https://github.com/VladimirAlexiev/rnc; [[https://github.com/VladimirAlexiev/rnc/README.org][README]], [[http://rawgit.com/VladimirAlexiev/rnc/master/README.html][HTML rendered version]]
+Source: https://github.com/VladimirAlexiev/rnc
+
+[[https://github.com/VladimirAlexiev/rnc/blob/master/README.org][README]], [[http://rawgit.com/VladimirAlexiev/rnc/master/README.html][HTML rendered version]]
 
 * Table of Contents                                 :TOC:
  - [[#rnc][RNC]]
