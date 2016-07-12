@@ -1,6 +1,20 @@
-Source: https://github.com/VladimirAlexiev/rnc.
+Source: https://github.com/VladimirAlexiev/rnc; [[https://github.com/VladimirAlexiev/rnc/README.org][README]], [[http://rawgit.com/VladimirAlexiev/rnc/master/README.html][HTML rendered version]]
 
-[[http://htmlpreview.github.io/?https://github.com/VladimirAlexiev/rnc/blob/master/README.html][README.html]]: better readable version
+* Table of Contents                                 :TOC:
+ - [[#rnc][RNC]]
+ - [[#rnc-tools][RNC Tools]]
+   - [[#emacs-rnc-mode][Emacs rnc-mode]]
+   - [[#emacs-flycheck][Emacs flycheck]]
+   - [[#rncfix][rncfix]]
+   - [[#scripts][Scripts]]
+ - [[#rnc-schemas][RNC Schemas]]
+   - [[#ead][EAD]]
+   - [[#ead3][EAD3]]
+   - [[#eac-cpf][EAC CPF]]
+   - [[#eag][EAG]]
+   - [[#cdwa][CDWA]]
+   - [[#lido][LIDO]]
+   - [[#cona][CONA]]
 
 * RNC
 The ISO DSSSL group defines a number of XML schema definition languages. Amongst them:
@@ -18,8 +32,8 @@ Tools for working with RNC include:
     Comment out such includes.
   - It also can't reliably identify which is the start element. I've added a string param for this,
     but if there are multiple start elements, you'll need to touch the schema manually. See LIDO below.
-- [[https://jing-trang.googlecode.com/files/trang-20091111.zip][trang]] ([[https://htmlpreview.github.io/?https://raw.githubusercontent.com/relaxng/jing-trang/master/trang/doc/trang-manual.html][manual]]), which converts RNG->RNC and other conversions
-- [[https://jing-trang.googlecode.com/files/jing-20091111.zip][jing]] ([[https://htmlpreview.github.io/?https://raw.githubusercontent.com/relaxng/jing-trang/master/doc/jing.html][doc]]), which validates RNG and RNC.
+- [[https://jing-trang.googlecode.com/files/trang-20091111.zip][trang]] ([[http://rawgit.com/relaxng/jing-trang/master/trang/doc/trang-manual.html][manual]]), which converts RNG->RNC and other conversions
+- [[https://jing-trang.googlecode.com/files/jing-20091111.zip][jing]] ([[http://rawgit.com/relaxng/jing-trang/master/doc/jing.html][doc]]), which validates RNG and RNC.
   - The binaries are at google code, the source of both trang and jing is moved to https://github.com/relaxng/jing-trang
   - Note: if you get errors like this:
     : Exception in thread "main" java.lang.StackOverflowError
