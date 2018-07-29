@@ -1,0 +1,609 @@
+# RelaxNG Compact Schema: converted by vladimir.alexiev@ontotext.com on 22-Jun-2015 from 
+# Getty Vocabulary CONA Contribution Schema - Release 1.0, 09/28/2010
+
+default namespace = "http://localhost/namespace"
+namespace a = "http://relaxng.org/ns/compatibility/annotations/1.0"
+namespace rng = "http://relaxng.org/ns/structure/1.0"
+namespace vp = "http://localhost/namespace/vp"
+include "cona_associative_type.rnc" inherit = vp
+include "cona_contrib.rnc" inherit = vp
+include "cona_language.rnc" inherit = vp
+include "cona_nationality.rnc" inherit = vp
+include "cona_event.rnc" inherit = vp
+include "cona_class.rnc" inherit = vp
+include "cona_role.rnc" inherit = vp
+include "cona_source.rnc" inherit = vp
+include "cona_lookup_lists.rnc" inherit = vp
+start = Vocabulary
+
+Vocabulary =
+  ## Getty Vocabulary CONA Contribution Schema - Release 1.0, 09/28/2010
+  element Vocabulary {
+    ## A vocabulary record that is defined by its subject ID number
+    element Subject {(
+       ## There can be one and only one preferred ancester branch, but zero to many non-preferrened ancester branches
+       element Ancestors {
+         (element Preferred_Ancestor_Branch {
+            ## The preferred parent of the current record
+            element Ancestor {
+              element Immediate {ParentType},
+              element Other {ParentType}*}}
+          & element Non-Preferred_Ancestor_Branches {
+              ## There has to be at least one non-preferred parent
+              element Non-Preferred_Ancestor_Branch {
+                ## The non-preferred parent of the current record
+                element Ancestor {
+                  element Immediate {ParentType},
+                  element Other {ParentType}*}}+}?),
+         [ a:defaultValue = "300000000" ]
+         attribute Broad_Parent_ID {
+           ## Facet
+           VP_Subject_ID}?}
+       & element Associative_Relationships {
+           ## The Subject to Subject relationships other than parent/child. There can be  zero to infinite number of such relationships.
+           element Associative_Relationship {
+             element Description {
+               ## Relationship information
+               xsd:string}?
+             & element AR_Date {
+                 ## The date group for the associative relationship
+                 element Display_Date {
+                   ## Label for relationship date information
+                   xsd:string}
+                 & element Start_Date {
+                     ## Historical start date of relationship
+                     Geog_Date}
+                 & element End_Date {
+                     ## Historical end date of the relationship
+                     Geog_Date}}?
+             & element Historic_Flag {
+                 ## Flag indicating the historical status of the relationship
+                 associative_rels_historic_flag}?
+             & element Relationship_Type {
+                 ## The code related to the relationship type between the subjects
+                 ar_code}
+             & element Related_Subject_ID {
+                 element VP_Subject_ID {
+                   ## ID of the related subject set by the Getty Vocabulary Program
+                   VP_Subject_ID}
+                 | element Contrib_Subject_ID {
+                     ## ID of the related subject set by the Contributing Organization
+                     xsd:string}}}*}?
+       & element Descriptive_Notes {
+           ## Descriptive note linked to a subject record associated with a particular language. There can be zero to infinite number of such notes.
+           element Descriptive_Note {
+             element Note_Text {
+               ## The text of the descriptive note
+               xsd:string}
+             & element Note_Language {
+                 ## The code associated with the  language in which the note is written along with the textual description separated by the forward slash "/"
+                 language_code}
+             & element Note_Sources {
+                 ## There must be at least one source for each note but there can be multiple sources
+                 element Note_Source {
+                   element Source {
+                     ## Source of the note
+                     SourceType}
+                   & element Page {
+                       ## The free text field for information relating to note-to-source relationship
+                       xsd:string}?}+}}*}?
+       & element Record_Type {
+           ## Subject record type: Movable Work, Built Work, Guide Term, Facet
+           sub_record_type}?
+       & element Sort_Order {
+           ## Sort order of subject record among preferred parent siblings
+           xsd:int}
+       & element Special_Project {
+           ## Name of special project associated with subject record
+           xsd:string}?
+       & element Subject_Contributor {
+           ## The contributor record for the contributor of the subject record
+           element Contributor_id {
+             ## The Getty unique id for a particular contributor
+             contrib_code}
+           & element Contrib_subject_id {
+               ## ID of subject record in the contributor's system
+               xsd:string}?
+           & element Contrib_Note {
+               ## Editorial note by the contributing organization
+               xsd:string}?
+           & element Editor_name {
+               ## Name of the contributing editor or organization
+               xsd:string}
+           & element Editor_email {
+               ## Email of the contributing editor or organization
+               xsd:string}}
+       & element Subject_Sources {
+           ## The source record for the  source of the subject record
+           element Subject_Source {
+             element Source {SourceType}
+             & element Page {
+                 ## Free text entry field for information relating to subject-to-source relationship
+                 xsd:string}?}+}?
+       & element Terms {
+           ## There can be one and only one preferred term, but zero to many non-preferrened terms.
+           element Preferred_Term {
+             ## The preferred term
+             TermType},
+           element Non-Preferred_Term {TermType}*}
+       & element Work_Types {
+           element Preferred_Work_Type {Work_TypeType},
+           element Non-Preferred_Work_Type {Work_TypeType}*}
+       & element Other_Displays {OtherDisplaysType}
+       & element Person_Corp_Rels {
+           element Person_Corp_Rel {PersonCorpType}+}
+       & element Depicted_Subjects {
+           element Depicted_Subject {DepictedSubjectType}+}?
+       & element Creation_Display_Dates {
+           element Creation_Display_Date {
+             element Date_Qualifier {
+               ## A clarification of the meaning of the date, including an indication that different creative activities took place on different dates (e.g., design; execution; alteration; addition; performance; restoration; destruction; discovery; bulk; inclusive; coverage; publication). Qualifier, Start Date, and End Date repeat as a set.
+               creation_dates_qualifier},
+             element Start_Date {
+               ## The earliest possible dates when the work of art or architecture was created. For works that were created over a span of time, start date is the year when the work was designed or when execution was begun, and end date is the year when it was finished. For uncertain or approximate dates, these are the earliest possible years when the work could have been begun or designed.
+               Historical_Date},
+             element End_Date {
+               ## The latest possible dates when the work of art or architecture was created.
+               Historical_Date}}*}?
+       & element General_Depicted_Subjects {
+           element General_Depicted_Subject {GenDepictedSubjectType}+}?
+       & element Location_Repositories {
+           element Location_Repository {LocationRepositoryType}+}
+       & element Classifications {
+           element Classification {ClassificationType}+}
+       & element Materials {
+           element Material {
+             ## An indication of the substances or materials used in the creation of a work, as well as any implements, production or manufacturing techniques, processes, or methods incorporated in its fabrication. (e.g., oil on canvas, egg-tempera paint with tooled gold-leaf halos on panel, Carrara marble on granite base).
+             MaterialsIndexingType}+}?
+       & element Dimensions {
+           element Dimension {
+             ## Information about the dimensions, size, or scale of the work. It may include the shape, weight, or other characteristics of the work. It may also include the number of the parts of a complex work, series, or collection (e.g., 23.9 x 35.8 x 8.3 cm, 76 x 41 x 39 feet, 56.8 cm (diameter), sheets range from 20.3 to 49 cm height).
+             DimensionsIndexingType}+}?
+       & element Creator_Displays {
+           ## There has to  at least one description for a creator.
+           element Creator_Display {
+             element Creator_Display_Text {
+               ## Creator description
+               xsd:string},
+             element Preferred_Flag {
+               ## The flag that indicates whether the creator is preferred or not.
+               creator_display_preferred}}+}?
+       & element Cultures {
+           element Culture {
+             ## There has to be at least one culture for the object record.
+             CultureType}+}?
+       & element Events {
+           element Preferred_Event {
+             ## The preferred even for the subject record
+             EventType},
+           element Non-Preferred_Event {
+             ## Any non-preferred events for the subject record
+             EventType}*}?
+       & element Styles {
+           element Style {
+             ## There has to be at least one style for an object record.
+             StyleType}+}?
+       & element Outside_Iconography_Records {
+           ## Note field for a term or phrase for subjects that are taken from some outside source not included in AAT, TGN, ULAN, or the CONA Iconography Authority.
+           element Outside_Iconography {
+             element Iconogrpahy_Term {
+               ## Textual description of iconography element
+               xsd:string},
+             element Iconography_Code {
+               ## Code or ID number in iconogrpahic system
+               xsd:string},
+             element Outside_Iconography_Sources {
+               ## Brief Citation of the linked source for the outside iconography term.
+               element Outside_Iconography_Source {
+                 element Source {SourceType}
+                 & element Page {
+                     ## The free text field for information relating to outside inconography-to-source relationship
+                     xsd:string}?}+}?}+}?),
+      attribute Subject_ID {
+        ## The unique number that identifies each subject record assigned by the Getty Vocabulary Program; can be used to indicate an update to an existing Getty Vocabulary record
+        VP_Subject_ID}?}+,
+    attribute Title {
+      ## Title of dataset
+      xsd:string},
+    attribute Part {
+      ## Batch number within the entire dataset (e.g. 1 of 4)
+      xsd:string}?,
+    attribute Date {
+      ## Date of the dataset
+      xsd:date}}
+
+## The VCS unique identifier for a subject
+VP_Subject_ID =
+  xsd:long {minInclusive = "1000000" maxInclusive = "799999999"}
+
+## Years recording historical events
+Historical_Date = xsd:integer {maxInclusive = "9999"}
+
+## Years of geographic or geologic events
+Geog_Date = xsd:integer {maxInclusive = "9999"}
+
+## Set of values to reference a bibliographic source
+SourceType =
+  element Source_ID {
+    ## The uniqued ID of easch Source record
+    source_code}
+  & element Brief_Citation {
+      ## Brief textual description of source record
+      xsd:string}?
+  & element Full_Citation {
+      ## Complete textual description of source record
+      xsd:string}?
+  & element Biblio_Note {
+      ## Bibliographic information related to the source record
+      xsd:string}?
+
+## Parent type for the Ancestors element
+ParentType =
+  element Historic_Flag {
+    ## Flag indicating the historical status of the parent/child relationship
+    sub_rel_historic_flag}?
+  & element PR_Date {
+      ## The date group for the parent/child relationship
+      element Display_Date {
+        ## Label for relationship date information
+        xsd:string}
+      & element Start_Date {
+          ## Historical start date of the parent/child relationship
+          Geog_Date}
+      & element End_Date {
+          ## Historical end date of the parent/child relationship
+          Geog_Date}}?
+  & element Term {
+      ## A vocabulary entry for each subject record. Only one term can be preferred but there can be other non-preferred terms.
+      xsd:string}?
+  & element Parent_ID {
+    ## The subject id of the parent record
+      element VP_Subject_ID {
+        ## ID of the parent record set by the Getty Vocabulary Program
+        VP_Subject_ID}
+      | element Contrib_Subject_ID {
+          ## ID of the parent record set by the Contributing Organization
+          xsd:string}}
+  & element Hier_Rel_Type {
+      ## Hierarchical relationship type
+      sub_rel_hier_rel_type}
+
+## Term block for the Terms element
+TermType =
+  element AACR2_Flag {
+    ## Flag to indicate when a CONA record is a AACR2 record
+    term_aacr2_flag}?
+  & element Contributor_Term_ID {
+      ## ID of term record set by the Contributing Organization
+      xsd:string}?
+  & element VP_Term_ID {
+      ## ID given to the term by the Getty Vocabulary Program
+      xsd:string}?
+  & (element Display_Name {
+       ## Flag indicating whether or not the term is a display name
+       term_display_name}?)
+  & element Display_Order {
+      ## Order number of the term in relation to the other terms of a subject record
+      [ a:defaultValue = "0" ]
+      xsd:unsignedShort}?
+  & element Historic_Flag {
+      ## Flag indicating the historical status of the term
+      term_historic_flag}?
+  & element Language {
+      ## The language of the term. There has to be at least one language, but there can be infinite languages.
+      element Term_Languages {
+        element Term_Language {
+          ## The language of the term designated by a code and a textual description separated by a forward slash "/" 
+          language_code}
+        & element Preferred {
+            ## The flag for whether the term language is the preferred language
+            language_rels_preferred}?
+        & element Qualifier {
+            ## Label to disambiguate homographs
+            xsd:string}?
+        & element Term_Type {
+            ## Type of Term e.g. Descriptor, Alternate Descriptor, Used For Term
+            language_rels_term_type}?
+        & element Part_of_Speech {
+            ## Flag to indicate term part of speech for a particular language
+            language_rels_part_of_speech}?
+        & element Lang_Stat {
+            ## Language status flag used to indicate loan terms
+            language_rels_lang_stat}?}+}?
+  & element Other_Flags {
+      ## Extra field for holding any flags not already represented in the term table
+      term_other_flags}?
+  & element Term_Date {
+    ## The date group for the term
+      element Display_Date {
+        ## Label for term date information
+        xsd:string}
+      & element Start_Date {
+          ## Historical start date of term use
+          Historical_Date}
+      & element End_Date {
+          ## Historical end date of term use
+          Historical_Date}}?
+  & element Term_Sources {
+      ## There has to be at least one source for every term record, but there can be infinite sources
+      element Term_Source {
+        element Source {SourceType}
+        & element Page {
+            ## Free text entry field for information relating to term-to-source relationship
+            xsd:string}?
+        & element Preferred {
+            ## Flag indicating whtether or not a term is preferred for a particular source
+            source_rels_term_preferred}?}+}
+  & element Term_Text {
+      ## The term
+      xsd:string}
+  & element Vernacular {
+      ## Flag indicating whether or not the term is the vernacular for the indicated language
+      term_vernacular}?
+
+## Work_Type type for the Work type element
+Work_TypeType =
+  element Work_Type_Number {
+    ## AAT Subject ID from the Objects Facet (300264092)
+    VP_Subject_ID}
+  & element Display_Order {
+      ## Order of the work type in the list of work types
+      xsd:unsignedShort}
+  & element Historic_Flag {
+      ## Flag indicating the historical status of the work type
+      wtype_role_rels_historic_flag}?
+  & element Work_Type_TermID {
+      ## AAT Term ID from the Objects Facet (300264092)
+      xsd:long}?
+  & element WT_Date {
+    ## The date group for the work type
+      element Display_Date {
+        ## Label for term date information
+        xsd:string}
+      & element Start_Date {
+          ## Historical start date of the work type
+          Geog_Date}
+      & element End_Date {
+          ## Historical end date of the work type
+          Geog_Date}}?
+
+## Culture type for the Nationality element
+CultureType =
+  element Nationality_Code {
+    ## The nationality/culture code and textual description separated by a forward slash "/"
+    nationality_code}
+  & element Display_Order {
+      ## Number where the nationality ranks in the subject record.
+      xsd:unsignedShort}
+  & element Preferred {
+      ## Flag indicating whether or not a nationality is preferred
+      depicted_sub_rels_preferred}
+
+## Event type for the Events element
+EventType =
+  element Event_ID {
+    ## Unique ID number of an event chosen from a Getty controlled list along with the textual description separated by the forward slash "/"
+    event_code}
+  & element Display_Order {
+      ## Order number of event within the list of events
+      xsd:unsignedShort}
+  & element Place {
+      ## TGN Subject ID referring to a specific Geographic Place.
+      xsd:string}?
+  & element Event_Date {
+    ## Date group for the event
+      element Display_Date {
+        ## Note referring to a date or other information alluding to a date that describes the work as relative to the event.
+        xsd:string}
+      & element Start_Date {
+          ## Historical start date of the event
+          Historical_Date}
+      & element End_Date {
+          ## Historical end date of the event
+          Historical_Date}}?
+
+## Classification type for the Classification element
+ClassificationType =
+  element Class_ID {
+    ## Code and textual description combination separated by a forward slash "/" obtained from a Getty controlled list
+    class_code}
+  & element Preferred {
+      ## Flag indicating whether the classification is preferred or not.
+      class_rels_preferred}
+
+## Style_Type type for the Style element
+StyleType =
+  element Style_Number {
+    ## AAT Subject ID from the Styles and Periods Facet (300264088)
+    VP_Subject_ID}
+  & element Display_Order {
+      ## Number where the style ranks in the subject record.
+      xsd:unsignedShort}
+  & element Style_Code {
+      ## Type of style being described obtained from a Getty controlled list
+      style_rels_code}
+  & element Preferred {
+      ## Flag indicating whether or not the style is preferred
+      style_rels_preferred}
+
+## Location/Repository type for the Location/Repository element
+LocationRepositoryType =
+  element Geog_Loc_RefID {
+    ## TGN Subject ID referring to a specific Geographic Place.  Note:  Cannot have both a Geographic place and a Corporate Body in the same line.
+    VP_Subject_ID}?
+  & element Corp_Loc_RefID {
+      ## ULAN Subject ID referring to a specific Corporate Body.  Note:  Cannot have both a Geographic place and a Corporate Body in the same line.
+      VP_Subject_ID}?
+  & element Current_Flag {
+      ## Indication if the location is current or historical (current, other).
+      locrep_current_flag}
+  & element Repository_Numbers {
+      ## Any unique identifiers assigned to a work by the repository. Required for the current repository  (e.g. 1987.776.32 A; P and D 3455-90).
+      xsd:string}?
+  & element Credit_Line {
+      ## A brief statement indicating how the work came into the current collection or how it came to be on view at the repository (e.g., Bashford Dean Memorial Collection, Gift of Edward S. Harkness, 1929).
+      xsd:string}?
+  & element Repository_Loc_Type {
+      ## An indication clarifying what the location represents, used primarily when Current Flag = Other (e.g., Creation; Discovery; Architectural Context; Lost; Destroyed; Not Applicable).
+      locrep_type}?
+  & element Address_Note {
+      ## An indication of the street address of architecture or other address information for the location.
+      xsd:string}?
+
+## Dimensions Indexing type for the Dimensions Indexing element
+DimensionsIndexingType =
+  element Value {xsd:decimal}
+  & element Unit {dimensions_idx_unit}
+  & element Dimensions_Type {
+      ## Description of the type of dimension being described obtained from a Getty controlled list
+      dimensions_idx_dim_type}
+  & element Dimensions_Extent {
+      ## An explanation of the part of the work being measured, included when necessary for clarity (e.g., image, overall, diameter).
+      dimensions_idx_dim_ext}?
+  & element Dimensions_Qualifier {
+      ## A word or phrase that elaborates on the nature of the measurements of the work when necessary, as when the measurements are approximate (sight, maximum).
+      dimensions_idx_dim_qual}?
+  & element Scale_Type {
+      ## A term describing the scale, which is an expression of the ratio between the size of the representation of something and that thing (e.g., the size of the drawn structure and the actual built work). Used for studies, record drawings, models, and other representations drawn or constructed to scale (e.g., numeric, full size)
+      ## Format: The configuration of the size or format a work, including technical formats, or the conventional designation for the dimensions or proportion of a work (longline, quarto, IMAX).
+      dimensions_idx_scale_type}?
+  & element Format {dimensions_idx_format}?
+  & element Shape {
+      ## The outline, form, or characteristic configuration of a work or part of a work, including its contours; used for unusual shapes (round, irregular).
+      dimensions_idx_shape}?
+
+## Materials Indexing type for the Materials Indexing element
+MaterialsIndexingType =
+  element Material_Term_ID {
+    ## AAT Subject ID
+    VP_Subject_ID}
+  & element Material_Tech_Flag {
+      ## Flag for distinguishing materials from techniques (material, technique/implement).
+      matidx_material_tech_flag}?
+  & element Material_Tech_Role {
+      ## The role indicating if the terms refer to to a medium or support for materials, or to a technique or implement for techniques/implements (medium, support, technique, implement).
+      matidx_material_tech_role}?
+  & element Material_Term_Text {
+      ## Textual description of material to be converted into a link to an AAT record before being loaded into CONA.
+      xsd:string}?
+  & element Material_Extent {
+      ## The specific part of a work composed of a certain material manufactured or created using a particular technique (overall, surface).
+      xsd:string}?
+
+## Other Displays type for the Other Displays element
+OtherDisplaysType =
+  element Catalog_Level {
+    ## An indication of the level of cataloging represented by the record, based on the physical form or intellectual content of the material (e.g., item, group, subgroup, volume, collection).
+    other_displays_cat_level}
+  & element Provenance {
+      ## The prose description of the provenance or history of the owners or others in possession of a work of art or architecture, or a group.
+      xsd:string}?
+  & element Copyright {
+      ## A formal statement of the copyright of a work, and/or any restrictions placed on it.
+      xsd:string}?
+  & element Creation_Date {
+      ## A concise description of the date or range of dates associated with the creation, design, production, presentation, performance, construction, or alteration of the work or its components, presented in a syntax suitable for display to the end-user and including any necessary indications of uncertainty, ambiguity, and nuance (e.g., 1667, ca. 1210, 17th century, before 952 BCE, reign of Rameses II).
+      xsd:string}
+  & element Creation_Number {
+      ## Any numbers or codes assigned to a work of art in the context of its creation (e.g., DAR ; no. 1227Y).
+      xsd:string}?
+  & element Display_Dimensions {
+      ## Information about the dimensions, size, or scale of the work, presented in a syntax suitable for display to the end-user and including any necessary indications of uncertainty, ambiguity, and nuance. It may include the scale of the work. It may also include the number of the parts of a complex work, series, or collection.
+      xsd:string}
+  & element Display_Materials {
+      ## : An indication of the substances or materials used in the creation of a work, as well as any implements, production or manufacturing techniques, processes, or methods incorporated in its fabrication. (e.g., oil on canvas, egg-tempera paint with tooled gold-leaf halos on panel, Carrara marble on granite base).
+      xsd:string}
+  & element Watermarks {
+      ## A description of marks inherent in or applied to the material before it was fashioned into the work, including watermarks and stationers' stamps or marks (e.g., foolscap, EAL in orb).
+      xsd:string}?
+  & element Inscriptions {
+      ## The transcription or description of the content of the inscription, mark, or text, which may include the material or medium in which the inscription or text was executed; its support if it is on a separate piece affixed to the object; the method by which the inscription or text was produced; and a brief description of the content or appearance of the inscription or text.
+      xsd:string}?
+  & element Typeface {
+      ## The name or a descriptive phrase that identifies the typeface or script used in an inscription (e.g., Carolingian minuscule, Helvetica 9 point bold).
+      xsd:string}?
+  & element Marks {
+      ## An identification of an inscribed mark type or name (e.g., Sèvres double Louis, Grindley Tunstall).
+      xsd:string}?
+  & element State {
+      ## An indication of the relationship of the work to other stages of the same work (e.g., 3rd state, 4th of 5 states, printer's proof).
+      xsd:string}?
+  & element Edition {
+      ## A description of the specific edition to which a work belongs, whether expressed as a fractional number or as a name or expression of the context related to prior or later issuances (e.g., 46/500 ; 2nd edition).
+      xsd:string}?
+
+## Person/Corp Body type for the Person/Corp Body type element
+PersonCorpType =
+  element Person_Corp_Number {
+    ## ULAN Subject ID
+    VP_Subject_ID}
+  & element Person_Role_ID {
+      ## Unique numeric code of the role of linked person or corporate body in ULAN, from the Role table in ULAN.
+      role_code}?
+  & element Person_Corp_Extent {
+      ## The part of a work contributed by a particular creator (e.g., predella; execution; with additions by; figures).
+      person_corp_rels_extent}
+  & element Person_Corp_Qualifier {
+      ## Attribution qualifier, an expression of the certainty with which a work can be attributed to a known artist or group, used when the attribution is uncertain, is in dispute, when there is more than one creator, when there is a former attribution, or when the attribution otherwise requires explanation (e.g., attributed to, formerly attributed to, probably by, possibly by, workshop of, studio of, office of, atelier of, assistant to, associate of, manufactory of, follower of, circle of, school of, style of, after, copyist of, manner of). Definitions of these terms are in the editorial manual.
+      person_corp_rels_qualifier}
+  & element Person_Corp_Nat_Text {
+      ## System-concatenated label for the linked entity, e.g., Gogh, Vincent van (Dutch painter and draftsman, 1853-1890) (Persons, Artists, Top of the ULAN list / hierarchy).
+      empty}?
+
+## Location/Repository type for the Location/Repository element
+DepictedSubjectType =
+  element Place_Number {
+    ## TGN Subject ID
+    VP_Subject_ID}?
+  & element Person_Corp_Number {
+      ## ULAN Subject ID
+      VP_Subject_ID}?
+  & element AAT_Number {
+      ## AAT Subject ID
+      VP_Subject_ID}?
+  & element CONA_Number {
+      ## CONA Subject ID
+      VP_Subject_ID}?
+  & element Iconography_ID {
+      ## Iconography Term or ID separated by forward slash (/).  Use "NEW" for new iconography record with term.
+      VP_Subject_ID}?
+  & element Preferred {
+      ## Flag indicating whether or not a depicted subject is preferred
+      depicted_sub_rels_preferred}
+  & element Display_Order {
+      ## Order of the depicted subject in the list of depiceted subjects
+      xsd:unsignedShort}
+  & element Indexing_Type {
+      ## A classification of the level of subject description indicated by the indexing terms, for use if necessary to distinguish between what a work is "of" and what it is "about” (e.g., description, identification, interpretation).
+      depicted_sub_rels_idx_type}?
+  & element Subject_Extent {
+      ## When there are multiple subjects, a term indicating the part of the work to which these subject terms apply (e.g., recto, verso, side A).
+      depicted_sub_rels_sub_extent}?
+  & element Depicted_Term_ID {
+      ## Term ID of the value in Depicted Label, a link coming from one of 5 sources: CONA itself, ULAN, TGN, AAT or the Iconography Authority
+      empty}?
+
+## Location/Repository type for the Location/Repository element
+GenDepictedSubjectType =
+  element Preferred {
+    ## Flag indicating whether or not a general depicted subject is preferred
+    depicted_sub_rels_preferred}
+  & element Display_Order {
+      ## Sort order for the general depicted subjects.
+      xsd:unsignedShort}
+  & element General_Depicted {
+      ## Indexing terms that characterize in general terms what the work depicts or what is depicted in it,, taken from a controlled list. This subject analysis is the minimum required. It is recommended to also list specific subjects, if possible.
+      general_depicted_subject_gendep}
+  & element Indexing_Type {
+      ## A classification of the level of subject description indicated by the indexing terms, for use if necessary to distinguish between what a work is "of" and what it is "about” (e.g., description, identification, interpretation).
+      depicted_sub_rels_idx_type}?
+  & element Subject_Extent {
+      ## When there are multiple subjects, a term indicating the part of the work to which these subject terms apply (e.g., recto, verso, side A).
+      depicted_sub_rels_sub_extent}?
+
+## The VCS unique identifier for a source
+VP_Source_ID =
+  xsd:long {minInclusive = "2000000000" maxInclusive = "2499999999"}
+
+## Valid merged status values
+Merged_Status_Value = "Merged" | "Not Merged"

@@ -3,22 +3,29 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<title>README</title>
-<meta  http-equiv="Content-Type" content="text/html;charset=utf-8" />
-<meta  name="generator" content="Org-mode" />
-<meta  name="author" content="Vladimir Alexiev" />
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>&lrm;</title>
+<meta name="generator" content="Org mode" />
+<meta name="author" content="Vladimir Alexiev" />
 <style type="text/css">
  <!--/*--><![CDATA[/*><!--*/
-  .title  { text-align: center; }
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
   .todo   { font-family: monospace; color: red; }
-  .done   { color: green; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
   .tag    { background-color: #eee; font-family: monospace;
             padding: 2px; font-size: 80%; font-weight: normal; }
   .timestamp { color: #bebebe; }
   .timestamp-kwd { color: #5f9ea0; }
-  .right  { margin-left: auto; margin-right: 0px;  text-align: right; }
-  .left   { margin-left: 0px;  margin-right: auto; text-align: left; }
-  .center { margin-left: auto; margin-right: auto; text-align: center; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
   .underline { text-decoration: underline; }
   #postamble p, #preamble p { font-size: 90%; margin: .2em; }
   p.verse { margin-left: 3%; }
@@ -45,27 +52,111 @@
     border: 1px solid black;
   }
   pre.src:hover:before { display: inline;}
-  pre.src-sh:before    { content: 'sh'; }
-  pre.src-bash:before  { content: 'sh'; }
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
   pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
-  pre.src-R:before     { content: 'R'; }
-  pre.src-perl:before  { content: 'Perl'; }
-  pre.src-java:before  { content: 'Java'; }
-  pre.src-sql:before   { content: 'SQL'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-hledger:before { content: 'hledger'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
 
   table { border-collapse:collapse; }
   caption.t-above { caption-side: top; }
   caption.t-bottom { caption-side: bottom; }
   td, th { vertical-align:top;  }
-  th.right  { text-align: center;  }
-  th.left   { text-align: center;   }
-  th.center { text-align: center; }
-  td.right  { text-align: right;  }
-  td.left   { text-align: left;   }
-  td.center { text-align: center; }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
   dt { font-weight: bold; }
-  .footpara:nth-child(2) { display: inline; }
-  .footpara { display: block; }
+  .footpara { display: inline; }
   .footdef  { margin-bottom: 1em; }
   .figure { padding: 1em; }
   .figure p { text-align: center; }
@@ -85,15 +176,16 @@
     { font-size: 10px; font-weight: bold; white-space: nowrap; }
   .org-info-js_search-highlight
     { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { width: 90%; }
   /*]]>*/-->
 </style>
-<style type='text/css'> h1,h2,h3,h4,h5,h6,h7 {font-family: Arial} .author, .date, .creator {-webkit-margin-before: 0em; -webkit-margin-after: 0em} .abstract {margin: 1em; padding: 1em; border: 1px solid black} .abstract:before {content: 'Abstract: '; font-weight: bold} #preamble p {font-size: 110%%; margin-left: auto; margin-right: auto; text-align: center} th.left {text-align:left} th.right {text-align:right} th, td {line-height: 1em; border-width: 1px; border-style: solid solid; border-spacing: 2px 2px; padding: 2px 1px} .CANCELED {color: blue} .MAYBE {color: blue} .POSTPONED {color: blue} .INPROGRESS {color: orange} .NEXT {color: orange} .IER {color: orange}.underline {text-decoration:underline} </style>
+<style type='text/css'> h1,h2,h3,h4,h5,h6,h7 {font-family: Arial} .author, .date, .creator {-webkit-margin-before: 0em; -webkit-margin-after: 0em} .abstract {margin: 1em; padding: 1em; border: 1px solid black} .abstract:before {content: 'Abstract: '; font-weight: bold} #preamble p {font-size: 110%%; margin-left: auto; margin-right: auto; text-align: center} th.left {text-align:left} th.right {text-align:right} th, td {line-height: 1em; border-width: 1px; border-style: solid solid; border-spacing: 2px 2px; padding: 2px 1px} .CANCELED {color: blue} .MAYBE {color: blue} .POSTPONED {color: blue} .SAME {color: blue} .APPLIED {color: orange} .FOLLOW {color: orange} .INPROGRESS {color: orange} .NEXT {color: orange} .IER {color: orange}.underline {text-decoration:underline} </style>
 <script type="text/javascript">
 /*
 @licstart  The following is the entire license notice for the
 JavaScript code in this tag.
 
-Copyright (C) 2012-2013 Free Software Foundation, Inc.
+Copyright (C) 2012-2018 Free Software Foundation, Inc.
 
 The JavaScript code in this tag is free software: you can
 redistribute it and/or modify it under the terms of the GNU
@@ -137,77 +229,61 @@ for the JavaScript code in this tag.
 </head>
 <body>
 <div id="content">
-<h1 class="title">README</h1>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#org88b04e0">RNC</a></li>
+<li><a href="#org44ab648">RNC Tools</a>
+<ul>
+<li><a href="#org5033707">Emacs rnc-mode</a></li>
+<li><a href="#org4a140f2">Emacs flycheck</a></li>
+<li><a href="#orgbbc2509">rncfix</a></li>
+<li><a href="#orgfb0c8c9">Scripts</a></li>
+</ul>
+</li>
+<li><a href="#orgbf48fa8">RNC Schemas</a>
+<ul>
+<li><a href="#org13c5b1c">EAD</a></li>
+<li><a href="#org29d845a">EAD3</a></li>
+<li><a href="#orgf29a976">EAC CPF</a></li>
+<li><a href="#org2991166">EAG</a></li>
+<li><a href="#org2d94396">CDWA</a></li>
+<li><a href="#org7ff1980">CONA</a></li>
+<li><a href="#org0c37618">LIDO</a></li>
+<li><a href="#org762ad19">SPECTRUM</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
 <p>
 Source: <a href="https://github.com/VladimirAlexiev/rnc">https://github.com/VladimirAlexiev/rnc</a>
 </p>
 
 <p>
-<a href="https://github.com/VladimirAlexiev/rnc/blob/master/README.org">README</a>, <a href="http://rawgit.com/VladimirAlexiev/rnc/master/README.html">HTML rendered version</a>
+<a href="https://github.com/VladimirAlexiev/rnc/blob/master/README.org">README.org</a>, <a href="http://rawgit.com/VladimirAlexiev/rnc/master/README.html">HTML rendered version</a>
 </p>
 
-<div id="outline-container-sec-1" class="outline-2">
-<h2 id="sec-1">Table of Contents&#xa0;&#xa0;&#xa0;<span class="tag"><span class="TOC">TOC</span></span></h2>
-<div class="outline-text-2" id="text-1">
-<ul class="org-ul">
-<li><i>RNC</i>
-</li>
-<li><i>RNC Tools</i>
-<ul class="org-ul">
-<li><i>Emacs rnc-mode</i>
-</li>
-<li><i>Emacs flycheck</i>
-</li>
-<li><i>rncfix</i>
-</li>
-<li><i>Scripts</i>
-</li>
-</ul>
-</li>
-<li><i>RNC Schemas</i>
-<ul class="org-ul">
-<li><i>EAD</i>
-</li>
-<li><i>EAD3</i>
-</li>
-<li><i>EAC CPF</i>
-</li>
-<li><i>EAG</i>
-</li>
-<li><i>CDWA</i>
-</li>
-<li><i>LIDO</i>
-</li>
-<li><i>CONA</i>
-</li>
-</ul>
-</li>
-</ul>
-</div>
-</div>
-
-<div id="outline-container-sec-2" class="outline-2">
-<h2 id="sec-2">RNC</h2>
-<div class="outline-text-2" id="text-2">
+<div id="outline-container-org88b04e0" class="outline-2">
+<h2 id="org88b04e0">RNC</h2>
+<div class="outline-text-2" id="text-org88b04e0">
 <p>
 The ISO DSSSL group defines a number of XML schema definition languages. Amongst them:
 </p>
 <ul class="org-ul">
-<li>XSD is the most verbose and unwieldy way for understanding a XML schema
-</li>
-<li>Then comes RelaxNG XML (RNG).
-</li>
-<li>RelaxNG Compact (RNC) is most compact and easy to understand.
+<li>XSD is the most verbose and unwieldy way for understanding a XML schema</li>
+<li>Then comes RelaxNG XML (RNG).</li>
+<li>RelaxNG Compact (RNC) is the most compact and easy to understand.
 RNC is even easier to read than XMLspy diagrams, because it gives you a ready overview of the schema and convenient search.
-RNC clearly shows deeply nested "matroska" style schemas, like the screen shots below.
-</li>
+RNC clearly shows deeply nested "matrioshka" style schemas, like the screen shots below.</li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-sec-3" class="outline-2">
-<h2 id="sec-3">RNC Tools</h2>
-<div class="outline-text-2" id="text-3">
+<div id="outline-container-org44ab648" class="outline-2">
+<h2 id="org44ab648">RNC Tools</h2>
+<div class="outline-text-2" id="text-org44ab648">
 <p>
 Tools for working with RNC include:
 </p>
@@ -216,46 +292,42 @@ Tools for working with RNC include:
 <ul class="org-ul">
 <li>In particular, it converts all <code>xsd:include</code> to <code>rng:include</code> without caring whether the included schema is converted or not.
 And since it cannot handle some included schemas (eg OGC Features, which is a complex multi-file schema), you'll get errors about them.
-Comment out such includes.
-</li>
+Comment out such includes.</li>
 <li>It also can't reliably identify which is the start element. I've added a string param for this,
-but if there are multiple start elements, you'll need to touch the schema manually. See LIDO below.
-</li>
-</ul>
-</li>
-<li><a href="https://jing-trang.googlecode.com/files/trang-20091111.zip">trang</a> (<a href="http://rawgit.com/relaxng/jing-trang/master/trang/doc/trang-manual.html">manual</a>), which converts RNG-&gt;RNC and other conversions
-</li>
+but if there are multiple start elements, you'll need to touch the schema manually. See LIDO below.</li>
+</ul></li>
+<li><a href="https://jing-trang.googlecode.com/files/trang-20091111.zip">trang</a> (<a href="http://rawgit.com/relaxng/jing-trang/master/trang/doc/trang-manual.html">manual</a>), which converts RNG-&gt;RNC and other conversions</li>
 <li><a href="https://jing-trang.googlecode.com/files/jing-20091111.zip">jing</a> (<a href="http://rawgit.com/relaxng/jing-trang/master/doc/jing.html">doc</a>), which validates RNG and RNC.
 <ul class="org-ul">
-<li>The binaries are at google code, the source of both trang and jing is moved to <a href="https://github.com/relaxng/jing-trang">https://github.com/relaxng/jing-trang</a>
-</li>
-<li>Note: if you get errors like this:
+<li>The binaries are at google code, the source of both trang and jing is moved to <a href="https://github.com/relaxng/jing-trang">https://github.com/relaxng/jing-trang</a></li>
+<li><p>
+Note: if you get errors like this:
+</p>
 <pre class="example">
 Exception in thread "main" java.lang.StackOverflowError
  at com.thaiopensource.relaxng.pattern.BinaryPattern.checkRecursion(BinaryPattern.java:16)
+
 </pre>
 <p>
 for deeply nested schemas then you need to increase the java stack, eg
 </p>
 <pre class="example">
 java -Xss8M -jar c:/prog/jing-20091111/bin/jing.jar -c schema.rnc
-</pre>
-</li>
-</ul>
-</li>
+
+</pre></li>
+</ul></li>
 </ul>
 </div>
 
-<div id="outline-container-sec-3-1" class="outline-3">
-<h3 id="sec-3-1">Emacs rnc-mode</h3>
-<div class="outline-text-3" id="text-3-1">
+<div id="outline-container-org5033707" class="outline-3">
+<h3 id="org5033707">Emacs rnc-mode</h3>
+<div class="outline-text-3" id="text-org5033707">
 <p>
 In emacs I use <a href="https://github.com/TreeRex/rnc-mode">rnc-mode</a>, flymake and jing to do syntax highlighting and "on the fly" syntax checking.
 Use a <a href="https://github.com/TreeRex/rnc-mode/pulls">patched rnc-mode</a> to set -Xss for jing as described above. 
 I use a setup like this:
 </p>
 <div class="org-src-container">
-
 <pre class="src src-elisp">(<span style="color: #a020f0;">setq</span>
   rnc-enable-flymake t
   rnc-jing-jar-file <span style="color: #8b2252;">"c:/prog/jing-20091111/bin/jing.jar"</span>
@@ -290,9 +362,9 @@ I also use Emacs imenu to get a "table of contents" of the schema, and jump to t
 </div>
 </div>
 
-<div id="outline-container-sec-3-2" class="outline-3">
-<h3 id="sec-3-2">Emacs flycheck</h3>
-<div class="outline-text-3" id="text-3-2">
+<div id="outline-container-org4a140f2" class="outline-3">
+<h3 id="org4a140f2">Emacs flycheck</h3>
+<div class="outline-text-3" id="text-org4a140f2">
 <p>
 rnc-mode uses flymake to check syntax on the fly.
 However, <a href="https://www.masteringemacs.org/article/spotlight-flycheck-a-flymake-replacement">flymake has been superseded by flycheck</a>, because it makes it a lot easier to define checkers and supersedes packages like smart-compile.
@@ -302,7 +374,6 @@ However, <a href="https://www.masteringemacs.org/article/spotlight-flycheck-a-fl
 Install it with the package manager, then set it up like this:
 </p>
 <div class="org-src-container">
-
 <pre class="src src-elisp">(<span style="color: #a020f0;">flycheck-define-checker</span> rnc-jing
   <span style="color: #8b2252;">"RNC syntax checker using jing.</span>
 <span style="color: #8b2252;">Home: https://github.com/relaxng/jing-trang (was https://jing-trang.googlecode.com).</span>
@@ -330,9 +401,9 @@ Don't forget to set <code>rnc-enable-flymake nil</code> to avoid conflicts.
 </div>
 </div>
 
-<div id="outline-container-sec-3-3" class="outline-3">
-<h3 id="sec-3-3">rncfix</h3>
-<div class="outline-text-3" id="text-3-3">
+<div id="outline-container-orgbbc2509" class="outline-3">
+<h3 id="orgbbc2509">rncfix</h3>
+<div class="outline-text-3" id="text-orgbbc2509">
 <p>
 <a href="./bat/rncfix.pl">./bat/rncfix.pl</a> converts ugly RNC annotations, eg:
 </p>
@@ -343,6 +414,7 @@ a:documentation [
 "   See http://www.w3.org/XML/1998/namespace.html and\x{a}" ~
 "   http://www.w3.org/TR/REC-xml for information about this namespace.\x{a}" ~
 "\x{a}" ~
+
 </pre>
 <p>
 to nice RNC comments, eg:
@@ -350,63 +422,75 @@ to nice RNC comments, eg:
 <pre class="example">
 ##   See http://www.w3.org/XML/1998/namespace.html and
 ##   http://www.w3.org/TR/REC-xml for information about this namespace.
+
 </pre>
 <p>
 It also does a bunch of other cosmetic fixes that hopefully make the RNC easier to read, eg:
 </p>
 <ul class="org-ul">
-<li>put trailing <code>}+*</code> to the line above
-</li>
-<li>remove superfluous empty lines (commented or not)
-</li>
-<li>put empty line before definitions (word or comment at beginning of line)
-</li>
+<li>put trailing <code>}+*</code> to the line above</li>
+<li>remove superfluous empty lines (commented or not)</li>
+<li>put empty line before definitions (word or comment at beginning of line)</li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-sec-3-4" class="outline-3">
-<h3 id="sec-3-4">Scripts</h3>
-<div class="outline-text-3" id="text-3-4">
+<div id="outline-container-orgfb0c8c9" class="outline-3">
+<h3 id="orgfb0c8c9">Scripts</h3>
+<div class="outline-text-3" id="text-orgfb0c8c9">
 <p>
 <a href="./bat/">./bat/</a> includes batch files for Windows (the horror!) that I use under cygwin. 
 </p>
 <ul class="org-ul">
-<li><a href="./bat/xsd2rng.bat">./bat/xsd2rng.bat</a>: XSD-&gt;RNC using xsltproc and XSDtoRNG
+<li><p>
+<a href="./bat/xsd2rng.bat">./bat/xsd2rng.bat</a>: XSD-&gt;RNC using xsltproc and XSDtoRNG
+</p>
 <pre class="example">
 xsd2rng ead
-</pre>
-</li>
-<li><a href="./bat/xsd2rnc.bat">./bat/xsd2rnc.bat</a>: XSD-&gt;RNC using xsltproc, XSDtoRNG.xsl, trang and rncfix
+
+</pre></li>
+<li><p>
+<a href="./bat/xsd2rnc.bat">./bat/xsd2rnc.bat</a>: XSD-&gt;RNC using xsltproc, XSDtoRNG.xsl, trang and rncfix
+</p>
 <pre class="example">
 xsd2rnc ead
-</pre>
-</li>
-<li><a href="./bat/rncfix.bat">./bat/rncfix.bat</a>: runs rncfix
+
+</pre></li>
+<li><p>
+<a href="./bat/rncfix.bat">./bat/rncfix.bat</a>: runs rncfix
+</p>
 <pre class="example">
 rncfix ead-tmp.rnc &gt; ead.rnc
-</pre>
-</li>
-<li><a href="./bat/rng2rnc.bat">./bat/rng2rnc.bat</a>: RNG-&gt;RNC using trang and rncfix
+
+</pre></li>
+<li><p>
+<a href="./bat/rng2rnc.bat">./bat/rng2rnc.bat</a>: RNG-&gt;RNC using trang and rncfix
+</p>
 <pre class="example">
 rng2rnc ead
-</pre>
-</li>
-<li><a href="./bat/jing.bat">./bat/jing.bat</a>: runs jing to validate a RNG or RNC
+
+</pre></li>
+<li><p>
+<a href="./bat/jing.bat">./bat/jing.bat</a>: runs jing to validate a RNG or RNC
+</p>
 <pre class="example">
 jing -c ead.rnc
-</pre>
-</li>
-<li><a href="./bat/trang.bat">./bat/trang.bat</a>: runs trang to convert RNG-&gt;RNC
+
+</pre></li>
+<li><p>
+<a href="./bat/trang.bat">./bat/trang.bat</a>: runs trang to convert RNG-&gt;RNC
+</p>
 <pre class="example">
 trang ead.rng ead.rnc
-</pre>
-</li>
-<li><a href="./bat/rnc-nocomment.bat">./bat/rnc-nocomment.bat</a>: removes all comments from RNC, making it more compact and easier to see the structure. But you need to already know what the elements mean
+
+</pre></li>
+<li><p>
+<a href="./bat/rnc-nocomment.bat">./bat/rnc-nocomment.bat</a>: removes all comments from RNC, making it more compact and easier to see the structure. But you need to already know what the elements mean
+</p>
 <pre class="example">
 rnc-nocomment ead.rnc &gt; ead-nocomment.rnc
-</pre>
-</li>
+
+</pre></li>
 </ul>
 
 <p>
@@ -418,19 +502,22 @@ so you need to modify them for your setup.
 </div>
 </div>
 
-<div id="outline-container-sec-4" class="outline-2">
-<h2 id="sec-4">RNC Schemas</h2>
-<div class="outline-text-2" id="text-4">
+<div id="outline-container-orgbf48fa8" class="outline-2">
+<h2 id="orgbf48fa8">RNC Schemas</h2>
+<div class="outline-text-2" id="text-orgbf48fa8">
 <p>
 I have collected or converted the following RNC schemas related to GLAM (galleries, libraries, archives and museums)
 </p>
 </div>
 
-<div id="outline-container-sec-4-1" class="outline-3">
-<h3 id="sec-4-1">EAD</h3>
-<div class="outline-text-3" id="text-4-1">
+<div id="outline-container-org13c5b1c" class="outline-3">
+<h3 id="org13c5b1c">EAD</h3>
+<div class="outline-text-3" id="text-org13c5b1c">
+<ul class="org-ul">
+<li><a href="./ead.rnc">./ead.rnc</a>: EAD 2002 version 20080421 (Encoded Archival Description) by Society of American Archivists and Library of Congress, converted to RNC by Vladimir Alexiev.</li>
+<li><a href="./ead-nocomment.rnc">./ead-nocomment.rnc</a>: includes 387 elements or attributes</li>
+</ul>
 <p>
-<a href="./ead.rnc">./ead.rnc</a> (<a href="./ead-nocomment.rnc">nocomment</a>): EAD 2002 version 20080421 (Encoded Archival Description) by Society of American Archivists and Library of Congress, converted by Vladimir Alexiev.
 EAD is used widely by archival institutions and projects, including APex (Arvhives Portal Europe) and EHRI (European Holocaust Research Infrastructure).
 Uses the following prefixes:
 </p>
@@ -438,158 +525,199 @@ Uses the following prefixes:
 
 
 <colgroup>
-<col  class="left" />
+<col  class="org-left" />
 
-<col  class="left" />
+<col  class="org-left" />
 
-<col  class="left" />
+<col  class="org-left" />
 </colgroup>
 <thead>
 <tr>
-<th scope="col" class="left">prefix</th>
-<th scope="col" class="left">what</th>
-<th scope="col" class="left">example</th>
+<th scope="col" class="org-left">prefix</th>
+<th scope="col" class="org-left">what</th>
+<th scope="col" class="org-left">example</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td class="left"><code>e.</code></td>
-<td class="left">element definition</td>
-<td class="left"><code>e.chronlist</code> is element <code>chronlist</code>, which includes various attributes and a sequence of elements <code>chronitem</code></td>
+<td class="org-left"><code>e.</code></td>
+<td class="org-left">element definition</td>
+<td class="org-left"><code>e.chronlist</code> is element <code>chronlist</code>, which includes various attributes and a sequence of elements <code>chronitem</code></td>
 </tr>
 
 <tr>
-<td class="left"><code>a.</code></td>
-<td class="left">attribute definition</td>
-<td class="left"><code>a.identifier</code> is a simple attribute <code>identifier</code> that consists of an <code>xsd:token</code></td>
+<td class="org-left"><code>a.</code></td>
+<td class="org-left">attribute definition</td>
+<td class="org-left"><code>a.identifier</code> is a simple attribute <code>identifier</code> that consists of an <code>xsd:token</code></td>
 </tr>
 
 <tr>
-<td class="left"><code>m.</code></td>
-<td class="left">element model</td>
-<td class="left"><code>m.inter.noquote</code> is alternative of <code>e.chronlist e.list e.table</code></td>
+<td class="org-left"><code>m.</code></td>
+<td class="org-left">element model</td>
+<td class="org-left"><code>m.inter.noquote</code> is alternative of <code>e.chronlist e.list e.table</code></td>
 </tr>
 
 <tr>
-<td class="left"><code>m.mixed</code></td>
-<td class="left">mixed element model</td>
-<td class="left"><code>m.mixed.basic</code> consists of text and/or <code>e.abbr e.emph e.expan</code> etc</td>
+<td class="org-left"><code>m.mixed</code></td>
+<td class="org-left">mixed element model</td>
+<td class="org-left"><code>m.mixed.basic</code> consists of text and/or <code>e.abbr e.emph e.expan</code> etc</td>
 </tr>
 
 <tr>
-<td class="left"><code>am.</code></td>
-<td class="left">attribute model (group)</td>
-<td class="left"><code>am.common.empty</code> consists of elements <code>id altrender audience</code></td>
+<td class="org-left"><code>am.</code></td>
+<td class="org-left">attribute model (group)</td>
+<td class="org-left"><code>am.common.empty</code> consists of elements <code>id altrender audience</code></td>
 </tr>
 </tbody>
 </table>
 </div>
 </div>
-<div id="outline-container-sec-4-2" class="outline-3">
-<h3 id="sec-4-2">EAD3</h3>
-<div class="outline-text-3" id="text-4-2">
+
+<div id="outline-container-org29d845a" class="outline-3">
+<h3 id="org29d845a">EAD3</h3>
+<div class="outline-text-3" id="text-org29d845a">
 <p>
 <a href="https://github.com/SAA-SDT/EAD3">EAD3</a>: upcoming revised version, developed natively in RNG. Schemas listed in increasing recency:
 </p>
 <ul class="org-ul">
-<li><a href="https://raw.githubusercontent.com/SAA-SDT/EAD-Revision/develop/ead3.rng">https://raw.githubusercontent.com/SAA-SDT/EAD-Revision/develop/ead3.rng</a>: the namespace <a href="http://ead3.archivists.org/schema/">http://ead3.archivists.org/schema/</a> redirects to this
-</li>
-<li><a href="https://raw.githubusercontent.com/SAA-SDT/EAD2002toEAD3/develop/ead3.rng">https://raw.githubusercontent.com/SAA-SDT/EAD2002toEAD3/develop/ead3.rng</a>
-</li>
-<li><a href="https://raw.github.com/SAA-SDT/EAD-Revision/master/ead3.rng">https://raw.github.com/SAA-SDT/EAD-Revision/master/ead3.rng</a>
-</li>
-<li><a href="./ead3.rnc">./ead3.rnc</a> (<a href="./ead3-nocomment.rnc">nocomment</a>): converted from the most recent schema by Vladimir Alexiev
-</li>
+<li><a href="https://raw.githubusercontent.com/SAA-SDT/EAD-Revision/develop/ead3.rng">https://raw.githubusercontent.com/SAA-SDT/EAD-Revision/develop/ead3.rng</a>: the namespace <a href="http://ead3.archivists.org/schema/">http://ead3.archivists.org/schema/</a> redirects to this</li>
+<li><a href="https://raw.githubusercontent.com/SAA-SDT/EAD2002toEAD3/develop/ead3.rng">https://raw.githubusercontent.com/SAA-SDT/EAD2002toEAD3/develop/ead3.rng</a></li>
+<li><a href="https://raw.github.com/SAA-SDT/EAD-Revision/master/ead3.rng">https://raw.github.com/SAA-SDT/EAD-Revision/master/ead3.rng</a></li>
+<li><a href="./ead3.rnc">./ead3.rnc</a>: converted to RNC from the most recent schema by Vladimir Alexiev</li>
+<li><a href="./ead3-nocomment.rnc">./ead3-nocomment.rnc</a>: includes 264 attributes or elements</li>
 </ul>
 </div>
 </div>
-<div id="outline-container-sec-4-3" class="outline-3">
-<h3 id="sec-4-3">EAC CPF</h3>
-<div class="outline-text-3" id="text-4-3">
+
+<div id="outline-container-orgf29a976" class="outline-3">
+<h3 id="orgf29a976">EAC CPF</h3>
+<div class="outline-text-3" id="text-orgf29a976">
 <p>
-<a href="https://github.com/SAA-SDT/eac-cpf-schema/blob/master/cpf.rnc">cpf.rnc</a> (<a href="./cpf-nocomment.rnc">nocomment</a>): EAC CPF version 20100301 (Encoded Archival Context: Corporations, People, Families) by Society of American Archivists.
 CPF is a complement to EAD, describing agents that archival materials originate from.
 </p>
-</div>
-</div>
-<div id="outline-container-sec-4-4" class="outline-3">
-<h3 id="sec-4-4">EAG</h3>
-<div class="outline-text-3" id="text-4-4">
 <ul class="org-ul">
-<li><a href="./eag.rng">./eag.rng</a>
-</li>
-<li><a href="./eag.rnc">./eag.rnc</a> (<a href="./eag-nocomment.rnc">nocomment</a>): EAG 2012 version 0.1e 20120828 (Encoded Archival Guide), APEx project (www.apex-project.eu), converted by Vladimir Alexiev.
-</li>
+<li><a href="https://github.com/SAA-SDT/eac-cpf-schema/blob/master/cpf.rnc">./cpf.rnc</a>: EAC CPF version 20100301 (Encoded Archival Context: Corporations, People, Families) by Society of American Archivists, converted to RNC by Vladimir Alexiev</li>
+<li><a href="./cpf-nocomment.rnc">./cpf-nocomment.rnc</a>: includes 133 elements or attributes</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org2991166" class="outline-3">
+<h3 id="org2991166">EAG</h3>
+<div class="outline-text-3" id="text-org2991166">
+<p>
+EAG is used for describing archival institutions, see <a href="http://www.apex-project.eu/images/docs/EAG_2012_description.html">description</a>. 
+</p>
+<ul class="org-ul">
+<li><a href="./eag.rnc">./eag.rnc</a>: EAG 2012 version 0.1e 20120828 (Encoded Archival Guide), APEx project (www.apex-project.eu), converted to RNC by Vladimir Alexiev.</li>
+<li><a href="./eag-nocomment.rnc">./eag-nocomment.rnc</a>: includes 338 elements or attributes</li>
 </ul>
 <p>
-EAG is used for describing archival institutions. See <a href="http://www.apex-project.eu/images/docs/EAG_2012_description.html">description</a>. 
 The above is generated from eag_2012.xsd. An alternative official RNC exists, marked as follows:
 </p>
 <pre class="example">
 # Schema generated from ODD source 2015-03-06T09:33:00Z.
 # Edition: Version 2.7.0. Last updated on
-#       16th September 2014, revision 13036
+#	16th September 2014, revision 13036
 # Edition Location: http://www.tei-c.org/Vault/P5/Version 2.7.0/
+
 </pre>
 </div>
 </div>
-<div id="outline-container-sec-4-5" class="outline-3">
-<h3 id="sec-4-5">CDWA</h3>
-<div class="outline-text-3" id="text-4-5">
+<div id="outline-container-org2d94396" class="outline-3">
+<h3 id="org2d94396">CDWA</h3>
+<div class="outline-text-3" id="text-org2d94396">
 <p>
-<a href="./CDWAlite.rnc">./CDWAlite.rnc</a> (<a href="./CDWAlite-nocomment.rnc">nocomment</a>): CDWA version 1.1 20060712 (Categories for the Description of Works of Art) by ARTstor and J Paul Getty Trust, converted by Vladimir Alexiev.
 CDWA is used for describing museum objects and works of art, corresponding to the <a href="http://cco.vrafoundation.org">CCO</a> content standard.
 </p>
-</div>
-</div>
-<div id="outline-container-sec-4-6" class="outline-3">
-<h3 id="sec-4-6">LIDO</h3>
-<div class="outline-text-3" id="text-4-6">
 <ul class="org-ul">
-<li><a href="./lido.rnc">./lido.rnc</a> (<a href="./lido-nocomment.rnc">nocomment</a>): LIDO version 1.0 20101108 (Lightweight Information Describing Objects) by ICOM-CIDOC Working Group Data Harvesting and Interchange, converted by Vladimir Alexiev
-</li>
-<li><a href="./xml.rnc">./xml.rnc</a>: defines <code>xml:</code> attributes <code>lang, base, space</code>. Used by LIDO &amp; EAG.
-</li>
+<li><a href="./CDWAlite.rnc">./CDWAlite.rnc</a>: CDWA version 1.1 20060712 (Categories for the Description of Works of Art) by ARTstor and J Paul Getty Trust, converted to RNC by Vladimir Alexiev.</li>
+<li><a href="./CDWAlite-nocomment.rnc">./CDWAlite-nocomment.rnc</a>: includes 121 elements or attributes</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org7ff1980" class="outline-3">
+<h3 id="org7ff1980">CONA</h3>
+<div class="outline-text-3" id="text-org7ff1980">
+<p>
+CONA (Cultural Object Names Authority) is an aggregation of art object data by the Getty Research Institute.
+</p>
+<ul class="org-ul">
+<li><a href="./CONA.rnc">./CONA.rnc</a>:  Getty Vocabulary CONA Contribution Schema - Release 1.0, 09/28/2010, converted to RNC by Vladimir Alexiev on 22-Jun-2015.</li>
+<li><a href="./CONA-nocomment.rnc">./CONA-nocomment.rnc</a>: includes 212 elements</li>
 </ul>
 
 <p>
-LIDO is also used to describe museum objects and works of art. It's based on CDWA and MuseumDat and is quite more complex.
+CONA also includes a number of lookup lists that are omitted here.
+These include <code>cona_associative_type.rnc cona_class.rnc cona_contrib.rnc cona_event.rnc cona_language.rnc cona_lookup_lists.rnc cona_nationality.rnc cona_role.rnc cona_source.rnc</code>
+and look like this (example from <code>cona_associative_type.rnc</code> i.e. associative relations):
 </p>
+<pre class="example">
+ar_code =
+    "4000/related to"
+  | "4001/miscellaneous"
+  | "4100/distinguished from"
+  ...
+  | "4516/was architectural context for"
+</pre>
+</div>
+</div>
+
+<div id="outline-container-org0c37618" class="outline-3">
+<h3 id="org0c37618">LIDO</h3>
+<div class="outline-text-3" id="text-org0c37618">
+<p>
+LIDO is used to describe museum objects and works of art. It's based on CDWA and MuseumDat and is more complex.
+</p>
+<ul class="org-ul">
+<li><a href="./lido.rnc">./lido.rnc</a>: LIDO version 1.0 20101108 (Lightweight Information Describing Objects) by ICOM-CIDOC Working Group Data Harvesting and Interchange, converted to RNC by Vladimir Alexiev</li>
+<li><a href="./lido-nocomment.rnc">./lido-nocomment.rnc</a>:</li>
+<li><a href="./xml.rnc">./xml.rnc</a>: defines <code>xml:</code> attributes <code>lang, base, space</code>. Used by LIDO &amp; EAG.</li>
+</ul>
 
 <p>
 For LIDO and CDWA I made some manual corrections
 </p>
 <ul class="org-ul">
-<li>This sets one start element, and introduces the parasitic name "starting_lidoWrap"
+<li><p>
+This sets one start element, and introduces the parasitic name "starting_lidoWrap"
+</p>
 <pre class="example">
 start |= starting_lidoWrap
 starting_lidoWrap =
+
 </pre>
 <p>
 Corrected to two start elements:
 </p>
 <pre class="example">
 start = lido | lidoWrap
-</pre>
-</li>
-<li>XSDtoRNG currently can't grok the OGC GML schema so I've commented out
+
+</pre></li>
+<li><p>
+XSDtoRNG currently can't grok the OGC GML schema so I've commented out
+</p>
 <pre class="example">
 # rng:include href="http://schemas.opengis.net/gml/3.1.1/base/feature.rng"
+
 </pre>
 <p>
 You'll get 3 errors at
 </p>
 <pre class="example">
 gmlComplexType = Point*, LineString*, Polygon*
-</pre>
-</li>
-<li>Moved some comments up, and collapsed simple definitions into one line, eg:
+
+</pre></li>
+<li><p>
+Moved some comments up, and collapsed simple definitions into one line, eg:
+</p>
 <pre class="example">
 administrativeMetadata =
   element administrativeMetadata {
          ## Definition: Holds the administrative metadata for an object / work record. 
          ## How to record: The attribute xml:lang is mandatory ...
     administrativeMetadataComplexType}
+
 </pre>
 <p>
 becomes
@@ -598,24 +726,29 @@ becomes
 ## Definition: Holds the administrative metadata for an object / work record. 
 ## How to record: The attribute xml:lang is mandatory ...
 administrativeMetadata = element administrativeMetadata {administrativeMetadataComplexType}
-</pre>
-</li>
+
+</pre></li>
 </ul>
 </div>
 </div>
-<div id="outline-container-sec-4-7" class="outline-3">
-<h3 id="sec-4-7">CONA</h3>
-<div class="outline-text-3" id="text-4-7">
+
+<div id="outline-container-org762ad19" class="outline-3">
+<h3 id="org762ad19">SPECTRUM</h3>
+<div class="outline-text-3" id="text-org762ad19">
 <p>
-I've also converted Getty's CONA schema to RNC, contact me if you would like to work with it
+SPECTRUM is a UK museum standard (also used in other countries) that defines museum processes and data (Units of Information)
 </p>
+<ul class="org-ul">
+<li><a href="./spectrum.rnc">./spectrum.rnc</a>: Collections Trust XML Schema for SPECTRUM version 4.0.4 (26 June 2012), converted to RNC by Vladimir Alexiev.
+It uses special documentation properties <code>spectrum:unitName, spectrum:description</code></li>
+<li><a href="./spectrum-nocomment.rnc">./spectrum-nocomment.rnc</a>: 595 elements, of which the majority (490) are about <code>Object</code> (artwork)</li>
+</ul>
 </div>
 </div>
 </div>
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Vladimir Alexiev</p>
-<p class="creator"><a href="http://www.gnu.org/software/emacs/">Emacs</a> 25.0.50.1 (<a href="http://orgmode.org">Org</a> mode 8.2.10)</p>
 <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>

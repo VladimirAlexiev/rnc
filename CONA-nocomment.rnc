@@ -1,0 +1,270 @@
+default namespace = "http://localhost/namespace"
+namespace a = "http://relaxng.org/ns/compatibility/annotations/1.0"
+namespace rng = "http://relaxng.org/ns/structure/1.0"
+namespace vp = "http://localhost/namespace/vp"
+
+include "cona_associative_type.rnc" inherit = vp
+include "cona_contrib.rnc" inherit = vp
+include "cona_language.rnc" inherit = vp
+include "cona_nationality.rnc" inherit = vp
+include "cona_event.rnc" inherit = vp
+include "cona_class.rnc" inherit = vp
+include "cona_role.rnc" inherit = vp
+include "cona_source.rnc" inherit = vp
+include "cona_lookup_lists.rnc" inherit = vp
+start = Vocabulary
+
+Vocabulary =
+  element Vocabulary {
+    element Subject {
+      (element Ancestors {
+         (element Preferred_Ancestor_Branch {
+            element Ancestor {
+              element Immediate {ParentType},
+              element Other {ParentType}*}}
+          & element Non-Preferred_Ancestor_Branches {
+              element Non-Preferred_Ancestor_Branch {
+                element Ancestor {
+                  element Immediate {ParentType},
+                  element Other {ParentType}*}}+}?),
+         [a:defaultValue = "300000000"]
+         attribute Broad_Parent_ID {VP_Subject_ID}?}
+       & element Associative_Relationships {
+           element Associative_Relationship {
+             element Description {xsd:string}?
+             & element AR_Date {
+                 element Display_Date {xsd:string}
+                 & element Start_Date {Geog_Date}
+                 & element End_Date {Geog_Date}}?
+             & element Historic_Flag {associative_rels_historic_flag}?
+             & element Relationship_Type {ar_code}
+             & element Related_Subject_ID {
+                 element VP_Subject_ID {VP_Subject_ID}
+                 | element Contrib_Subject_ID {xsd:string}}}*}?
+       & element Descriptive_Notes {
+           element Descriptive_Note {
+             element Note_Text {xsd:string}
+             & element Note_Language {language_code}
+             & element Note_Sources {
+                 element Note_Source {
+                   element Source {SourceType}
+                   & element Page {xsd:string}?}+}}*}?
+       & element Record_Type {sub_record_type}?
+       & element Sort_Order {xsd:int}
+       & element Special_Project {xsd:string}?
+       & element Subject_Contributor {
+           element Contributor_id {contrib_code}
+           & element Contrib_subject_id {xsd:string}?
+           & element Contrib_Note {xsd:string}?
+           & element Editor_name {xsd:string}
+           & element Editor_email {xsd:string}}
+       & element Subject_Sources {
+           element Subject_Source {
+             element Source {SourceType}
+             & element Page {xsd:string}?}+}?
+       & element Terms {
+           element Preferred_Term {TermType},
+           element Non-Preferred_Term {TermType}*}
+       & element Work_Types {
+           element Preferred_Work_Type {Work_TypeType},
+           element Non-Preferred_Work_Type {Work_TypeType}*}
+       & element Other_Displays {OtherDisplaysType}
+       & element Person_Corp_Rels {
+           element Person_Corp_Rel {PersonCorpType}+}
+       & element Depicted_Subjects {
+           element Depicted_Subject {DepictedSubjectType}+}?
+       & element Creation_Display_Dates {
+           element Creation_Display_Date {
+             element Date_Qualifier {creation_dates_qualifier},
+             element Start_Date {Historical_Date},
+             element End_Date {Historical_Date}}*}?
+       & element General_Depicted_Subjects {
+           element General_Depicted_Subject {GenDepictedSubjectType}+}?
+       & element Location_Repositories {
+           element Location_Repository {LocationRepositoryType}+}
+       & element Classifications {
+           element Classification {ClassificationType}+}
+       & element Materials {
+           element Material {MaterialsIndexingType}+}?
+       & element Dimensions {
+           element Dimension {DimensionsIndexingType}+}?
+       & element Creator_Displays {
+           element Creator_Display {
+             element Creator_Display_Text {xsd:string},
+             element Preferred_Flag {creator_display_preferred}}+}?
+       & element Cultures {
+           element Culture {CultureType}+}?
+       & element Events {
+           element Preferred_Event {EventType},
+           element Non-Preferred_Event {EventType}*}?
+       & element Styles {
+           element Style {StyleType}+}?
+       & element Outside_Iconography_Records {
+           element Outside_Iconography {
+             element Iconogrpahy_Term {xsd:string},
+             element Iconography_Code {xsd:string},
+             element Outside_Iconography_Sources {
+               element Outside_Iconography_Source {
+                 element Source {SourceType}
+                 & element Page {xsd:string}?}+}?}+}?),
+      attribute Subject_ID {VP_Subject_ID}?}+,
+    attribute Title {xsd:string},
+    attribute Part {xsd:string}?,
+    attribute Date {xsd:date}}
+
+VP_Subject_ID = xsd:long {minInclusive = "1000000" maxInclusive = "799999999"}
+
+ClassificationType =
+  element Class_ID {class_code}
+  & element Preferred {class_rels_preferred}
+
+CultureType =
+  element Nationality_Code {nationality_code}
+  & element Display_Order {xsd:unsignedShort}
+  & element Preferred {depicted_sub_rels_preferred}
+
+DepictedSubjectType =
+  element Place_Number {VP_Subject_ID}?
+  & element Person_Corp_Number {VP_Subject_ID}?
+  & element AAT_Number {VP_Subject_ID}?
+  & element CONA_Number {VP_Subject_ID}?
+  & element Iconography_ID {VP_Subject_ID}?
+  & element Preferred {depicted_sub_rels_preferred}
+  & element Display_Order {xsd:unsignedShort}
+  & element Indexing_Type {depicted_sub_rels_idx_type}?
+  & element Subject_Extent {depicted_sub_rels_sub_extent}?
+  & element Depicted_Term_ID {empty}?
+
+DimensionsIndexingType =
+  element Value {xsd:decimal}
+  & element Unit {dimensions_idx_unit}
+  & element Dimensions_Type {dimensions_idx_dim_type}
+  & element Dimensions_Extent {dimensions_idx_dim_ext}?
+  & element Dimensions_Qualifier {dimensions_idx_dim_qual}?
+  & element Scale_Type {dimensions_idx_scale_type}?
+  & element Format {dimensions_idx_format}?
+  & element Shape {dimensions_idx_shape}?
+
+EventType =
+  element Event_ID {event_code}
+  & element Display_Order {xsd:unsignedShort}
+  & element Place {xsd:string}?
+  & element Event_Date {
+      element Display_Date {xsd:string}
+      & element Start_Date {Historical_Date}
+      & element End_Date {Historical_Date}}?
+
+GenDepictedSubjectType =
+  element Preferred {depicted_sub_rels_preferred}
+  & element Display_Order {xsd:unsignedShort}
+  & element General_Depicted {general_depicted_subject_gendep}
+  & element Indexing_Type {depicted_sub_rels_idx_type}?
+  & element Subject_Extent {depicted_sub_rels_sub_extent}?
+
+Geog_Date = xsd:integer {maxInclusive = "9999"}
+
+Historical_Date = xsd:integer {maxInclusive = "9999"}
+
+LocationRepositoryType =
+  element Geog_Loc_RefID {VP_Subject_ID}?
+  & element Corp_Loc_RefID {VP_Subject_ID}?
+  & element Current_Flag {locrep_current_flag}
+  & element Repository_Numbers {xsd:string}?
+  & element Credit_Line {xsd:string}?
+  & element Repository_Loc_Type {locrep_type}?
+  & element Address_Note {xsd:string}?
+
+MaterialsIndexingType =
+  element Material_Term_ID {VP_Subject_ID}
+  & element Material_Tech_Flag {matidx_material_tech_flag}?
+  & element Material_Tech_Role {matidx_material_tech_role}?
+  & element Material_Term_Text {xsd:string}?
+  & element Material_Extent {xsd:string}?
+
+Merged_Status_Value = "Merged" | "Not Merged"
+
+OtherDisplaysType =
+  element Catalog_Level {other_displays_cat_level}
+  & element Provenance {xsd:string}?
+  & element Copyright {xsd:string}?
+  & element Creation_Date {xsd:string}
+  & element Creation_Number {xsd:string}?
+  & element Display_Dimensions {xsd:string}
+  & element Display_Materials {xsd:string}
+  & element Watermarks {xsd:string}?
+  & element Inscriptions {xsd:string}?
+  & element Typeface {xsd:string}?
+  & element Marks {xsd:string}?
+  & element State {xsd:string}?
+  & element Edition {xsd:string}?
+
+ParentType =
+  element Historic_Flag {sub_rel_historic_flag}?
+  & element PR_Date {
+      element Display_Date {xsd:string}
+      & element Start_Date {Geog_Date}
+      & element End_Date {Geog_Date}}?
+  & element Term {xsd:string}?
+  & element Parent_ID {
+      element VP_Subject_ID {VP_Subject_ID}
+      | element Contrib_Subject_ID {xsd:string}}
+  & element Hier_Rel_Type {sub_rel_hier_rel_type}
+
+PersonCorpType =
+  element Person_Corp_Number {VP_Subject_ID}
+  & element Person_Role_ID {role_code}?
+  & element Person_Corp_Extent {person_corp_rels_extent}
+  & element Person_Corp_Qualifier {person_corp_rels_qualifier}
+  & element Person_Corp_Nat_Text {empty}?
+
+SourceType =
+  element Source_ID {source_code}
+  & element Brief_Citation {xsd:string}?
+  & element Full_Citation {xsd:string}?
+  & element Biblio_Note {xsd:string}?
+
+StyleType =
+  element Style_Number {VP_Subject_ID}
+  & element Display_Order {xsd:unsignedShort}
+  & element Style_Code {style_rels_code}
+  & element Preferred {style_rels_preferred}
+
+TermType =
+  element AACR2_Flag {term_aacr2_flag}?
+  & element Contributor_Term_ID {xsd:string}?
+  & element VP_Term_ID {xsd:string}?
+  & element Display_Name {term_display_name}?
+  & element Display_Order {[a:defaultValue = "0"] xsd:unsignedShort}?
+  & element Historic_Flag {term_historic_flag}?
+  & element Language {
+      element Term_Languages {
+        element Term_Language {language_code}
+        & element Preferred {language_rels_preferred}?
+        & element Qualifier {xsd:string}?
+        & element Term_Type {language_rels_term_type}?
+        & element Part_of_Speech {language_rels_part_of_speech}?
+        & element Lang_Stat {language_rels_lang_stat}?}+}?
+  & element Other_Flags {term_other_flags}?
+  & element Term_Date {
+      element Display_Date {xsd:string}
+      & element Start_Date {Historical_Date}
+      & element End_Date {Historical_Date}}?
+  & element Term_Sources {
+      element Term_Source {
+        element Source {SourceType}
+        & element Page {xsd:string}?
+        & element Preferred {source_rels_term_preferred}?}+}
+  & element Term_Text {xsd:string}
+  & element Vernacular {term_vernacular}?
+
+VP_Source_ID = xsd:long {minInclusive = "2000000000" maxInclusive = "2499999999"}
+
+Work_TypeType =
+  element Work_Type_Number {VP_Subject_ID}
+  & element Display_Order {xsd:unsignedShort}
+  & element Historic_Flag {wtype_role_rels_historic_flag}?
+  & element Work_Type_TermID {xsd:long}?
+  & element WT_Date {
+      element Display_Date {xsd:string}
+      & element Start_Date {Geog_Date}
+      & element End_Date {Geog_Date}}?

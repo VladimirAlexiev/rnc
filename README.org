@@ -1,30 +1,14 @@
 Source: https://github.com/VladimirAlexiev/rnc
 
-[[https://github.com/VladimirAlexiev/rnc/blob/master/README.org][README]], [[http://rawgit.com/VladimirAlexiev/rnc/master/README.html][HTML rendered version]]
-
-* Table of Contents                                 :TOC:
- - [[#rnc][RNC]]
- - [[#rnc-tools][RNC Tools]]
-   - [[#emacs-rnc-mode][Emacs rnc-mode]]
-   - [[#emacs-flycheck][Emacs flycheck]]
-   - [[#rncfix][rncfix]]
-   - [[#scripts][Scripts]]
- - [[#rnc-schemas][RNC Schemas]]
-   - [[#ead][EAD]]
-   - [[#ead3][EAD3]]
-   - [[#eac-cpf][EAC CPF]]
-   - [[#eag][EAG]]
-   - [[#cdwa][CDWA]]
-   - [[#lido][LIDO]]
-   - [[#cona][CONA]]
+[[https://github.com/VladimirAlexiev/rnc/blob/master/README.org][README.org]], [[http://rawgit.com/VladimirAlexiev/rnc/master/README.html][HTML rendered version]]
 
 * RNC
 The ISO DSSSL group defines a number of XML schema definition languages. Amongst them:
 - XSD is the most verbose and unwieldy way for understanding a XML schema
 - Then comes RelaxNG XML (RNG).
-- RelaxNG Compact (RNC) is most compact and easy to understand.
+- RelaxNG Compact (RNC) is the most compact and easy to understand.
   RNC is even easier to read than XMLspy diagrams, because it gives you a ready overview of the schema and convenient search.
-  RNC clearly shows deeply nested "matroska" style schemas, like the screen shots below.
+  RNC clearly shows deeply nested "matrioshka" style schemas, like the screen shots below.
 
 * RNC Tools
 Tools for working with RNC include:
@@ -136,7 +120,8 @@ so you need to modify them for your setup.
 I have collected or converted the following RNC schemas related to GLAM (galleries, libraries, archives and museums)
 
 ** EAD
-[[./ead.rnc]] ([[./ead-nocomment.rnc][nocomment]]): EAD 2002 version 20080421 (Encoded Archival Description) by Society of American Archivists and Library of Congress, converted by Vladimir Alexiev.
+- [[./ead.rnc]]: EAD 2002 version 20080421 (Encoded Archival Description) by Society of American Archivists and Library of Congress, converted to RNC by Vladimir Alexiev.
+- [[./ead-nocomment.rnc]]: includes 387 elements or attributes
 EAD is used widely by archival institutions and projects, including APex (Arvhives Portal Europe) and EHRI (European Holocaust Research Infrastructure).
 Uses the following prefixes:
 | prefix    | what                    | example                                                                                                        |
@@ -146,32 +131,55 @@ Uses the following prefixes:
 | ~m.~      | element model           | ~m.inter.noquote~ is alternative of ~e.chronlist e.list e.table~                                               |
 | ~m.mixed~ | mixed element model     | ~m.mixed.basic~ consists of text and/or ~e.abbr e.emph e.expan~ etc                                            |
 | ~am.~     | attribute model (group) | ~am.common.empty~ consists of elements ~id altrender audience~                                                 |
+
 ** EAD3
 [[https://github.com/SAA-SDT/EAD3][EAD3]]: upcoming revised version, developed natively in RNG. Schemas listed in increasing recency:
 - https://raw.githubusercontent.com/SAA-SDT/EAD-Revision/develop/ead3.rng: the namespace http://ead3.archivists.org/schema/ redirects to this
 - https://raw.githubusercontent.com/SAA-SDT/EAD2002toEAD3/develop/ead3.rng
 - https://raw.github.com/SAA-SDT/EAD-Revision/master/ead3.rng
-- [[./ead3.rnc]] ([[./ead3-nocomment.rnc][nocomment]]): converted from the most recent schema by Vladimir Alexiev
+- [[./ead3.rnc]]: converted to RNC from the most recent schema by Vladimir Alexiev
+- [[./ead3-nocomment.rnc]]: includes 264 attributes or elements
+
 ** EAC CPF
-[[https://github.com/SAA-SDT/eac-cpf-schema/blob/master/cpf.rnc][cpf.rnc]] ([[./cpf-nocomment.rnc][nocomment]]): EAC CPF version 20100301 (Encoded Archival Context: Corporations, People, Families) by Society of American Archivists.
 CPF is a complement to EAD, describing agents that archival materials originate from.
+- [[https://github.com/SAA-SDT/eac-cpf-schema/blob/master/cpf.rnc][./cpf.rnc]]: EAC CPF version 20100301 (Encoded Archival Context: Corporations, People, Families) by Society of American Archivists, converted to RNC by Vladimir Alexiev
+- [[./cpf-nocomment.rnc]]: includes 133 elements or attributes
+
 ** EAG
-- [[./eag.rng]]
-- [[./eag.rnc]] ([[./eag-nocomment.rnc][nocomment]]): EAG 2012 version 0.1e 20120828 (Encoded Archival Guide), APEx project (www.apex-project.eu), converted by Vladimir Alexiev.
-EAG is used for describing archival institutions. See [[http://www.apex-project.eu/images/docs/EAG_2012_description.html][description]]. 
+EAG is used for describing archival institutions, see [[http://www.apex-project.eu/images/docs/EAG_2012_description.html][description]]. 
+- [[./eag.rnc]]: EAG 2012 version 0.1e 20120828 (Encoded Archival Guide), APEx project (www.apex-project.eu), converted to RNC by Vladimir Alexiev.
+- [[./eag-nocomment.rnc]]: includes 338 elements or attributes
 The above is generated from eag_2012.xsd. An alternative official RNC exists, marked as follows:
 : # Schema generated from ODD source 2015-03-06T09:33:00Z.
 : # Edition: Version 2.7.0. Last updated on
 : #	16th September 2014, revision 13036
 : # Edition Location: http://www.tei-c.org/Vault/P5/Version 2.7.0/
 ** CDWA
-[[./CDWAlite.rnc]] ([[./CDWAlite-nocomment.rnc][nocomment]]): CDWA version 1.1 20060712 (Categories for the Description of Works of Art) by ARTstor and J Paul Getty Trust, converted by Vladimir Alexiev.
 CDWA is used for describing museum objects and works of art, corresponding to the [[http://cco.vrafoundation.org][CCO]] content standard.
-** LIDO
-- [[./lido.rnc]] ([[./lido-nocomment.rnc][nocomment]]): LIDO version 1.0 20101108 (Lightweight Information Describing Objects) by ICOM-CIDOC Working Group Data Harvesting and Interchange, converted by Vladimir Alexiev
-- [[./xml.rnc]]: defines ~xml:~ attributes ~lang, base, space~. Used by LIDO & EAG.
+- [[./CDWAlite.rnc]]: CDWA version 1.1 20060712 (Categories for the Description of Works of Art) by ARTstor and J Paul Getty Trust, converted to RNC by Vladimir Alexiev.
+- [[./CDWAlite-nocomment.rnc]]: includes 121 elements or attributes
+** CONA
+CONA (Cultural Object Names Authority) is an aggregation of art object data by the Getty Research Institute.
+- [[./CONA.rnc]]:  Getty Vocabulary CONA Contribution Schema - Release 1.0, 09/28/2010, converted to RNC by Vladimir Alexiev on 22-Jun-2015.
+- [[./CONA-nocomment.rnc]]: includes 212 elements
 
-LIDO is also used to describe museum objects and works of art. It's based on CDWA and MuseumDat and is quite more complex.
+CONA also includes a number of lookup lists that are omitted here.
+These include ~cona_associative_type.rnc cona_class.rnc cona_contrib.rnc cona_event.rnc cona_language.rnc cona_lookup_lists.rnc cona_nationality.rnc cona_role.rnc cona_source.rnc~
+and look like this (example from ~cona_associative_type.rnc~ i.e. associative relations):
+#+BEGIN_EXAMPLE
+ar_code =
+    "4000/related to"
+  | "4001/miscellaneous"
+  | "4100/distinguished from"
+  ...
+  | "4516/was architectural context for"
+#+END_EXAMPLE
+
+** LIDO
+LIDO is used to describe museum objects and works of art. It's based on CDWA and MuseumDat and is more complex.
+- [[./lido.rnc]]: LIDO version 1.0 20101108 (Lightweight Information Describing Objects) by ICOM-CIDOC Working Group Data Harvesting and Interchange, converted to RNC by Vladimir Alexiev
+- [[./lido-nocomment.rnc]]: 
+- [[./xml.rnc]]: defines ~xml:~ attributes ~lang, base, space~. Used by LIDO & EAG.
 
 For LIDO and CDWA I made some manual corrections
 - This sets one start element, and introduces the parasitic name "starting_lidoWrap"
@@ -193,5 +201,9 @@ For LIDO and CDWA I made some manual corrections
   : ## Definition: Holds the administrative metadata for an object / work record. 
   : ## How to record: The attribute xml:lang is mandatory ...
   : administrativeMetadata = element administrativeMetadata {administrativeMetadataComplexType}
-** CONA
-I've also converted Getty's CONA schema to RNC, contact me if you would like to work with it
+
+** SPECTRUM
+SPECTRUM is a UK museum standard (also used in other countries) that defines museum processes and data (Units of Information)
+- [[./spectrum.rnc]]: Collections Trust XML Schema for SPECTRUM version 4.0.4 (26 June 2012), converted to RNC by Vladimir Alexiev.
+  It uses special documentation properties ~spectrum:unitName, spectrum:description~
+- [[./spectrum-nocomment.rnc]]: 595 elements, of which the majority (490) are about ~Object~ (artwork)

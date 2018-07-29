@@ -1,0 +1,3075 @@
+namespace a = "http://relaxng.org/ns/compatibility/annotations/1.0"
+namespace doc =
+  "http://collectionstrust.org.uk/spectrumXML/Documentation"
+namespace rng = "http://relaxng.org/ns/structure/1.0"
+default namespace spectrum =
+  "http://collectionstrust.org.uk/spectrumXML/Schema-v4.0"
+namespace xsd = "http://www.w3.org/2001/XMLSchema"
+
+a:documentation [
+  ##    Collections Trust XML Schema for SPECTRUM version 4.0.4 (26 June 2012)
+]
+
+start |= starting_Interchange
+starting_Interchange = element Interchange {Interchange}
+
+Address =
+  element EMail {
+    xsd:string
+    >> a:documentation [
+         spectrum:unitName [ "Address - e-mail" ]
+         spectrum:description [ "The e-mail address used to contact an Organisation or Person." ]
+       ]}?,
+  element Fax {
+    xsd:string
+    >> a:documentation [
+         spectrum:unitName [ "Address - fax number" ]
+         spectrum:description [ "The fax number used to contact an Organisation or Person." ]
+       ]}?,
+  element Place {
+    Place
+    >> a:documentation [
+         spectrum:unitName [ "Address - place" ]
+         spectrum:description [ "The elements of an Address which are required for retrieval purposes." ]
+       ]}*,
+  element Postcode {
+    xsd:string
+    >> a:documentation [
+         spectrum:unitName [ "Address - postcode" ]
+         spectrum:description [ "The postcode or zip code of an Address." ]
+       ]}?,
+  element Telephone {
+    xsd:string
+    >> a:documentation [
+         spectrum:unitName [ "Address - telephone number" ]
+         spectrum:description [ "The telephone number used to contact an Organisation or Person." ]
+       ]}?,
+  element Text {
+    xsd:string
+    >> a:documentation [
+         spectrum:unitName [ "Address - text" ]
+         spectrum:description [ "The address of an Organisation, Person or Location as expressed for mailing purposes." ]
+       ]}?,
+  element Type {
+    xsd:string
+    >> a:documentation [
+         spectrum:unitName [ "Address type" ]
+         spectrum:description [ "The status or use of the Address recorded" ]
+       ]}?
+
+Date =
+  element Association {
+    xsd:string
+    >> a:documentation [
+         spectrum:unitName [ "Date association" ]
+         spectrum:description [ "How a Date relates to an event in an object's history." ]
+       ]}?,
+  element Earliest {
+    element Certainty {
+      xsd:string
+      >> a:documentation [
+           spectrum:unitName [ "Date - earliest/single certainty" ]
+           spectrum:description [ "A term describing the extent to which the Date - earliest/single recorded is thought to be correct." ]
+         ]}?,
+    element Date {
+      xsd:string
+      >> a:documentation [
+           spectrum:unitName [ "Date - earliest/single" ]
+           spectrum:description [ "The earliest probable or exact date at which an event in an object's history is thought to have occurred." ]
+         ]},
+    element Qualifier {
+      xsd:string
+      >> a:documentation [
+           spectrum:unitName [ "Date - earliest/single qualifier" ]
+           spectrum:description [ "A qualification of the earliest probable or exact date at which an event in an object's history is thought to have occurred." ]
+         ]}?}?,
+  element Latest {
+    element Certainty {
+      xsd:string
+      >> a:documentation [
+           spectrum:unitName [ "Date - latest certainty" ]
+           spectrum:description [ "A term describing the extent to which the Date - latest recorded is thought to be correct." ]
+         ]}?,
+    element Date {
+      xsd:string
+      >> a:documentation [
+           spectrum:unitName [ "Date - latest" ]
+           spectrum:description [ "The latest probable date at which an event in an object's history is thought to have occurred." ]
+         ]},
+    element Qualifier {
+      xsd:string
+      >> a:documentation [
+           spectrum:unitName [ "Date - latest qualifier" ]
+           spectrum:description [ "A qualification of the latest probable date at which an event in the object's history is thought to have occurred." ]
+         ]}?}?,
+  element Period {
+    xsd:string
+    >> a:documentation [
+         spectrum:unitName [ "Date - period" ]
+         spectrum:description [ "A textual expression of the period when an event in an object's history is thought to have occurred." ]
+       ]}?,
+  element Text {
+    xsd:string
+    >> a:documentation [
+         spectrum:unitName [ "Date text" ]
+         spectrum:description [ "The textual expression of the date or date span when an event in an object's history is thought to have occurred." ]
+       ]}?
+
+ExactDate =
+  element Day {
+    xsd:integer
+    >> a:documentation [
+         spectrum:unitName [ "Day" ]
+         spectrum:description [ "The day part of an exact date." ]
+       ]}?,
+  element Month {
+    xsd:integer
+    >> a:documentation [
+         spectrum:unitName [ "Month" ]
+         spectrum:description [ "The month part of an exact date." ]
+       ]}?,
+  element Year {
+    xsd:integer
+    >> a:documentation [
+         spectrum:unitName [ "Year" ]
+         spectrum:description [ "The year part of an exact date." ]
+       ]}?
+
+Interchange =
+  element Record {
+    element Data {
+      element Address {
+        Address
+        >> a:documentation [
+             spectrum:unitName [ "Top-level Address element" ]
+             spectrum:description [ ]
+           ]}
+      | element Object {
+          Object
+          >> a:documentation [
+               spectrum:unitName [ "Top-level Object element" ]
+               spectrum:description [ ]
+             ]}
+      | element Organisation {
+          Organisation
+          >> a:documentation [
+               spectrum:unitName [ "Top-level Organisation element" ]
+               spectrum:description [ ]
+             ]}
+      | element People {
+          People
+          >> a:documentation [
+               spectrum:unitName [ "Top-level People element" ]
+               spectrum:description [ ]
+             ]}
+      | element Person {
+          Person
+          >> a:documentation [
+               spectrum:unitName [ "Top-level Person element" ]
+               spectrum:description [ ]
+             ]}
+      | element Place {
+          Place
+          >> a:documentation [
+               spectrum:unitName [ "Top-level Place element" ]
+               spectrum:description [ ]
+             ]}}?}*
+
+Metadata =
+  element AmendmentHistory {
+    element Change {
+      element Authoriser {
+        Person
+        >> a:documentation [
+             spectrum:unitName [ "Amendment history authoriser" ]
+             spectrum:description [ "The name of the person giving final approval for a piece of information being added to a record" ]
+           ]}?,
+      element SchemeUsed {
+        xsd:string
+        >> a:documentation [
+             spectrum:unitName [ "Unit of information scheme" ]
+             spectrum:description [ "Information recording the classification system, thesaurus or termlist from which a recorded term is taken." ]
+           ]}?,
+      element Source {
+        empty
+        >> a:documentation [
+             spectrum:unitName [ "Information source" ]
+             spectrum:description [ "The People, Person or Organisation providing information recorded." ]
+           ]}*,
+      element SourceDate {
+        Date
+        >> a:documentation [
+             spectrum:unitName [ "Information source date" ]
+             spectrum:description [ "The date information is supplied to be added to the record." ]
+           ]}?,
+      element UnitAdded {
+        xsd:string
+        >> a:documentation [
+             spectrum:unitName [ "Unit of information added" ]
+             spectrum:description [ "The name of the unit of information added to the record or updated." ]
+           ]}?}+}?,
+  element Date {
+    ExactDate
+    >> a:documentation [
+         spectrum:unitName [ "Recording date" ]
+         spectrum:description [ "The date information is added to the record." ]
+       ]}?,
+  element Progress {
+    xsd:string
+    >> a:documentation [
+         spectrum:unitName [ "Recording progress" ]
+         spectrum:description [ "A description of the state of development of information about an object." ]
+       ]}?,
+  element Recorder {
+    Person
+    >> a:documentation [
+         spectrum:unitName [ "Recorder" ]
+         spectrum:description [ "The Person recording the information." ]
+       ]}?,
+  element Type {
+    xsd:string
+    >> a:documentation [
+         spectrum:unitName [ "Record type" ]
+         spectrum:description [ "Describes the level of description which the record contains." ]
+       ]}?,
+  element Usage {
+    xsd:string
+    >> a:documentation [
+         spectrum:unitName [ "Information usage" ]
+         spectrum:description [ "Information on the use made of the record and associated resources" ]
+       ]}*
+
+Object =
+  element AccessCategory {
+    element Date {
+      ExactDate
+      >> a:documentation [
+           spectrum:unitName [ "Access category date" ]
+           spectrum:description [ "The date on which an Access category was recorded." ]
+         ]}?,
+    element Name {
+      xsd:string
+      >> a:documentation [
+           spectrum:unitName [ "Access category" ]
+           spectrum:description [ "A record of the level of access allowed to an object or group of objects based on their needs or significance." ]
+         ]},
+    element Note {
+      xsd:string
+      >> a:documentation [
+           spectrum:unitName [ "Access category note" ]
+           spectrum:description [ "Additional information about the Access category of an object which has not been recorded elsewhere using controlled terminology." ]
+         ]}?}?,
+  element Acquisition {
+    element AccessionDate {
+      ExactDate
+      >> a:documentation [
+           spectrum:unitName [ "Accession date" ]
+           spectrum:description [ "The date on which an object formally enters the collections and is recorded in the accessions register." ]
+         ]}?,
+    element Authorisation {
+      element Authoriser {
+        xsd:string
+        >> a:documentation [
+             spectrum:unitName [ "Acquisition authoriser" ]
+             spectrum:description [ "The name of a member of staff giving final approval for the acquisition to proceed." ]
+           ]},
+      element Date {
+        ExactDate
+        >> a:documentation [
+             spectrum:unitName [ "Acquisition authorisation date" ]
+             spectrum:description [ "The date on which the Acquisition authoriser gives final approval for an acquisition to proceed." ]
+           ]}?}*,
+    element Date {
+      Date
+      >> a:documentation [
+           spectrum:unitName [ "Acquisition date" ]
+           spectrum:description [ "The date on which title to an object or group of objects is transferred to the organisation." ]
+         ]}?,
+    element Funding {
+      element Provisos {
+        xsd:string
+        >> a:documentation [
+             spectrum:unitName [ "Acquisition funding source provisos" ]
+             spectrum:description [ "Restrictions applying to all the objects acquired with the support from an Acquisition funding source." ]
+           ]}?,
+      element Source {
+        xsd:string
+        >> a:documentation [
+             spectrum:unitName [ "Acquisition funding source" ]
+             spectrum:description [ "The Person or Organisation from whom the Acquisition funding was obtained. " ]
+           ]}?,
+      element Value {
+        xsd:string
+        >> a:documentation [
+             spectrum:unitName [ "Acquisition funding" ]
+             spectrum:description [ "The funding used to support the acquisition of an object." ]
+           ]}?}*,
+    element GroupPrice {
+      xsd:string
+      >> a:documentation [
+           spectrum:unitName [ "Group purchase price" ]
+           spectrum:description [ "The total price paid for a group of objects at acquisition, including taxes for which the purchase is liable. If individual prices are known for specific objects in the group, use Object acquisition price." ]
+         ]}?,
+    element Method {
+      xsd:string
+      >> a:documentation [
+           spectrum:unitName [ "Acquisition method" ]
+           spectrum:description [ "The means by which title to an object is formally transferred to the organisation." ]
+         ]}?,
+    element Note {
+      xsd:string
+      >> a:documentation [
+           spectrum:unitName [ "Acquisition note" ]
+           spectrum:description [ "General information about the acquisition." ]
+         ]}*,
+    element OfferedPrice {
+      xsd:string
+      >> a:documentation [
+           spectrum:unitName [ "Object purchaser offer price" ]
+           spectrum:description [ "The price which the organisation offers for the purchase of an object." ]
+         ]}*,
+    element OfferPrice {
+      xsd:string
+      >> a:documentation [
+           spectrum:unitName [ "Object offer price" ]
+           spectrum:description [ "The price at which an object is offered for sale to the organisation." ]
+         ]}*,
+    element Owner {
+      Person
+      >> a:documentation [
+           spectrum:unitName [ "Acquisition owner element" ]
+           spectrum:description [ ]
+         ]}*,
+    element Price {
+      element LocalValue {
+        xsd:string
+        >> a:documentation [
+             spectrum:unitName [ "Object purchase price" ]
+             spectrum:description [ "The total price paid for an object at acquisition, including taxes for which the purchase is liable. Associated with the Object number. If no individual prices are known for specific objects in the group (e.g. a lot bought at auction), use Group purchase price." ]
+           ]},
+      element OriginalCurrency {
+        xsd:string
+        >> a:documentation [
+             spectrum:unitName [ "Original object purchase price denomination" ]
+             spectrum:description [ "The denomination or currency of the Original object purchase price." ]
+           ]}?,
+      element OriginalValue {
+        xsd:string
+        >> a:documentation [
+             spectrum:unitName [ "Original object purchase price" ]
+             spectrum:description [ "The price paid for an object in the original currency at the time of purchase." ]
+           ]}?}?,
+    element Provisos {
+      xsd:string
+      >> a:documentation [
+           spectrum:unitName [ "Acquisition provisos" ]
+           spectrum:description [ "Restrictions applying to the objects in a single acquisition, including conditions for deposition of archaeological archives" ]
+         ]}*,
+    element Reason {
+      xsd:string
+      >> a:documentation [
+           spectrum:unitName [ "Acquisition reason" ]
+           spectrum:description [ "The reason or justification for an acquisition." ]
+         ]}*,
+    element Reference {
+      xsd:string
+      >> a:documentation [
+           spectrum:unitName [ "Acquisition reference number" ]
+           spectrum:description [ "A unique identifying number for information on the acquisition of an object or group of objects. It should serve as the reference to written documentation of a valuation. This will normally be the object number." ]
+         ]}*,
+    element Source {
+      empty
+      >> a:documentation [
+           spectrum:unitName [ "Acquisition source" ]
+           spectrum:description [ "The People, Person or Organisation from whom an object was obtained, if different from the Owner. The Acquisition source may be an agent or other intermediary between the acquiring organisation and the Owner. For archaeological archives, use Acquisition source to record the excavating body responsible for preparing and depositing the archive with the organisation." ]
+         ]}*,
+    element TitleTransfer {
+      element Number {
+        xsd:string
+        >> a:documentation [
+             spectrum:unitName [ "Transfer of title number" ]
+             spectrum:description [ "A unique identifying number for a transfer of title or acquisition event. It should serve as the reference to written documentation of a transfer of title or acquisition process. The number may be assigned to a transfer of title form." ]
+           ]}}?}?,
+  element Associations {
+    element GeneralAssociations {
+      element Concept {
+        xsd:string
+        >> a:documentation [
+             spectrum:unitName [ "Associated concept" ]
+             spectrum:description [ "A concept associated with an object or group of objects." ]
+           ]}?,
+      element CulturalAffinity {
+        xsd:string
+        >> a:documentation [
+             spectrum:unitName [ "Associated cultural affinity" ]
+             spectrum:description [ "A wider cultural context to which an object or group of objects relates. " ]
+           ]}?,
+      element HistoryNote {
+        xsd:string
+        >> a:documentation [
+             spectrum:unitName [ "Object history note" ]
+             spectrum:description [ "The history of an object, including its creation, owners, vendors and the circumstances surrounding such events. Record information here which has not been recorded elsewhere using controlled terminology." ]
+           ]}?}*,
+    element SpecificAssociations {
+      element Association {
+        element AssociatedActivity {
+          element Activity {
+            xsd:string
+            >> a:documentation [
+                 spectrum:unitName [ "Associated activity" ]
+                 spectrum:description [ "An activity associated an object or group of objects." ]
+               ]}?,
+          element AssociatedActivityNote {
+            xsd:string
+            >> a:documentation [
+                 spectrum:unitName [ "Associated activity note" ]
+                 spectrum:description [ "A description of, or comments relating to, an activity associated with an object. " ]
+               ]}?}*,
+        element AssociatedObject {
+          element AssociatedObject {
+            Object
+            >> a:documentation [
+                 spectrum:unitName [ "Associated object" ]
+                 spectrum:description [ "An object associated with an object or group of objects." ]
+               ]}?,
+          element AssociatedObjectType {
+            xsd:string
+            >> a:documentation [
+                 spectrum:unitName [ "Associated object type" ]
+                 spectrum:description [ "A term describing the nature of the Associated object." ]
+               ]}?}*,
+        element AssociationNote {
+          xsd:string
+          >> a:documentation [
+               spectrum:unitName [ "Association note" ]
+               spectrum:description [ "A narrative description of the nature of the association of an organisation, people, person or place, with the object being recorded (e.g. design influences and design impact)." ]
+             ]}?,
+        element Date {
+          Date
+          >> a:documentation [
+               spectrum:unitName [ "Associated date" ]
+               spectrum:description [ "A date associated with an object or group of objects." ]
+             ]}?,
+        element Organisation {
+          Organisation
+          >> a:documentation [
+               spectrum:unitName [ "Associated organisation" ]
+               spectrum:description [ "An Organisation associated with an object's or group of objects' history." ]
+             ]}?,
+        element People {
+          People
+          >> a:documentation [
+               spectrum:unitName [ "Associated people" ]
+               spectrum:description [ "A people associated with an object's or group of objects' history." ]
+             ]}?,
+        element Person {
+          Person
+          >> a:documentation [
+               spectrum:unitName [ "Associated person" ]
+               spectrum:description [ "A person associated with an object's or group of objects' history." ]
+             ]}?,
+        element Place {
+          Place
+          >> a:documentation [
+               spectrum:unitName [ "Associated place" ]
+               spectrum:description [ "A place associated with an object or group of objects." ]
+             ]}?,
+        element RelatedEvent {
+          element AssociatedEventName {
+            element Name {
+              xsd:string
+              >> a:documentation [
+                   spectrum:unitName [ "Associated event name" ]
+                   spectrum:description [ "An historical event associated with an object or group of objects, not including production and collections management events. Use the Object history note to describe details about the nature of the association." ]
+                 ]}?,
+            element Type {
+              xsd:string
+              >> a:documentation [
+                   spectrum:unitName [ "Associated event name type" ]
+                   spectrum:description [ "Use a single term, without punctuation or capitalisation. Maintain a list of standard terms." ]
+                 ]}?},
+          element AssociatedEventPeople {
+            People
+            >> a:documentation [
+                 spectrum:unitName [ "Associated event people" ]
+                 spectrum:description [ "A people associated with an event in an object's or group of objects' history (other than field collection or ownership)" ]
+               ]}?,
+          element AssociatedEventPerson {
+            Person
+            >> a:documentation [
+                 spectrum:unitName [ "Associated event person" ]
+                 spectrum:description [ "A person associated with an event in an object's or group of objects' history (other than field collection or ownership)" ]
+               ]}?,
+          element AssociatedEventPlace {
+            Place
+            >> a:documentation [
+                 spectrum:unitName [ "Associated event place" ]
+                 spectrum:description [ "A place associated with an event in an object's history." ]
+               ]}?,
+          element Date {
+            Date
+            >> a:documentation [
+                 spectrum:unitName [ "Associated event date" ]
+                 spectrum:description [ "The date of an event in an object's history." ]
+               ]}?,
+          element Organisation {
+            Organisation
+            >> a:documentation [
+                 spectrum:unitName [ "Associated event organisation" ]
+                 spectrum:description [ "An Organisation associated with an event in an object's or group of objects' history (other than field collection or ownership)." ]
+               ]}?}?,
+        element RelatedObject {
+          element Number {
+            xsd:string
+            >> a:documentation [
+                 spectrum:unitName [ "Related object number" ]
+                 spectrum:description [ "The Object number of an object which is related to the object being documented." ]
+               ]},
+          element RelatedObjectAssociation {
+            xsd:string
+            >> a:documentation [
+                 spectrum:unitName [ "Related object association" ]
+                 spectrum:description [ "The nature of the relationship of an object to the object being documented." ]
+               ]}?,
+          element RelatedObjectNote {
+            xsd:string
+            >> a:documentation [
+                 spectrum:unitName [ "Related object note" ]
+                 spectrum:description [ "A narrative description of the nature of the relationship of an object to the object being documented." ]
+               ]}?}?},
+      element AssociationType {
+        xsd:string
+        >> a:documentation [
+             spectrum:unitName [ "Association type" ]
+             spectrum:description [ "The way in which the person/group, date, object, concept, event, activity or place is associated with the history of an object or specimen." ]
+           ]}?}*}*,
+  element Audit {
+    element Auditor {
+      empty
+      >> a:documentation [
+           spectrum:unitName [ "Auditor" ]
+           spectrum:description [ "The Person or Organisation carrying out an audit. The Auditor is individually accountable for the Object audit result." ]
+         ]},
+    element Category {
+      xsd:string
+      >> a:documentation [
+           spectrum:unitName [ "Object audit category" ]
+           spectrum:description [ "A code indicating the priority of an object for auditing purposes." ]
+         ]}?,
+    element Date {
+      ExactDate
+      >> a:documentation [
+           spectrum:unitName [ "Object audit date" ]
+           spectrum:description [ "The date an object was last checked in its location." ]
+         ]}?,
+    element Method {
+      xsd:string
+      >> a:documentation [
+           spectrum:unitName [ "Audit method" ]
+           spectrum:description [ "The method used to audit an object or group of objects." ]
+         ]}?,
+    element Note {
+      xsd:string
+      >> a:documentation [
+           spectrum:unitName [ "Object audit note" ]
+           spectrum:description [ "Additional information about the result or circumstances of the audit of an object." ]
+         ]}?,
+    element ObjectAuditType {
+      xsd:string
+      >> a:documentation [
+           spectrum:unitName [ "Object audit type" ]
+           spectrum:description [ "The type of audit carried out on an object." ]
+         ]}?,
+    element Reference {
+      xsd:string
+      >> a:documentation [
+           spectrum:unitName [ "Audit reference number" ]
+           spectrum:description [ "A unique identifying number for the audit of an object or group of objects. It should serve as the reference to written documentation of an audit." ]
+         ]}?,
+    element Results {
+      xsd:string
+      >> a:documentation [
+           spectrum:unitName [ "Object audit result" ]
+           spectrum:description [ "The result of an audit of an object." ]
+         ]}?,
+    element Type {
+      xsd:string
+      >> a:documentation [
+           spectrum:unitName [ "Audit type" ]
+           spectrum:description [ "The type of audit carried out on a object" ]
+         ]}?}*,
+  element Condition {
+    element Check {
+      element Assessor {
+        empty
+        >> a:documentation [
+             spectrum:unitName [ "Condition checker/assessor" ]
+             spectrum:description [ "The person or organisation which carried out a condition check or technical assessment process." ]
+           ]}?,
+      element ConditionCheckAssessmentReason {
+        xsd:string
+        >> a:documentation [
+             spectrum:unitName [ "Condition check/assessment reason" ]
+             spectrum:description [ "The reason for a condition check or technical assessment process taking place" ]
+           ]}?,
+      element ConditionDate {
+        ExactDate
+        >> a:documentation [
+             spectrum:unitName [ "Condition date" ]
+             spectrum:description [ "The date on which the condition of an object was recorded." ]
+           ]}?,
+      element Date {
+        ExactDate
+        >> a:documentation [
+             spectrum:unitName [ "Condition check/assessment date" ]
+             spectrum:description [ "The date(s) on which a condition check or technical assessment process took place." ]
+           ]}?,
+      element Method {
+        xsd:string
+        >> a:documentation [
+             spectrum:unitName [ "Condition check/assessment method" ]
+             spectrum:description [ "The method used when carrying out a condition check or technical assessment process." ]
+           ]}?,
+      element NextDate {
+        ExactDate
+        >> a:documentation [
+             spectrum:unitName [ "Next condition check/assessment date" ]
+             spectrum:description [ "The date on which the next condition check or technical assessment is due." ]
+           ]}?,
+      element Note {
+        xsd:string
+        >> a:documentation [
+             spectrum:unitName [ "Condition check/assessment note" ]
+             spectrum:description [ "Additional information about the condition checking or technical assessment process which has not been recorded elsewhere using controlled terminology." ]
+           ]}*,
+      element Reference {
+        xsd:string
+        >> a:documentation [
+             spectrum:unitName [ "Condition check/assessment reference number" ]
+             spectrum:description [ "A unique identifying number for the condition checking or technical assessment process. It should serve as the reference to written documentation of a condition check or technical assessment." ]
+           ]}?,
+      element TechnicalAttributes {
+        element TechnicalAssesment {
+          xsd:string
+          >> a:documentation [
+               spectrum:unitName [ "Technical assessment" ]
+               spectrum:description [ "Detailed assessment of the condition of an object and the required treatment." ]
+             ]}*,
+        element TechnicalAssessmentDate {
+          ExactDate
+          >> a:documentation [
+               spectrum:unitName [ "Technical assessment date" ]
+               spectrum:description [ "The date on which a Technical assessment of an object was recorded." ]
+             ]}?}*}*,
+    element Completeness {
+      element CompletenessDate {
+        ExactDate
+        >> a:documentation [
+             spectrum:unitName [ "Completeness date" ]
+             spectrum:description [ "The date on which the completeness of an object was recorded." ]
+           ]}?,
+      element Keyword {
+        xsd:string
+        >> a:documentation [
+             spectrum:unitName [ "Completeness" ]
+             spectrum:description [ "A single term describing the completeness of an object" ]
+           ]},
+      element Note {
+        xsd:string
+        >> a:documentation [
+             spectrum:unitName [ "Completeness note" ]
+             spectrum:description [ "Additional information about the completeness of an object which has not been recorded elsewhere using controlled terminology." ]
+           ]}*}?,
+    element DamageLoss {
+      element Date {
+        Date
+        >> a:documentation [
+             spectrum:unitName [ "Loss/damage date" ]
+             spectrum:description [ "The date an object was first established as damaged or missing." ]
+           ]}?,
+      element Method {
+        xsd:string
+        >> a:documentation [
+             spectrum:unitName [ "Loss/damage method" ]
+             spectrum:description [ "The method by which an object or group of objects was lost to the collections." ]
+           ]}?,
+      element Note {
+        xsd:string
+        >> a:documentation [
+             spectrum:unitName [ "Loss/damage note" ]
+             spectrum:description [ "Additional information about the loss of an object" ]
+           ]}*,
+      element Reference {
+        xsd:string
+        >> a:documentation [
+             spectrum:unitName [ "Loss/damage reference number" ]
+             spectrum:description [ "The unique number assigned to the record of the loss of an object or group of objects. The number should also refer to a file containing all written documentation about the loss of an object." ]
+           ]}?,
+      element Reporter {
+        Person
+        >> a:documentation [
+             spectrum:unitName [ "Loss/damage reporter" ]
+             spectrum:description [ "The person reporting the loss or damage to an object." ]
+           ]}*}*,
+    element Keyword {
+      xsd:string
+      >> a:documentation [
+           spectrum:unitName [ "Condition" ]
+           spectrum:description [ "A single term describing the condition of an object." ]
+         ]}?,
+    element Note {
+      xsd:string
+      >> a:documentation [
+           spectrum:unitName [ "Condition note" ]
+           spectrum:description [ "A brief description of the condition of an object." ]
+         ]}*}?,
+  element Conservation {
+    element Material {
+      xsd:string
+      >> a:documentation [
+           spectrum:unitName [ "Conservation material" ]
+           spectrum:description [ "The materials used in the conservation of an object." ]
+         ]}*,
+    element Method {
+      xsd:string
+      >> a:documentation [
+           spectrum:unitName [ "Conservation method" ]
+           spectrum:description [ "The method used in the conservation of an object." ]
+         ]}*,
+    element Note {
+      xsd:string
+      >> a:documentation [
+           spectrum:unitName [ "Conservation note" ]
+           spectrum:description [ "Additional information about conservation of an object which has not been recorded elsewhere using controlled terminology." ]
+         ]}*,
+    element RecallDate {
+      ExactDate
+      >> a:documentation [
+           spectrum:unitName [ "Recall date" ]
+           spectrum:description [ "The date on which the next stage of a conservation process is due." ]
+         ]}*,
+    element Reference {
+      xsd:string
+      >> a:documentation [
+           spectrum:unitName [ "Conservation reference number" ]
+           spectrum:description [ "A unique identifying number for the conservation of an object or group of objects. It should serve as the reference to written documentation of conservation." ]
+         ]}?,
+    element Treatment {
+      element Conservator {
+        Person
+        >> a:documentation [
+             spectrum:unitName [ "Conservator" ]
+             spectrum:description [ "The name of the Person or Organisation treating an object." ]
+           ]}*,
+      element Date {
+        ExactDate
+        >> a:documentation [
+             spectrum:unitName [ "Treatment date" ]
+             spectrum:description [ "The date on which conservation treatment is completed." ]
+           ]}?,
+      element Description {
+        xsd:string
+        >> a:documentation [
+             spectrum:unitName [ "Treatment report" ]
+             spectrum:description [ "Detailed description of the conservation treatment undergone by an object." ]
+           ]}*,
+      element Priority {
+        xsd:string
+        >> a:documentation [
+             spectrum:unitName [ "Conservation treatment priority" ]
+             spectrum:description [ "A term describing an object's need for Conservation treatment." ]
+           ]}?}*}*,
+  element Deaccession {
+    element Date {
+      ExactDate
+      >> a:documentation [
+           spectrum:unitName [ "Deaccession date" ]
+           spectrum:description [ "The date when an item was struck off the accession register." ]
+         ]}?,
+    element Disposal {
+      element Date {
+        ExactDate
+        >> a:documentation [
+             spectrum:unitName [ "Disposal date" ]
+             spectrum:description [ "The date an object is disposed of." ]
+           ]}?,
+      element Method {
+        xsd:string
+        >> a:documentation [
+             spectrum:unitName [ "Disposal method" ]
+             spectrum:description [ "The way in which an object is disposed of." ]
+           ]}?,
+      element NewNumber {
+        xsd:string
+        >> a:documentation [
+             spectrum:unitName [ "Disposal new object number" ]
+             spectrum:description [ "The object number assigned to a deaccessioned object by the recipient." ]
+           ]}?,
+      element Note {
+        xsd:string
+        >> a:documentation [
+             spectrum:unitName [ "Disposal note" ]
+             spectrum:description [ "Additional information about the disposal of an object which has not been recorded elsewhere using controlled terminology." ]
+           ]}*,
+      element Price {
+        empty
+        >> a:documentation [
+             spectrum:unitName [ "Disposal price" ]
+             spectrum:description [ "The total price paid for an object at disposal, including taxes for which the transfer is liable. Associated with the Object number. If no individual prices are known for specific objects in the group, use Group disposal price" ]
+           ]}?,
+      element ProposedRecipient {
+        xsd:string
+        >> a:documentation [
+             spectrum:unitName [ "Disposal proposed recipient" ]
+             spectrum:description [ "The People, Person or Organisation proposed as recipients for an object to be disposed of by way of transfer, gift or sale." ]
+           ]}*,
+      element Provisos {
+        xsd:string
+        >> a:documentation [
+             spectrum:unitName [ "Disposal provisos" ]
+             spectrum:description [ "Restrictions applying to all the objects to be disposed of." ]
+           ]}*,
+      element Reason {
+        xsd:string
+        >> a:documentation [
+             spectrum:unitName [ "Disposal reason" ]
+             spectrum:description [ "The reason or justification for an object or objects being disposed of." ]
+           ]}*,
+      element Recipient {
+        empty
+        >> a:documentation [
+             spectrum:unitName [ "Disposal recipient" ]
+             spectrum:description [ "The People, Person or Organisation receiving an object to be disposed of by way of transfer, gift or sale." ]
+           ]}?,
+      element Reference {
+        xsd:string
+        >> a:documentation [
+             spectrum:unitName [ "Disposal reference number" ]
+             spectrum:description [ "The unique number assigned to the disposal of an object or group of objects. The number should also refer to a file containing all written documentation about the disposal." ]
+           ]}?}?,
+    element GroupPrice {
+      xsd:string
+      >> a:documentation [
+           spectrum:unitName [ "Group disposal price" ]
+           spectrum:description [ "The total price paid for a group of objects at disposal including taxes for which the purchase is liable. If individual prices are known for specific objects in the group, use Disposal price." ]
+         ]}?}?,
+  element Description {
+    element Age {
+      element Phase {
+        xsd:string
+        >> a:documentation [
+             spectrum:unitName [ "Phase" ]
+             spectrum:description [ "A textual expression of the age or developmental phase of a natural science specimen." ]
+           ]}?,
+      element Qualifier {
+        xsd:string
+        >> a:documentation [
+             spectrum:unitName [ "Age qualifier" ]
+             spectrum:description [ "A qualification of the statement of the Age of a natural science specimen." ]
+           ]}?,
+      element Unit {
+        xsd:string
+        >> a:documentation [
+             spectrum:unitName [ "Age unit" ]
+             spectrum:description [ "The unit of measurement used to describe the Age of a natural science specimen." ]
+           ]}?,
+      element Value {
+        xsd:integer
+        >> a:documentation [
+             spectrum:unitName [ "Age" ]
+             spectrum:description [ "The numeric age of a natural science specimen when it died. Use Age unit to describe the unit of measurement used and Age qualifier to qualify the information. Use Phase for a textual description of Age." ]
+           ]}?}*,
+    element Colour {
+      xsd:string
+      >> a:documentation [
+           spectrum:unitName [ "Colour" ]
+           spectrum:description [ "The colour of an object." ]
+         ]}*,
+    element Component {
+      element Information {
+        xsd:string
+        >> a:documentation [
+             spectrum:unitName [ "Object component information" ]
+             spectrum:description [ "The unit of information describing an Object component name." ]
+           ]}?,
+      element Name {
+        xsd:string
+        >> a:documentation [
+             spectrum:unitName [ "Object component name" ]
+             spectrum:description [ "The non-separable part or component of an object which is being described." ]
+           ]}?}*,
+    element Content {
+      element Activity {
+        xsd:string
+        >> a:documentation [
+             spectrum:unitName [ "Content - activity" ]
+             spectrum:description [ "An activity depicted in or described by an object." ]
+           ]}*,
+      element Concept {
+        xsd:string
+        >> a:documentation [
+             spectrum:unitName [ "Content - concept" ]
+             spectrum:description [ "A concept depicted in or described by an object." ]
+           ]}*,
+      element ContentLanguage {
+        xsd:string
+        >> a:documentation [
+             spectrum:unitName [ "Content - language" ]
+             spectrum:description [ "The language the textual content of an object." ]
+           ]}?,
+      element ContentOther {
+        element ContentOther {
+          xsd:string
+          >> a:documentation [
+               spectrum:unitName [ "Content - other" ]
+               spectrum:description [ "An aspect of the content depicted in or described in an object, not covered by the other Content units." ]
+             ]}?,
+        element ContentOtherType {
+          xsd:string
+          >> a:documentation [
+               spectrum:unitName [ "Content - other type" ]
+               spectrum:description [ "The type of aspect being recorded by Content - other." ]
+             ]}?}*,
+      element ContentScript {
+        xsd:string
+        >> a:documentation [
+             spectrum:unitName [ "Content - script" ]
+             spectrum:description [ "The script the textual content of an object." ]
+           ]}?,
+      element Date {
+        Date
+        >> a:documentation [
+             spectrum:unitName [ "Content - date" ]
+             spectrum:description [ "A date depicted in or described by an object" ]
+           ]}*,
+      element Description {
+        xsd:string
+        >> a:documentation [
+             spectrum:unitName [ "Content - description" ]
+             spectrum:description [ "A general description of a depiction in an object, or description of an object without making interpretation. This may include descriptions of the content of all audio and visual works. (Use Brief description and Physical description to describe an object's other features.)" ]
+           ]}*,
+      element Event {
+        element Name {
+          xsd:string
+          >> a:documentation [
+               spectrum:unitName [ "Content - event name" ]
+               spectrum:description [ "An event depicted in or described by an object." ]
+             ]}?,
+        element Type {
+          xsd:string
+          >> a:documentation [
+               spectrum:unitName [ "Content - event name type" ]
+               spectrum:description [ "A term describing the nature of the Content - event name." ]
+             ]}?}*,
+      element Keyword {
+        xsd:string
+        >> a:documentation [
+             spectrum:unitName [ "Content - note" ]
+             spectrum:description [ "Additional information about an object's content which has not been recorded elsewhere using controlled terminology." ]
+           ]}*,
+      element Name {
+        xsd:string
+        >> a:documentation [
+             spectrum:unitName [ "Content - object" ]
+             spectrum:description [ "An object depicted in or described by another object." ]
+           ]}?,
+      element Organisation {
+        Organisation
+        >> a:documentation [
+             spectrum:unitName [ "Content - organisation" ]
+             spectrum:description [ "The Organisation depicted in or described in an object." ]
+           ]}*,
+      element People {
+        People
+        >> a:documentation [
+             spectrum:unitName [ "Content - people" ]
+             spectrum:description [ "A People depicted in or described by an object." ]
+           ]}*,
+      element Person {
+        Person
+        >> a:documentation [
+             spectrum:unitName [ "Content - person" ]
+             spectrum:description [ "A Person depicted in or described by an object." ]
+           ]}*,
+      element Place {
+        Place
+        >> a:documentation [
+             spectrum:unitName [ "Content - place" ]
+             spectrum:description [ "A Place depicted in or described by an object." ]
+           ]}*,
+      element Position {
+        xsd:string
+        >> a:documentation [
+             spectrum:unitName [ "Content - position" ]
+             spectrum:description [ "The position on an object of a depiction or description." ]
+           ]}?}*,
+    element Dimension {
+      element Date {
+        ExactDate
+        >> a:documentation [
+             spectrum:unitName [ "Dimension value date" ]
+             spectrum:description [ "The date on which the Dimension value was recorded." ]
+           ]}?,
+      element Dimension {
+        xsd:string
+        >> a:documentation [
+             spectrum:unitName [ "Dimension" ]
+             spectrum:description [ "The aspect of a part or component of an object being measured." ]
+           ]},
+      element Part {
+        xsd:string
+        >> a:documentation [
+             spectrum:unitName [ "Dimension measured part" ]
+             spectrum:description [ "The part of an object measured." ]
+           ]}?,
+      element Qualifier {
+        xsd:string
+        >> a:documentation [
+             spectrum:unitName [ "Dimension value qualifier" ]
+             spectrum:description [ "The measurement of statistical deviation given for a dimension. If left blank, the assumption is that the Dimension accuracy recorded is thought to be correct. Do not use capitalisation or punctuation." ]
+           ]}?,
+      element Unit {
+        xsd:string
+        >> a:documentation [
+             spectrum:unitName [ "Dimension measurement unit" ]
+             spectrum:description [ "The unit of measurement used when measuring a Dimension." ]
+           ]},
+      element Value {
+        xsd:string
+        >> a:documentation [
+             spectrum:unitName [ "Dimension value" ]
+             spectrum:description [ "The numeric value of the measurement of a Dimension." ]
+           ]}}*,
+    element Form {
+      xsd:string
+      >> a:documentation [
+           spectrum:unitName [ "Form" ]
+           spectrum:description [ "The method used to mount or preserve a specimen." ]
+         ]}?,
+    element Gender {
+      xsd:string
+      >> a:documentation [
+           spectrum:unitName [ "Sex" ]
+           spectrum:description [ "The gender of an animal specimen." ]
+         ]}*,
+    element Inscription {
+      element Content {
+        xsd:string
+        >> a:documentation [
+             spectrum:unitName [ "Inscription content" ]
+             spectrum:description [ "The text inscribed as part of the decoration or construction of an object recorded in the original language." ]
+           ]}?,
+      element Date {
+        Date
+        >> a:documentation [
+             spectrum:unitName [ "Inscription date" ]
+             spectrum:description [ "The date on which an inscription was made." ]
+           ]}?,
+      element Description {
+        xsd:string
+        >> a:documentation [
+             spectrum:unitName [ "Inscription description" ]
+             spectrum:description [ "A description of non-textual marks inscribed on an object." ]
+           ]}*,
+      element Inscriber {
+        empty
+        >> a:documentation [
+             spectrum:unitName [ "Inscriber" ]
+             spectrum:description [ "The People, Person or Organisation responsible for inscribing an object." ]
+           ]}*,
+      element Interpretation {
+        xsd:string
+        >> a:documentation [
+             spectrum:unitName [ "Inscription interpretation" ]
+             spectrum:description [ "The interpretation of an inscription or mark on an object." ]
+           ]}*,
+      element Language {
+        xsd:string
+        >> a:documentation [
+             spectrum:unitName [ "Inscription language" ]
+             spectrum:description [ "The language used in a textual inscription on an object." ]
+           ]}*,
+      element Method {
+        xsd:string
+        >> a:documentation [
+             spectrum:unitName [ "Inscription method" ]
+             spectrum:description [ "The method used to inscribe a mark or text on an object." ]
+           ]}*,
+      element Position {
+        xsd:string
+        >> a:documentation [
+             spectrum:unitName [ "Inscription position" ]
+             spectrum:description [ "A term describing the position of an inscription on an object." ]
+           ]}?,
+      element Script {
+        xsd:string
+        >> a:documentation [
+             spectrum:unitName [ "Inscription script" ]
+             spectrum:description [ "The script used in a textual inscription on an object." ]
+           ]}*,
+      element Translation {
+        xsd:string
+        >> a:documentation [
+             spectrum:unitName [ "Inscription translation" ]
+             spectrum:description [ "A translation into the organisation's first language of a textual inscription on an object." ]
+           ]}*,
+      element Transliteration {
+        xsd:string
+        >> a:documentation [
+             spectrum:unitName [ "Inscription transliteration" ]
+             spectrum:description [ "The transliteration of a textual inscription on an object." ]
+           ]}*,
+      element Type {
+        xsd:string
+        >> a:documentation [
+             spectrum:unitName [ "Inscription type" ]
+             spectrum:description [ "The form or function of the inscription." ]
+           ]}?}*,
+    element Material {
+      element Material {
+        xsd:string
+        >> a:documentation [
+             spectrum:unitName [ "Material" ]
+             spectrum:description [ "The basic materials and media from which an object is constructed." ]
+           ]}?,
+      element MaterialComponent {
+        element Keyword {
+          xsd:string
+          >> a:documentation [
+               spectrum:unitName [ "Material component" ]
+               spectrum:description [ "The name of a significant component, inclusion or trace in the material of which an object or specimen is made. This could also include a patina or corrosion product which has developed on an object and is of sufficient significance to require documenting" ]
+             ]}?,
+        element Note {
+          xsd:string
+          >> a:documentation [
+               spectrum:unitName [ "Material component note" ]
+               spectrum:description [ "To record further information about a material component" ]
+             ]}*}?,
+      element Name {
+        xsd:string
+        >> a:documentation [
+             spectrum:unitName [ "Material name" ]
+             spectrum:description [ "The name commonly used to designate a particular or characteristic material, and additional to or further defining the basic material itself. This may be the vernacular or generally used name for a certain type of material or a brand name." ]
+           ]}*,
+      element Source {
+        Place
+        >> a:documentation [
+             spectrum:unitName [ "Material source" ]
+             spectrum:description [ "The geographical origin of naturally occurring vegetable, animal or geological materials which either have been used to form an object or form specimens or deposits in their own right e.g. a quarry source for stone, country of origin of timber, geological outcrop for imported stone or fossil. (Note that this is separate from Object Production Place which is where the original materials are modified by human intervention to form an object)" ]
+           ]}?}*,
+    element PhysicalDescription {
+      xsd:string
+      >> a:documentation [
+           spectrum:unitName [ "Physical description" ]
+           spectrum:description [ "General visual appearance of an object." ]
+         ]}*,
+    element TechnicalAttributes {
+      element Attribute {
+        xsd:string
+        >> a:documentation [
+             spectrum:unitName [ "Technical attribute" ]
+             spectrum:description [ "The name of a technical attribute possessed by an object which can be described and quantified." ]
+           ]}?,
+      element Unit {
+        xsd:string
+        >> a:documentation [
+             spectrum:unitName [ "Technical attribute measurement unit" ]
+             spectrum:description [ "The unit of measurement used when measuring a Technical attribute." ]
+           ]}?,
+      element Value {
+        xsd:string
+        >> a:documentation [
+             spectrum:unitName [ "Technical attribute measurement" ]
+             spectrum:description [ "The measurement of a named Technical attribute." ]
+           ]}?}*,
+    element Technique {
+      element Technique {
+        xsd:string
+        >> a:documentation [
+             spectrum:unitName [ "Technique" ]
+             spectrum:description [ "Processes, methods, techniques or tools used to fabricate or decorate an object." ]
+           ]}?,
+      element Type {
+        xsd:string
+        >> a:documentation [
+             spectrum:unitName [ "Technique type" ]
+             spectrum:description [ "A term describing the nature of the Technique." ]
+           ]}?}*}*,
+  element Despatch {
+    element DeliveryDate {
+      ExactDate
+      >> a:documentation [
+           spectrum:unitName [ "Delivery date" ]
+           spectrum:description [ "The precise date on which an object or objects leaving the organisation is due to be delivered at its destination." ]
+         ]}?}*,
+  element Entry {
+    element Date {
+      ExactDate
+      >> a:documentation [
+           spectrum:unitName [ "Entry date" ]
+           spectrum:description [ "The date on which an object or group of objects enters the organisation." ]
+         ]}?,
+    element Depositor {
+      empty
+      >> a:documentation [
+           spectrum:unitName [ "Depositor" ]
+           spectrum:description [ "The person or organisation from whom a loaned or temporarily deposited object was obtained, if different from the Current owner or Lender." ]
+         ]}?,
+    element DepositorRequirements {
+      xsd:string
+      >> a:documentation [
+           spectrum:unitName [ "Depositor's requirements" ]
+           spectrum:description [ "Requirements made by a depositor or owner concerning the deposit of an object or group of objects, including conditions for deposition of archaeological archives" ]
+         ]}*,
+    element EntryNumber {
+      xsd:string
+      >> a:documentation [
+           spectrum:unitName [ "Entry number" ]
+           spectrum:description [ "A unique number assigned to the entry of an object or group of objects and used to track objects prior to their return or acquisition. It should serve as the reference to written documentation of objects entering the organisation for the first time. The number should be the one assigned to an entry form or receipt." ]
+         ]}?,
+    element EnvironmentalCondition {
+      element Date {
+        ExactDate
+        >> a:documentation [
+             spectrum:unitName [ "Environmental condition date" ]
+             spectrum:description [ "The date to which the environmental condition note applies." ]
+           ]}?,
+      element Note {
+        xsd:string
+        >> a:documentation [
+             spectrum:unitName [ "Environmental condition note" ]
+             spectrum:description [ "A record of the environmental conditions in which an object is kept" ]
+           ]}*}*,
+    element FieldCollection {
+      element Collector {
+        empty
+        >> a:documentation [
+             spectrum:unitName [ "Field collector" ]
+             spectrum:description [ "The Person or Organisation responsible for collecting a specimen or object in the field." ]
+           ]}*,
+      element Context {
+        element Code {
+          xsd:string
+          >> a:documentation [
+               spectrum:unitName [ "Place context" ]
+               spectrum:description [ "A number, code or term identifying physical evidence of an archaeological event, such as a wall, pit or ditch." ]
+             ]}?,
+        element Date {
+          Date
+          >> a:documentation [
+               spectrum:unitName [ "Place context date" ]
+               spectrum:description [ "The date of a context." ]
+             ]}?,
+        element Level {
+          xsd:string
+          >> a:documentation [
+               spectrum:unitName [ "Place context level" ]
+               spectrum:description [ "A level within a context." ]
+             ]}?}*,
+      element Date {
+        Date
+        >> a:documentation [
+             spectrum:unitName [ "Field collection date" ]
+             spectrum:description [ "The date an object is collected in the field" ]
+           ]}?,
+      element FieldCollection {
+        element Name {
+          xsd:string
+          >> a:documentation [
+               spectrum:unitName [ "Field collection event name" ]
+               spectrum:description [ "The name of an event at which an object was collected." ]
+             ]}?,
+        element Reference {
+          xsd:string
+          >> a:documentation [
+               spectrum:unitName [ "Field collection event reference number" ]
+               spectrum:description [ "The unique number assigned to a field collection event. The number should also refer to a file containing written documentation about the event." ]
+             ]}?}?,
+      element GeologicalComplex {
+        xsd:string
+        >> a:documentation [
+             spectrum:unitName [ "Geological complex name" ]
+             spectrum:description [ "The name of a geological complex from which a geological specimen was collected." ]
+           ]}*,
+      element Keyword {
+        element Keyword {
+          xsd:string
+          >> a:documentation [
+               spectrum:unitName [ "Habitat" ]
+               spectrum:description [ "A term describing the surroundings and environment of the area where a specimen was collected in the field." ]
+             ]}?,
+        element Note {
+          xsd:string
+          >> a:documentation [
+               spectrum:unitName [ "Habitat note" ]
+               spectrum:description [ "Additional information about the habitat of an object which has not been recorded elsewhere using controlled terminology." ]
+             ]}*}*,
+      element Method {
+        xsd:string
+        >> a:documentation [
+             spectrum:unitName [ "Field collection method" ]
+             spectrum:description [ "The method used to excavate or collect an object in the field" ]
+           ]}?,
+      element Note {
+        xsd:string
+        >> a:documentation [
+             spectrum:unitName [ "Field collection note" ]
+             spectrum:description [ "Additional information about the place or method of field collection or excavation." ]
+           ]}*,
+      element Number {
+        xsd:string
+        >> a:documentation [
+             spectrum:unitName [ "Field collection number" ]
+             spectrum:description [ "A number or code assigned to an object collected in the field before an Entry number or Object number is assigned." ]
+           ]}?,
+      element Place {
+        Place
+        >> a:documentation [
+             spectrum:unitName [ "Field collection place" ]
+             spectrum:description [ "The place where an object was excavated or collected in the field." ]
+           ]}*,
+      element Position {
+        xsd:string
+        >> a:documentation [
+             spectrum:unitName [ "Place position" ]
+             spectrum:description [ "A precise position in a Place, usually to record the finding of an object in field collection." ]
+           ]}?,
+      element Source {
+        empty
+        >> a:documentation [
+             spectrum:unitName [ "Field collection source" ]
+             spectrum:description [ "The social, socio-professional, or ethnic groups from which an object was collected our bought. May be different from the group of production and/or the group use." ]
+           ]}?,
+      element StratigraphicUnit {
+        element Name {
+          xsd:string
+          >> a:documentation [
+               spectrum:unitName [ "Stratigraphic unit name" ]
+               spectrum:description [ "The stratigraphic unit from which a field collection was made." ]
+             ]}?,
+        element Note {
+          xsd:string
+          >> a:documentation [
+               spectrum:unitName [ "Stratigraphic unit note" ]
+               spectrum:description [ "Additional information about a Stratigraphic unit name." ]
+             ]}*,
+        element Type {
+          xsd:string
+          >> a:documentation [
+               spectrum:unitName [ "Stratigraphic unit type" ]
+               spectrum:description [ "The nature of the Stratigraphic unit name from which a field collection was made." ]
+             ]}?}?}?,
+    element Method {
+      xsd:string
+      >> a:documentation [
+           spectrum:unitName [ "Entry method" ]
+           spectrum:description [ "The method by which an object or group of objects is deposited." ]
+         ]}?,
+    element Note {
+      xsd:string
+      >> a:documentation [
+           spectrum:unitName [ "Entry note" ]
+           spectrum:description [ "Additional information about the deposit of an object which has not been recorded elsewhere using controlled terminology." ]
+         ]}*,
+    element ObjectRequirements {
+      xsd:string
+      >> a:documentation [
+           spectrum:unitName [ "Special requirements" ]
+           spectrum:description [ "Requirements that may be unique or special to a particular object." ]
+         ]}*,
+    element PackingNote {
+      xsd:string
+      >> a:documentation [
+           spectrum:unitName [ "Packing note" ]
+           spectrum:description [ "Information about the packing of an object or group of objects at the time of deposit at the organisation." ]
+         ]}*,
+    element Reason {
+      xsd:string
+      >> a:documentation [
+           spectrum:unitName [ "Entry reason" ]
+           spectrum:description [ "The reason for an object or group of objects physically entering the organisation." ]
+         ]}?}?,
+  element Exhibition {
+    element Begindate {
+      Date
+      >> a:documentation [
+           spectrum:unitName [ "Exhibition begin date" ]
+           spectrum:description [ "The opening date of an exhibition, display, or event at a particular Venue." ]
+         ]}?,
+    element CatalogueNumber {
+      xsd:string
+      >> a:documentation [
+           spectrum:unitName [ "Catalogue number" ]
+           spectrum:description [ "The number assigned to an object in an exhibition catalogue" ]
+         ]}?,
+    element Enddate {
+      Date
+      >> a:documentation [
+           spectrum:unitName [ "Exhibition end date" ]
+           spectrum:description [ "The closing date of an exhibition, display, or event at a particular Venue." ]
+         ]}?,
+    element Organiser {
+      empty
+      >> a:documentation [
+           spectrum:unitName [ "Exhibition organiser" ]
+           spectrum:description [ "The name of the Person or Organisation organising an exhibition, display, or selecting objects for an event." ]
+         ]}*,
+    element Reference {
+      xsd:string
+      >> a:documentation [
+           spectrum:unitName [ "Exhibition reference number" ]
+           spectrum:description [ "A unique identifying number for the exhibition of an object or group of objects under the auspices of the organisation. It should serve as the reference to written documentation of an exhibition." ]
+         ]}?,
+    element Title {
+      xsd:string
+      >> a:documentation [
+           spectrum:unitName [ "Exhibition title" ]
+           spectrum:description [ "The name of an exhibition, display or other type of event." ]
+         ]}?}*,
+  element Exit {
+    element ExitDate {
+      Date
+      >> a:documentation [
+           spectrum:unitName [ "Exit date" ]
+           spectrum:description [ "The date on which an object or objects leaves the organisation." ]
+         ]}?,
+    element ExitDestination {
+      Person
+      >> a:documentation [
+           spectrum:unitName [ "Exit destination" ]
+           spectrum:description [ "The Person or Organisation to whom an object is being sent." ]
+         ]}?,
+    element ExitMethod {
+      xsd:string
+      >> a:documentation [
+           spectrum:unitName [ "Exit method" ]
+           spectrum:description [ "The method by which an object or group of objects leaves the organisation." ]
+         ]}?,
+    element ExitNote {
+      xsd:string
+      >> a:documentation [
+           spectrum:unitName [ "Exit note" ]
+           spectrum:description [ "Additional information relating to the exit of an object which cannot be recorded elsewhere." ]
+         ]}?,
+    element ExitReferenceNumber {
+      xsd:string
+      >> a:documentation [
+           spectrum:unitName [ "Exit reference number" ]
+           spectrum:description [ "A unique identifying number for a exit. It should serve as the reference to written documentation of a exit. The number may be assigned to a exit note or receipt." ]
+         ]}?,
+    element OrgansiationCourier {
+      People
+      >> a:documentation [
+           spectrum:unitName [ "Organisation courier" ]
+           spectrum:description [ "The name of the person assigned the responsibility to accompany an object on an external move." ]
+         ]}?}?,
+  element Identification {
+    element AdministrationName {
+      xsd:string
+      >> a:documentation [
+           spectrum:unitName [ "Administration name" ]
+           spectrum:description [ "The name of a section of the organisation charged with the responsibility for an object and maintaining its documentation." ]
+         ]}?,
+    element BriefDescription {
+      xsd:string
+      >> a:documentation [
+           spectrum:unitName [ "Brief description" ]
+           spectrum:description [ "A text description of an object in approximately one sentence; normally used for administrative and identification purposes. It records the most important information from a number of separate descriptive units of information." ]
+         ]}?,
+    element Comments {
+      xsd:string
+      >> a:documentation [
+           spectrum:unitName [ "Comments" ]
+           spectrum:description [ "Additional comments made about an object by visitors, curators or researchers." ]
+         ]}*,
+    element CopyNumber {
+      xsd:string
+      >> a:documentation [
+           spectrum:unitName [ "Copy number" ]
+           spectrum:description [ "A number assigned to an object by the maker within a limited edition or special run." ]
+         ]}?,
+    element DistinguishingFeatures {
+      xsd:string
+      >> a:documentation [
+           spectrum:unitName [ "Distinguishing features" ]
+           spectrum:description [ "A description of features which could uniquely identify an object, bringing together details from other groups of units of information such as Identification, Inscription, Condition which could in a sentence uniquely identify an object." ]
+         ]}*,
+    element EditionNumber {
+      xsd:string
+      >> a:documentation [
+           spectrum:unitName [ "Edition number" ]
+           spectrum:description [ "A number assigned to an group of objects produced at the same time by the maker." ]
+         ]}?,
+    element NumberOfObjects {
+      xsd:string
+      >> a:documentation [
+           spectrum:unitName [ "Number of objects" ]
+           spectrum:description [ "A record of the number of objects at the next level down in an object record." ]
+         ]}?,
+    element ObjectName {
+      element Currency {
+        xsd:string
+        >> a:documentation [
+             spectrum:unitName [ "Object name currency" ]
+             spectrum:description [ "A statement of the status of an Object name." ]
+           ]}?,
+      element Language {
+        xsd:string
+        >> a:documentation [
+             spectrum:unitName [ "Object name/title language" ]
+             spectrum:description [ "The language used for the Object name, Other name or Title given to an object." ]
+           ]}?,
+      element Level {
+        xsd:string
+        >> a:documentation [
+             spectrum:unitName [ "Object name level" ]
+             spectrum:description [ "A statement of the position of the Object name in a classification scheme." ]
+           ]}?,
+      element Name {
+        xsd:string
+        >> a:documentation [
+             spectrum:unitName [ "Object name" ]
+             spectrum:description [ "A description of the form, function or type of object." ]
+           ]}?,
+      element Note {
+        xsd:string
+        >> a:documentation [
+             spectrum:unitName [ "Object name note" ]
+             spectrum:description [ "Additional information about the Object name." ]
+           ]}*,
+      element System {
+        xsd:string
+        >> a:documentation [
+             spectrum:unitName [ "Object name system" ]
+             spectrum:description [ "The classification system from which the Object name is taken." ]
+           ]}?,
+      element Type {
+        xsd:string
+        >> a:documentation [
+             spectrum:unitName [ "Object name type" ]
+             spectrum:description [ "The type of Object name recorded." ]
+           ]}?}*,
+    element ObjectNumber {
+      xsd:string
+      >> a:documentation [
+           spectrum:unitName [ "Object number" ]
+           spectrum:description [ "A unique number identifying an object or specimens, including any separated parts." ]
+         ]},
+    element ObjectTitle {
+      element Title {
+        xsd:string
+        >> a:documentation [
+             spectrum:unitName [ "Title" ]
+             spectrum:description [ "The name assigned to an object or group of objects by the artist/creator or collector at the time of origin or subsequent titles either specifically assigned or generally understood to refer to it." ]
+           ]}?,
+      element Translation {
+        xsd:string
+        >> a:documentation [
+             spectrum:unitName [ "Title translation" ]
+             spectrum:description [ "A translation into the organisation's first language of a title as recorded." ]
+           ]}*,
+      element Type {
+        xsd:string
+        >> a:documentation [
+             spectrum:unitName [ "Title type" ]
+             spectrum:description [ "The nature of the Title recorded." ]
+           ]}?}*,
+    element OtherNumber {
+      element Type {
+        xsd:string
+        >> a:documentation [
+             spectrum:unitName [ "Other number type" ]
+             spectrum:description [ "A description of an Other number assigned to an object." ]
+           ]}?,
+      element Value {
+        xsd:string
+        >> a:documentation [
+             spectrum:unitName [ "Other number" ]
+             spectrum:description [ "An alternative number for an object other than the Object number." ]
+           ]}?}*,
+    element Standing {
+      xsd:string
+      >> a:documentation [
+           spectrum:unitName [ "Object status" ]
+           spectrum:description [ "A statement of the standing of a natural science specimen or other object in relation to others in existence." ]
+         ]}?},
+  element Indemnity {
+    element Confirmation {
+      ExactDate
+      >> a:documentation [
+           spectrum:unitName [ "Indemnity confirmation date" ]
+           spectrum:description [ "The date confirmation of indemnity cover is received from the indemnifying body." ]
+         ]}?,
+    element MinimumLiabilitySum {
+      xsd:string
+      >> a:documentation [
+           spectrum:unitName [ "Object minimum liability sum" ]
+           spectrum:description [ "The sum determined by Government Indemnity Scheme which the indemnified organisation is responsible." ]
+         ]}?,
+    element Note {
+      xsd:string
+      >> a:documentation [
+           spectrum:unitName [ "Indemnity note" ]
+           spectrum:description [ "Additional information about the indemnity, including any special conditions which apply." ]
+         ]}*,
+    element Reference {
+      xsd:string
+      >> a:documentation [
+           spectrum:unitName [ "Indemnity reference number" ]
+           spectrum:description [ "A unique identifying number of the indemnity as assigned by the organisation. The number should be a reference to written documentation about the indemnity, which should include a copy of the indemnity." ]
+         ]}?,
+    element Renewal {
+      ExactDate
+      >> a:documentation [
+           spectrum:unitName [ "Indemnity renewal date" ]
+           spectrum:description [ "The date when a Government Indemnity arrangement is due for renewal." ]
+         ]}?}?,
+  element Insurance {
+    element Insurer {
+      empty
+      >> a:documentation [
+           spectrum:unitName [ "Insurer" ]
+           spectrum:description [ "The name of the Person or Organisation responsible for insuring an object or group of objects." ]
+         ]}?,
+    element Note {
+      xsd:string
+      >> a:documentation [
+           spectrum:unitName [ "Insurance note" ]
+           spectrum:description [ "Additional information about the insurance, including any special conditions which apply." ]
+         ]}*,
+    element PolicyNumber {
+      xsd:string
+      >> a:documentation [
+           spectrum:unitName [ "Insurance policy number" ]
+           spectrum:description [ "The number of the insurance policy as assigned by the Insurer." ]
+         ]}?,
+    element Reference {
+      xsd:string
+      >> a:documentation [
+           spectrum:unitName [ "Insurance reference number" ]
+           spectrum:description [ "A unique identifying number of the insurance as assigned by the organisation. The number should be a reference to written documentation about the indemnity, which should include a copy of the indemnity." ]
+         ]}?,
+    element RenewalDate {
+      ExactDate
+      >> a:documentation [
+           spectrum:unitName [ "Insurance renewal date" ]
+           spectrum:description [ "The date when an insurance policy is due for renewal." ]
+         ]}?}*,
+  element Loan {
+    element In {
+      element Conditions {
+        xsd:string
+        >> a:documentation [
+             spectrum:unitName [ "Loan in conditions" ]
+             spectrum:description [ "Conditions applying to objects as part of the loan in agreement, including conditions for deposition of archaeological archives" ]
+           ]}*,
+      element Contact {
+        Person
+        >> a:documentation [
+             spectrum:unitName [ "Loan in contact" ]
+             spectrum:description [ "The name of the Person assigned responsibility for managing a loan in on behalf of the organisation." ]
+           ]}*,
+      element Lender {
+        empty
+        >> a:documentation [
+             spectrum:unitName [ "Lender" ]
+             spectrum:description [ "The details of a People, Person or Organisation lending an object to the organisation." ]
+           ]},
+      element LenderContact {
+        Person
+        >> a:documentation [
+             spectrum:unitName [ "Lender's contact" ]
+             spectrum:description [ "The details of a Person designated by the lender of an object to be responsible for dealing with the loan on their behalf." ]
+           ]}*,
+      element Note {
+        xsd:string
+        >> a:documentation [
+             spectrum:unitName [ "Loan in note" ]
+             spectrum:description [ "General information about a loan in." ]
+           ]}*,
+      element Reference {
+        xsd:string
+        >> a:documentation [
+             spectrum:unitName [ "Loan in reference number" ]
+             spectrum:description [ "The unique number assigned to the loan of objects from outside the organisation. The number should also refer to a file containing written documentation about the loan." ]
+           ]}?}*,
+    element Loan {
+      element Date {
+        ExactDate
+        >> a:documentation [
+             spectrum:unitName [ "Loaned object status date" ]
+             spectrum:description [ "The date on which an Loaned object status was recorded." ]
+           ]}?,
+      element Keyword {
+        xsd:string
+        >> a:documentation [
+             spectrum:unitName [ "Loaned object status" ]
+             spectrum:description [ "The stage in the Loans out procedure which an individual object to be loaned out has reached." ]
+           ]}?}?,
+    element Out {
+      element Borrower {
+        empty
+        >> a:documentation [
+             spectrum:unitName [ "Borrower" ]
+             spectrum:description [ "The details of a Person or Organisation borrowing an object from the organisation." ]
+           ]},
+      element Conditions {
+        xsd:string
+        >> a:documentation [
+             spectrum:unitName [ "Special conditions of loan" ]
+             spectrum:description [ "A statement of conditions on the loan of an object from an organisation in addition to those normally laid down." ]
+           ]}*,
+      element Contact {
+        Person
+        >> a:documentation [
+             spectrum:unitName [ "Borrower's contact" ]
+             spectrum:description [ "The details of a Person or Organisation designated by the Borrower to be responsible for dealing with the loan on their behalf." ]
+           ]}*,
+      element LenderAuthorisation {
+        element Date {
+          ExactDate
+          >> a:documentation [
+               spectrum:unitName [ "Lender's authorisation date" ]
+               spectrum:description [ "The date on which the lender's authoriser gives approval for a loan in to proceed." ]
+             ]}?,
+        element Name {
+          xsd:string
+          >> a:documentation [
+               spectrum:unitName [ "Lender's authoriser" ]
+               spectrum:description [ "The name of a member of staff giving final approval for the loan in to proceed." ]
+             ]}}*,
+      element Note {
+        xsd:string
+        >> a:documentation [
+             spectrum:unitName [ "Loan out note" ]
+             spectrum:description [ "General information about a loan out." ]
+           ]}*,
+      element Reference {
+        xsd:string
+        >> a:documentation [
+             spectrum:unitName [ "Loan out reference number" ]
+             spectrum:description [ "The unique number assigned to the loan of objects to other organisations. The number should also refer to a file containing all written documentation about the loan out." ]
+           ]}?,
+      element Status {
+        element Date {
+          ExactDate
+          >> a:documentation [
+               spectrum:unitName [ "Status date" ]
+               spectrum:description [ "The date on which the status of a procedure was recorded." ]
+             ]}?,
+        element Keyword {
+          xsd:string
+          >> a:documentation [
+               spectrum:unitName [ "Status" ]
+               spectrum:description [ "The stage in the procedure which an individual object has reached." ]
+             ]},
+        element ReviewDate {
+          ExactDate
+          >> a:documentation [
+               spectrum:unitName [ "Status review date" ]
+               spectrum:description [ "The date on which the status of a procedure will next be reviewed." ]
+             ]}?}?,
+      element Venue {
+        xsd:string
+        >> a:documentation [
+             spectrum:unitName [ "Venue" ]
+             spectrum:description [ "The Organisation responsible for the venue where an exhibition is to be held." ]
+           ]}?,
+      element VenueAuthorisation {
+        element Date {
+          ExactDate
+          >> a:documentation [
+               spectrum:unitName [ "Venue authorisation date" ]
+               spectrum:description [ "The date on which the Venue authoriser gives final approval for a Venue to take a loan out." ]
+             ]}?,
+        element Name {
+          xsd:string
+          >> a:documentation [
+               spectrum:unitName [ "Venue authoriser" ]
+               spectrum:description [ "The name of a member of staff at a lending organisation giving final approval for a Venue to take a loan out." ]
+             ]}}*}*}?,
+  element ObjectLocation {
+    element AccessNote {
+      xsd:string
+      >> a:documentation [
+           spectrum:unitName [ "Location access note" ]
+           spectrum:description [ "Information about the access to a specific Location." ]
+         ]}*,
+    element Address {
+      Address
+      >> a:documentation [
+           spectrum:unitName [ "Location address" ]
+           spectrum:description [ "The address of a Location where it is not to be found on the main site of an organisation." ]
+         ]}?,
+    element Condition {
+      element Date {
+        ExactDate
+        >> a:documentation [
+             spectrum:unitName [ "Location condition note date" ]
+             spectrum:description [ "The date on which Location condition note was recorded." ]
+           ]}?}?,
+    element Current {
+      element Fitness {
+        xsd:string
+        >> a:documentation [
+             spectrum:unitName [ "Current location fitness" ]
+             spectrum:description [ "A term describing the extent to which an object's current location is fitted to an object's requirements." ]
+           ]}?,
+      element Name {
+        xsd:string
+        >> a:documentation [
+             spectrum:unitName [ "Current location" ]
+             spectrum:description [ "The place within the organisation where an object is currently located." ]
+           ]},
+      element Note {
+        xsd:string
+        >> a:documentation [
+             spectrum:unitName [ "Current location note" ]
+             spectrum:description [ "Information about the reason for an object's being at its Current location." ]
+           ]}*}?,
+    element Date {
+      ExactDate
+      >> a:documentation [
+           spectrum:unitName [ "Location date" ]
+           spectrum:description [ "The date an object was place at the Current location." ]
+         ]}?,
+    element LocationIdentifier {
+      xsd:string
+      >> a:documentation [
+           spectrum:unitName [ "Location identifier" ]
+           spectrum:description [ "A unique name, number, or identifier for a display or storage Location. It can also apply a Location on a computer system used for digital objects" ]
+         ]}?,
+    element LocationType {
+      xsd:string
+      >> a:documentation [
+           spectrum:unitName [ "Location type" ]
+           spectrum:description [ "The nature or category of a Location." ]
+         ]}?,
+    element Movement {
+      element Contact {
+        Person
+        >> a:documentation [
+             spectrum:unitName [ "Movement contact" ]
+             spectrum:description [ "The name of the member of staff responsible for an object during the move." ]
+           ]}*,
+      element Method {
+        xsd:string
+        >> a:documentation [
+             spectrum:unitName [ "Movement method" ]
+             spectrum:description [ "The method used in the movement of an object." ]
+           ]}?,
+      element Note {
+        xsd:string
+        >> a:documentation [
+             spectrum:unitName [ "Movement note" ]
+             spectrum:description [ "Additional information about the movement of an object or group of objects which has not been recorded elsewhere using controlled terminology." ]
+           ]}*,
+      element PlannedRemovalDate {
+        ExactDate
+        >> a:documentation [
+             spectrum:unitName [ "Planned removal date" ]
+             spectrum:description [ "The date an object is due to be returned from a Current location which is not its Normal location." ]
+           ]}?,
+      element Reference {
+        xsd:string
+        >> a:documentation [
+             spectrum:unitName [ "Movement reference number" ]
+             spectrum:description [ "A unique identifying number for the movement of an object or group of objects. It should serve as the reference to written documentation of a movement." ]
+           ]}?,
+      element RemovalDate {
+        ExactDate
+        >> a:documentation [
+             spectrum:unitName [ "Removal date" ]
+             spectrum:description [ "The date an object is actually removed from a Current location." ]
+           ]}?,
+      element ReturnDate {
+        ExactDate
+        >> a:documentation [
+             spectrum:unitName [ "Return date" ]
+             spectrum:description [ "The date an object is due to be returned to or collected by the Current owner or Depositor." ]
+           ]}?,
+      element Shipment {
+        element Contact {
+          Person
+          >> a:documentation [
+               spectrum:unitName [ "Shipper's contact" ]
+               spectrum:description [ "The name of the person assigned responsibility for a exit by an approved Shipper." ]
+             ]}*,
+        element Note {
+          xsd:string
+          >> a:documentation [
+               spectrum:unitName [ "Shipping note" ]
+               spectrum:description [ "Additional information about shipping an object, including details of the transit requirements." ]
+             ]}*,
+        element PackingRecommendations {
+          xsd:string
+          >> a:documentation [
+               spectrum:unitName [ "Packing recommendations" ]
+               spectrum:description [ "Specific recommendations for packing an object in addition to the measures which would normally be taken for that type of object." ]
+             ]}*,
+        element Shipper {
+          empty
+          >> a:documentation [
+               spectrum:unitName [ "Shipper" ]
+               spectrum:description [ "The name of the Person or Organisation assigned responsibility for removing object(s) from the organisation's premises." ]
+             ]}?}*}*,
+    element Normal {
+      xsd:string
+      >> a:documentation [
+           spectrum:unitName [ "Normal location" ]
+           spectrum:description [ "The place within the organisation where an object is normally located." ]
+         ]}?,
+    element Note {
+      xsd:string
+      >> a:documentation [
+           spectrum:unitName [ "Location condition note" ]
+           spectrum:description [ "Information about the condition of the location, including such as the environmental conditions or state of cleanliness." ]
+         ]}*,
+    element SecurityNote {
+      xsd:string
+      >> a:documentation [
+           spectrum:unitName [ "Location security note" ]
+           spectrum:description [ "Information about the security of a specific Location." ]
+         ]}*}?,
+  element ObjectView {
+    element ViewersContributionRole {
+      xsd:string
+      >> a:documentation [
+           spectrum:unitName [ "Viewer's contribution note" ]
+           spectrum:description [ "Any observations or comments on a viewer's contributions which the organisation wishes to record, e.g. the way in which the information was obtained or any discrepancies noted." ]
+         ]}?,
+    element ViewersPersonalExperience {
+      xsd:string
+      >> a:documentation [
+           spectrum:unitName [ "Viewer's personal experience" ]
+           spectrum:description [ "A description of how and why a particular object or type of object is of particular importance to a viewer." ]
+         ]}?,
+    element ViewersPersonalResponse {
+      xsd:string
+      >> a:documentation [
+           spectrum:unitName [ "Viewer's personal response" ]
+           spectrum:description [ "A description of the way in which a viewer responded intuitively to the object." ]
+         ]}?,
+    element ViewersReference {
+      xsd:string
+      >> a:documentation [
+           spectrum:unitName [ "Viewer's reference" ]
+           spectrum:description [ "Documentation of any additional reference to the object provided by a viewer e.g. an event, object, document, person or organisation." ]
+         ]}?,
+    element ViewersRole {
+      xsd:string
+      >> a:documentation [
+           spectrum:unitName [ "Viewer's role" ]
+           spectrum:description [ "The role of a viewer in relation to the object." ]
+         ]}?}?,
+  element Ownership {
+    element Access {
+      xsd:string
+      >> a:documentation [
+           spectrum:unitName [ "Ownership access" ]
+           spectrum:description [ "Information about the access to an object before title was transferred to the organisation." ]
+         ]}?,
+    element Category {
+      xsd:string
+      >> a:documentation [
+           spectrum:unitName [ "Ownership category" ]
+           spectrum:description [ "A term defining the type of ownership existing for an object before title was transferred to the organisation." ]
+         ]}?,
+    element CurrentOwnership {
+      element AcquisitionMethod {
+        xsd:string
+        >> a:documentation [
+             spectrum:unitName [ "Ownership exchange method" ]
+             spectrum:description [ "The means by which title to an object is transferred between two Owners, before title was transferred to the organisation." ]
+           ]}?,
+      element AcquisitionNote {
+        xsd:string
+        >> a:documentation [
+             spectrum:unitName [ "Ownership exchange note" ]
+             spectrum:description [ "Additional information about the ownership exchange, before title was transferred to the organisation, which has not been recorded elsewhere using controlled terminology." ]
+           ]}*,
+      element AcquisitionPrice {
+        xsd:string
+        >> a:documentation [
+             spectrum:unitName [ "Ownership exchange price" ]
+             spectrum:description [ "The total price paid for an object at when the title passed between two owners, including taxes for which the transfer is liable." ]
+           ]}?,
+      element CurrentOwner {
+        empty
+        >> a:documentation [
+             spectrum:unitName [ "Current owner" ]
+             spectrum:description [ "Details of the owner of a loaned or temporarily deposited object, or other object in the organisation's custody which does not belong to the organisation." ]
+           ]}?,
+      element Dates {
+        Date
+        >> a:documentation [
+             spectrum:unitName [ "Ownership dates" ]
+             spectrum:description [ "The dates when a People, Person or Organisation owned the title to an object." ]
+           ]}?,
+      element Place {
+        Place
+        >> a:documentation [
+             spectrum:unitName [ "Ownership place" ]
+             spectrum:description [ "The place where an object was owned before title was transferred to the organisation." ]
+           ]}?}*,
+    element PreviousOwnership {
+      element AcquisitionMethod {
+        xsd:string
+        >> a:documentation [
+             spectrum:unitName [ "Ownership exchange method" ]
+             spectrum:description [ "The means by which title to an object is transferred between two Owners, before title was transferred to the organisation." ]
+           ]}?,
+      element AcquisitionNote {
+        xsd:string
+        >> a:documentation [
+             spectrum:unitName [ "Ownership exchange note" ]
+             spectrum:description [ "Additional information about the ownership exchange, before title was transferred to the organisation, which has not been recorded elsewhere using controlled terminology." ]
+           ]}*,
+      element AcquisitionPrice {
+        xsd:string
+        >> a:documentation [
+             spectrum:unitName [ "Ownership exchange price" ]
+             spectrum:description [ "The total price paid for an object at when the title passed between two owners, including taxes for which the transfer is liable." ]
+           ]}?,
+      element OwnersContributionNote {
+        xsd:string
+        >> a:documentation [
+             spectrum:unitName [ "Owner's contribution note" ]
+             spectrum:description [ "Any observations or comments on a previous owner's contributions which the organisation wishes to record, e.g. the way in which the information was obtained or any discrepancies noted." ]
+           ]}?,
+      element OwnersPersonalExperience {
+        xsd:string
+        >> a:documentation [
+             spectrum:unitName [ "Owner's personal experience" ]
+             spectrum:description [ "A description of how and why a particular object or group of objects is known to have been of particular importance to a previous owner." ]
+           ]}?,
+      element OwnersPersonalResponse {
+        xsd:string
+        >> a:documentation [
+             spectrum:unitName [ "Owner's personal response" ]
+             spectrum:description [ "A description of the way in which a previous owner responded intuitively to the object. " ]
+           ]}?,
+      element OwnersReference {
+        xsd:string
+        >> a:documentation [
+             spectrum:unitName [ "Owner's reference" ]
+             spectrum:description [ "Documentation of any additional reference to the object provided by a previous owner, e.g. an event, object, document, person or organisation." ]
+           ]}?,
+      element Place {
+        Place
+        >> a:documentation [
+             spectrum:unitName [ "Ownership place" ]
+             spectrum:description [ "The place where an object was owned before title was transferred to the organisation." ]
+           ]}?,
+      element PreviousOwner {
+        empty
+        >> a:documentation [
+             spectrum:unitName [ "Owner" ]
+             spectrum:description [ "Details of a People, Person or Organisation who owned an object before title was transferred to the organisation." ]
+           ]}*}*}?,
+  element Procedure {
+    element Authorisation {
+      element Authoriser {
+        Person
+        >> a:documentation [
+             spectrum:unitName [ "Authoriser" ]
+             spectrum:description [ "The name of the person giving final approval for a procedure to take place" ]
+           ]},
+      element Date {
+        ExactDate
+        >> a:documentation [
+             spectrum:unitName [ "Authorisation date" ]
+             spectrum:description [ "The date on which an authoriser gives final approval for a procedure to take place." ]
+           ]}?}*,
+    element Cost {
+      element Note {
+        xsd:string
+        >> a:documentation [
+             spectrum:unitName [ "Cost note" ]
+             spectrum:description [ "Additional information about the cost of a procedure." ]
+           ]}*,
+      element Value {
+        xsd:string
+        >> a:documentation [
+             spectrum:unitName [ "Cost" ]
+             spectrum:description [ "The amount paid in the course of a procedure" ]
+           ]}?}*,
+    element Manager {
+      empty
+      >> a:documentation [
+           spectrum:unitName [ "Procedure manager" ]
+           spectrum:description [ "The person or organisation responsible for carrying out a procedure." ]
+         ]}?,
+    element Note {
+      xsd:string
+      >> a:documentation [
+           spectrum:unitName [ "Procedure note" ]
+           spectrum:description [ "Additional information about procedure which has not been recorded elsewhere using controlled terminology." ]
+         ]}*,
+    element ProcedureBeginDate {
+      ExactDate
+      >> a:documentation [
+           spectrum:unitName [ "Procedure begin date" ]
+           spectrum:description [ "The date on which a procedure is begun." ]
+         ]}?,
+    element ProcedureEndDate {
+      ExactDate
+      >> a:documentation [
+           spectrum:unitName [ "Procedure end date" ]
+           spectrum:description [ "The date on which a procedure ended." ]
+         ]}?,
+    element Process {
+      element Date {
+        ExactDate
+        >> a:documentation [
+             spectrum:unitName [ "Process date" ]
+             spectrum:description [ "The date on which a process is completed." ]
+           ]}?,
+      element Method {
+        xsd:string
+        >> a:documentation [
+             spectrum:unitName [ "Process method" ]
+             spectrum:description [ "The method used to carry out the process on an object." ]
+           ]}?,
+      element Note {
+        xsd:string
+        >> a:documentation [
+             spectrum:unitName [ "Process note" ]
+             spectrum:description [ "Additional information about the process of an object which has not been recorded elsewhere using controlled terminology." ]
+           ]}*,
+      element Processor {
+        empty
+        >> a:documentation [
+             spectrum:unitName [ "Process person/organisation" ]
+             spectrum:description [ "The Person or Organisation responsible for carrying out a process on an object." ]
+           ]}*,
+      element Reference {
+        xsd:string
+        >> a:documentation [
+             spectrum:unitName [ "Process reference number" ]
+             spectrum:description [ "A unique identifying number for the process carried out on an object or group of objects. It should serve as the reference to written documentation of a process." ]
+           ]}?}+,
+    element Reason {
+      xsd:string
+      >> a:documentation [
+           spectrum:unitName [ "Reason" ]
+           spectrum:description [ "The reason for the procedure taking place." ]
+         ]}*,
+    element Request {
+      element Date {
+        ExactDate
+        >> a:documentation [
+             spectrum:unitName [ "Request date" ]
+             spectrum:description [ "The date on which a requester makes a request for a procedure to occur." ]
+           ]}?,
+      element Deadline {
+        ExactDate
+        >> a:documentation [
+             spectrum:unitName [ "Requested action date" ]
+             spectrum:description [ "The date on which a requester wishes for a procedure to occur." ]
+           ]}?,
+      element Details {
+        xsd:string
+        >> a:documentation [
+             spectrum:unitName [ "Request" ]
+             spectrum:description [ "Details provided by the person or organisation making a request for a procedure or process to occur." ]
+           ]}?,
+      element Requester {
+        empty
+        >> a:documentation [
+             spectrum:unitName [ "Requester" ]
+             spectrum:description [ "The name of the person or organisation making a request for a procedure to occur." ]
+           ]}*}*,
+    element Scheduling {
+      element Begin {
+        ExactDate
+        >> a:documentation [
+             spectrum:unitName [ "Scheduled begin date" ]
+             spectrum:description [ "The date on which a procedure is scheduled to begin." ]
+           ]},
+      element End {
+        ExactDate
+        >> a:documentation [
+             spectrum:unitName [ "Scheduled end date" ]
+             spectrum:description [ "The date on which a procedure is scheduled to end." ]
+           ]}}?,
+    element Title {
+      xsd:string
+      >> a:documentation [
+           spectrum:unitName [ "Procedure title" ]
+           spectrum:description [ "The name assigned to a procedure or project carried." ]
+         ]}?}*,
+  element Production {
+    element Date {
+      Date
+      >> a:documentation [
+           spectrum:unitName [ "Object production date" ]
+           spectrum:description [ "The date when a stage in the design, creation or manufacture of an object took place." ]
+         ]}*,
+    element Note {
+      xsd:string
+      >> a:documentation [
+           spectrum:unitName [ "Object production note" ]
+           spectrum:description [ "Additional information about an object's production." ]
+         ]}*,
+    element Organisation {
+      Organisation
+      >> a:documentation [
+           spectrum:unitName [ "Object production organisation" ]
+           spectrum:description [ "An Organisation involved in the design, creation or manufacture of the object." ]
+         ]}*,
+    element People {
+      People
+      >> a:documentation [
+           spectrum:unitName [ "Object production people" ]
+           spectrum:description [ "A People involved in the design, creation or manufacture of an object." ]
+         ]}*,
+    element Person {
+      Person
+      >> a:documentation [
+           spectrum:unitName [ "Object production person" ]
+           spectrum:description [ "A Person involved in the design, creation or manufacture of an object. This may include the commissioner of an object." ]
+         ]}*,
+    element Place {
+      Place
+      >> a:documentation [
+           spectrum:unitName [ "Object production place" ]
+           spectrum:description [ "A Place where the design, creation or manufacture of an object took place." ]
+         ]}*,
+    element Reason {
+      xsd:string
+      >> a:documentation [
+           spectrum:unitName [ "Object production reason" ]
+           spectrum:description [ "The reason why an object was produced." ]
+         ]}*,
+    element Style {
+      xsd:string
+      >> a:documentation [
+           spectrum:unitName [ "Style" ]
+           spectrum:description [ "Styles or schools relating to an object." ]
+         ]}*}*,
+  element Reference {
+    element Association {
+      xsd:string
+      >> a:documentation [
+           spectrum:unitName [ "Reference association" ]
+           spectrum:description [ "A single term describing the nature of the relationship between the Reference and an object." ]
+         ]}?,
+    element Details {
+      xsd:string
+      >> a:documentation [
+           spectrum:unitName [ "Reference" ]
+           spectrum:description [ "Details of a bibliographic or other reference to an object. The reference can be in any media e.g. published, unpublished, audio, video, computer record" ]
+         ]}?,
+    element Note {
+      xsd:string
+      >> a:documentation [
+           spectrum:unitName [ "Reference note" ]
+           spectrum:description [ "Details of the specific nature of the relevance of the Reference to the object, including an abstract if required." ]
+         ]}*,
+    element Number {
+      xsd:string
+      >> a:documentation [
+           spectrum:unitName [ "Reference number" ]
+           spectrum:description [ "A number or identifier unique to a Reference." ]
+         ]}?,
+    element ReferenceAuthorEditor {
+      Person
+      >> a:documentation [
+           spectrum:unitName [ "Reference author/editor" ]
+           spectrum:description [ "The Person or Organisation responsible for the intellectual content of a referenced work." ]
+         ]}?,
+    element ReferenceDetails {
+      xsd:string
+      >> a:documentation [
+           spectrum:unitName [ "Reference details" ]
+           spectrum:description [ "Details, pages, and illustrations. of a bibliographic reference." ]
+         ]}?,
+    element ReferencePublicationDate {
+      ExactDate
+      >> a:documentation [
+           spectrum:unitName [ "Reference publication date" ]
+           spectrum:description [ "The Date when a referenced work was published." ]
+         ]}?,
+    element ReferencePublicationPlace {
+      Place
+      >> a:documentation [
+           spectrum:unitName [ "Reference publication place" ]
+           spectrum:description [ "The Place where a referenced work was published." ]
+         ]}?,
+    element ReferencePublisher {
+      Person
+      >> a:documentation [
+           spectrum:unitName [ "Reference publisher" ]
+           spectrum:description [ "The Organisation or Person responsible for the publication of a referenced work." ]
+         ]}?,
+    element ReferenceTitle {
+      xsd:string
+      >> a:documentation [
+           spectrum:unitName [ "Reference title" ]
+           spectrum:description [ "The title of a referenced work." ]
+         ]}?,
+    element Type {
+      xsd:string
+      >> a:documentation [
+           spectrum:unitName [ "Reference type" ]
+           spectrum:description [ "A term describing the nature of the Reference." ]
+         ]}?}?,
+  element Rights {
+    element Confidentiality {
+      xsd:string
+      >> a:documentation [
+           spectrum:unitName [ "Confidentiality note" ]
+           spectrum:description [ "Restrictions agreed on the publication of details of an object, personnel, site location or other details associated with an object or archive." ]
+         ]}?,
+    element CreditLine {
+      xsd:string
+      >> a:documentation [
+           spectrum:unitName [ "Credit line" ]
+           spectrum:description [ "Text acknowledging a donation or loan, normally used on a display label." ]
+         ]}?,
+    element Licence {
+      element Held {
+        element Begin {
+          ExactDate
+          >> a:documentation [
+               spectrum:unitName [ "Legal/licence requirements held begin date" ]
+               spectrum:description [ "The first date on which a licence or certificate held by the organisation is current." ]
+             ]}?,
+        element Details {
+          xsd:string
+          >> a:documentation [
+               spectrum:unitName [ "Legal/licence requirements held" ]
+               spectrum:description [ "Details of any licences or certificates held (other than copyright or other rights of use or performance) which applies to an object while in the organisation's custody, whether acquired or not." ]
+             ]}?,
+        element End {
+          ExactDate
+          >> a:documentation [
+               spectrum:unitName [ "Legal/licence requirements held end date" ]
+               spectrum:description [ "The last date on which a licence or certificate held by the organisation is current." ]
+             ]}?,
+        element Number {
+          xsd:string
+          >> a:documentation [
+               spectrum:unitName [ "Legal/licence requirements held number" ]
+               spectrum:description [ "The unique number stated on the licence or certificate held by the organisation" ]
+             ]}?,
+        element Renewal {
+          ExactDate
+          >> a:documentation [
+               spectrum:unitName [ "Legal/licence requirements held renewal date" ]
+               spectrum:description [ "The date when a licence or certificate held by the organisation is due for renewal. Use this unit where the renewal is to be applied for in advance of the Legal/licence requirements held end date)." ]
+             ]}?}?,
+      element Requirements {
+        xsd:string
+        >> a:documentation [
+             spectrum:unitName [ "Legal/licence requirements" ]
+             spectrum:description [ "Details of any legislation (other than associated rights) which applies to an object while in the organisation's custody, whether acquired or not." ]
+           ]}?}*,
+    element RightBeginDate {
+      ExactDate
+      >> a:documentation [
+           spectrum:unitName [ "Right begin date" ]
+           spectrum:description [ "The first date on which a right is current." ]
+         ]}?,
+    element RightEndDate {
+      ExactDate
+      >> a:documentation [
+           spectrum:unitName [ "Right end date" ]
+           spectrum:description [ "The last date on which a right is current." ]
+         ]}?,
+    element RightHolder {
+      Person
+      >> a:documentation [
+           spectrum:unitName [ "Right holder" ]
+           spectrum:description [ "The holder of the right associated with an object or any other work (e.g. personal information held by an organisation.)" ]
+         ]}?,
+    element RightNote {
+      xsd:string
+      >> a:documentation [
+           spectrum:unitName [ "Right note" ]
+           spectrum:description [ "Any details of the rights not covered elsewhere." ]
+         ]}?,
+    element RightReferenceNumber {
+      xsd:string
+      >> a:documentation [
+           spectrum:unitName [ "Right reference number" ]
+           spectrum:description [ "A unique number identifying a right." ]
+         ]}?,
+    element RightsInBeginDate {
+      ExactDate
+      >> a:documentation [
+           spectrum:unitName [ "Rights in begin date" ]
+           spectrum:description [ "The first date on which a licence to use rights not held by the organisation is current." ]
+         ]}?,
+    element RightsInConsentStatus {
+      xsd:string
+      >> a:documentation [
+           spectrum:unitName [ "Rights in consent status" ]
+           spectrum:description [ "The status of the process of obtaining a licence to use rights not held by the organisation." ]
+         ]}?,
+    element RightsInConsentStatusDate {
+      ExactDate
+      >> a:documentation [
+           spectrum:unitName [ "Rights in consent status date" ]
+           spectrum:description [ "The date on which an Rights in consent status was recorded." ]
+         ]}?,
+    element RightsInEndDate {
+      ExactDate
+      >> a:documentation [
+           spectrum:unitName [ "Rights in end date" ]
+           spectrum:description [ "The last date on which a licence to use rights not held by the organisation is current." ]
+         ]}?,
+    element RightsInHolder {
+      Person
+      >> a:documentation [
+           spectrum:unitName [ "Rights in holder" ]
+           spectrum:description [ "The primary Person or Organisation holding the rights the organisation is receiving a licence to use." ]
+         ]}?,
+    element RightsInNote {
+      xsd:string
+      >> a:documentation [
+           spectrum:unitName [ "Rights in note" ]
+           spectrum:description [ "Any details of the licence to use rights not held by the organisation, not recorded elsewhere." ]
+         ]}?,
+    element RightsInReferenceNumber {
+      xsd:string
+      >> a:documentation [
+           spectrum:unitName [ "Rights in reference number" ]
+           spectrum:description [ "A unique number identifying the grant of a licence to use rights not held by the organisation." ]
+         ]}?,
+    element RightsInType {
+      xsd:string
+      >> a:documentation [
+           spectrum:unitName [ "Rights in type" ]
+           spectrum:description [ "The specific type of right for which a licence to required to use" ]
+         ]}?,
+    element RightsOutAuthorisationDate {
+      ExactDate
+      >> a:documentation [
+           spectrum:unitName [ "Rights out authorisation date" ]
+           spectrum:description [ "The first date on which a licence to use the organisation's rights is current." ]
+         ]}?,
+    element RightsOutAuthoriser {
+      Person
+      >> a:documentation [
+           spectrum:unitName [ "Rights out authoriser" ]
+           spectrum:description [ "The person giving final approval for a licence to use the organisation's rights." ]
+         ]}?,
+    element RightsOutBeginDate {
+      ExactDate
+      >> a:documentation [
+           spectrum:unitName [ "Rights out begin date" ]
+           spectrum:description [ "The first date on which a rights out licence is current." ]
+         ]}?,
+    element RightsOutConsentStatus {
+      xsd:string
+      >> a:documentation [
+           spectrum:unitName [ "Rights out consent status" ]
+           spectrum:description [ "The status of the process of applying for a licence to use the organisations rights." ]
+         ]}?,
+    element RightsOutConsentStatusDate {
+      ExactDate
+      >> a:documentation [
+           spectrum:unitName [ "Rights out consent status date" ]
+           spectrum:description [ "The date on which an Rights out consent status was recorded." ]
+         ]}?,
+    element RightsOutEndDate {
+      ExactDate
+      >> a:documentation [
+           spectrum:unitName [ "Rights out end date" ]
+           spectrum:description [ "The last date on which a licence to use the organisation's rights is current." ]
+         ]}?,
+    element RightsOutNote {
+      xsd:string
+      >> a:documentation [
+           spectrum:unitName [ "Rights out note" ]
+           spectrum:description [ "Any details of the licence to use the organisation's rights, not recorded elsewhere." ]
+         ]}?,
+    element RightsOutReferenceNumber {
+      xsd:string
+      >> a:documentation [
+           spectrum:unitName [ "Rights out reference number" ]
+           spectrum:description [ "A unique number identifying the grant of a licence to use the organisation's rights." ]
+         ]}?,
+    element RightsOutRequester {
+      Person
+      >> a:documentation [
+           spectrum:unitName [ "Rights out requester" ]
+           spectrum:description [ "The Person or Organisation requesting a licence to use rights held by the organisation." ]
+         ]}?,
+    element RightsOutType {
+      xsd:string
+      >> a:documentation [
+           spectrum:unitName [ "Rights out type" ]
+           spectrum:description [ "The specific type of right being granted in the licence by the organisation." ]
+         ]}?,
+    element RightType {
+      xsd:string
+      >> a:documentation [
+           spectrum:unitName [ "Right type" ]
+           spectrum:description [ "The specific type of right being recorded in relation to an object, document, photograph, work of art or record." ]
+         ]}?}*,
+  element RiskManagement {
+    element Hazard {
+      element Date {
+        ExactDate
+        >> a:documentation [
+             spectrum:unitName [ "Hazard date" ]
+             spectrum:description [ "The date on which a Hazard was identified." ]
+           ]}?,
+      element Keyword {
+        xsd:string
+        >> a:documentation [
+             spectrum:unitName [ "Hazard" ]
+             spectrum:description [ "Details of potential hazards to people or other objects that the handling and storing of an object can present." ]
+           ]},
+      element Note {
+        xsd:string
+        >> a:documentation [
+             spectrum:unitName [ "Hazards note" ]
+             spectrum:description [ "Details of potential hazards to people or other objects that the handling and storing of an object can present which are not recorded using controlled terminology in Hazard." ]
+           ]}*}*,
+    element SalvagePriority {
+      element Code {
+        xsd:string
+        >> a:documentation [
+             spectrum:unitName [ "Salvage priority code" ]
+             spectrum:description [ "A record of the salvage priority assigned to an object or group of objects." ]
+           ]},
+      element Date {
+        ExactDate
+        >> a:documentation [
+             spectrum:unitName [ "Salvage priority code date" ]
+             spectrum:description [ "The date on which a Salvage priority code was recorded." ]
+           ]}?}?}?,
+  element Type {
+    xsd:string
+    >> a:documentation [
+         spectrum:unitName [ "Content - object type" ]
+         spectrum:description [ "A term describing the nature of the Content - object." ]
+       ]}?,
+  element Usage {
+    element DisplayStatus {
+      element Date {
+        ExactDate
+        >> a:documentation [
+             spectrum:unitName [ "Object display status date" ]
+             spectrum:description [ "The date on which an Object display status was recorded." ]
+           ]}?,
+      element Keyword {
+        xsd:string
+        >> a:documentation [
+             spectrum:unitName [ "Object display status" ]
+             spectrum:description [ "The stage in the " ]
+           ]}?}?,
+    element Keyword {
+      xsd:string
+      >> a:documentation [
+           spectrum:unitName [ "Usage" ]
+           spectrum:description [ "A single term describing the use of a particular kind of object." ]
+         ]}?,
+    element Label {
+      element Date {
+        ExactDate
+        >> a:documentation [
+             spectrum:unitName [ "Label text date" ]
+             spectrum:description [ "The date that a Label text used for an exhibition or display label or a handlist or catalogue was produced." ]
+           ]}?,
+      element LabelAudience {
+        xsd:string
+        >> a:documentation [
+             spectrum:unitName [ "Label audience" ]
+             spectrum:description [ "The audience or group a label was aimed at." ]
+           ]}?,
+      element LabelAuthor {
+        Person
+        >> a:documentation [
+             spectrum:unitName [ "Label author" ]
+             spectrum:description [ "The Person responsible for the intellectual content of the text of a label." ]
+           ]}?,
+      element LabelLanguage {
+        xsd:string
+        >> a:documentation [
+             spectrum:unitName [ "Label language" ]
+             spectrum:description [ "The language of the text of a label." ]
+           ]}?,
+      element LabelNote {
+        xsd:string
+        >> a:documentation [
+             spectrum:unitName [ "Label note" ]
+             spectrum:description [ "Additional information or relevant commentary about a label which has not been recorded elsewhere using controlled terminology." ]
+           ]}?,
+      element LabelReason {
+        xsd:string
+        >> a:documentation [
+             spectrum:unitName [ "Label reason" ]
+             spectrum:description [ "The reason or purpose for the creation of a label." ]
+           ]}?,
+      element Text {
+        xsd:string
+        >> a:documentation [
+             spectrum:unitName [ "Label/raisonné text" ]
+             spectrum:description [ "The text used for an exhibition or display label or a handlist or catalogue." ]
+           ]}}*,
+    element Note {
+      xsd:string
+      >> a:documentation [
+           spectrum:unitName [ "Usage note" ]
+           spectrum:description [ "The use of a kind of object by the original or subsequent owners." ]
+         ]}*,
+    element Recommendations {
+      element Display {
+        xsd:string
+        >> a:documentation [
+             spectrum:unitName [ "Display recommendations" ]
+             spectrum:description [ "Specific recommendations for the display of an object in addition to the measures which would normally be taken for that type of object." ]
+           ]}*,
+      element Environmental {
+        xsd:string
+        >> a:documentation [
+             spectrum:unitName [ "Environmental recommendations" ]
+             spectrum:description [ "Specific recommendations for the environment in which an object is to be displayed or stored in addition to the measures which would normally be taken for that type of object." ]
+           ]}*,
+      element Handling {
+        xsd:string
+        >> a:documentation [
+             spectrum:unitName [ "Handling recommendations" ]
+             spectrum:description [ "Specific recommendations for handling an object in addition to the measures which would normally be taken for that type of object." ]
+           ]}?,
+      element Security {
+        xsd:string
+        >> a:documentation [
+             spectrum:unitName [ "Security recommendations" ]
+             spectrum:description [ "Specific recommendations for the security of an object in addition to the measures which would normally be taken for that type of object." ]
+           ]}*,
+      element StorageRequirements {
+        xsd:string
+        >> a:documentation [
+             spectrum:unitName [ "Storage requirements" ]
+             spectrum:description [ "Specific recommendations for the storage of an object in addition to the measures which would normally be taken for that type of object." ]
+           ]}*}?,
+    element Research {
+      element Date {
+        ExactDate
+        >> a:documentation [
+             spectrum:unitName [ "Research/use of object date" ]
+             spectrum:description [ "The date an object is researched, selected for an event, or used." ]
+           ]}*,
+      element Method {
+        xsd:string
+        >> a:documentation [
+             spectrum:unitName [ "Research/use of object method" ]
+             spectrum:description [ "The way in which an object is researched, used, or the reason for its selection for an event." ]
+           ]}?,
+      element Note {
+        xsd:string
+        >> a:documentation [
+             spectrum:unitName [ "Research/use of object note" ]
+             spectrum:description [ "Additional information about the research or use of an object which has not been recorded elsewhere using controlled terminology. This could include an object's operations log." ]
+           ]}*,
+      element Provisos {
+        xsd:string
+        >> a:documentation [
+             spectrum:unitName [ "Research/use of object provisos" ]
+             spectrum:description [ "Restrictions applying to the research or use of an object." ]
+           ]}*,
+      element Reference {
+        xsd:string
+        >> a:documentation [
+             spectrum:unitName [ "Research/use of object reference number" ]
+             spectrum:description [ "The unique number assigned to the research or use of an object or group of objects. The number should also refer to a file containing all written documentation about the disposal." ]
+           ]}?,
+      element Researcher {
+        empty
+        >> a:documentation [
+             spectrum:unitName [ "Researcher/user" ]
+             spectrum:description [ "The Person or Organisation researching, using, selecting or viewing an object or group of objects." ]
+           ]}*,
+      element Result {
+        xsd:string
+        >> a:documentation [
+             spectrum:unitName [ "Research/use of object result" ]
+             spectrum:description [ "Information about the outcome of the research or use of object(s)." ]
+           ]}?}*}*,
+  element Valuation {
+    element Date {
+      ExactDate
+      >> a:documentation [
+           spectrum:unitName [ "Object valuation date" ]
+           spectrum:description [ "The date the valuation of an object is assigned." ]
+         ]}?,
+    element Note {
+      xsd:string
+      >> a:documentation [
+           spectrum:unitName [ "Object valuation note" ]
+           spectrum:description [ "Additional information about the valuation of an object or group of objects." ]
+         ]}*,
+    element Reference {
+      xsd:string
+      >> a:documentation [
+           spectrum:unitName [ "Valuation reference number" ]
+           spectrum:description [ "A unique identifying number for the valuation of an object or group of objects. It should serve as the reference to written documentation of a valuation." ]
+         ]}?,
+    element RenewalDate {
+      ExactDate
+      >> a:documentation [
+           spectrum:unitName [ "Object valuation renewal date" ]
+           spectrum:description [ "The date the valuation should be re-assessed." ]
+         ]}?,
+    element Type {
+      xsd:string
+      >> a:documentation [
+           spectrum:unitName [ "Object valuation type" ]
+           spectrum:description [ "The type of valuation carried out on an object or group of objects." ]
+         ]}?,
+    element Value {
+      xsd:string
+      >> a:documentation [
+           spectrum:unitName [ "Object valuation" ]
+           spectrum:description [ "The current worth of an object as assigned by a Valuer." ]
+         ]},
+    element Valuer {
+      empty
+      >> a:documentation [
+           spectrum:unitName [ "Valuer" ]
+           spectrum:description [ "The Person or Organisation responsible for valuing an object on behalf of the organisation." ]
+         ]}*}*
+
+Organisation =
+  element Address {
+    Address
+    >> a:documentation [
+         spectrum:unitName [ "Organisation's address" ]
+         spectrum:description [ "The address where an Organisation can be contacted." ]
+       ]}*,
+  element Contact {
+    Person
+    >> a:documentation [
+         spectrum:unitName [ "Organisation's contact name" ]
+         spectrum:description [ "The representative of an Organisation who is normally liaised with." ]
+       ]}*,
+  element Group {
+    xsd:string
+    >> a:documentation [
+         spectrum:unitName [ "Organisation's group" ]
+         spectrum:description [ "The social, socio professional, ethnic, or culture group to which the Organisation belongs." ]
+       ]}*,
+  element History {
+    xsd:string
+    >> a:documentation [
+         spectrum:unitName [ "Organisation's history" ]
+         spectrum:description [ "Information about the history of the Organisation." ]
+       ]}*,
+  element MdaCode {
+    xsd:string
+    >> a:documentation [
+         spectrum:unitName [ "Organisation's MDA code" ]
+         spectrum:description [ "The MDA-assigned code uniquely identifying an Organisation." ]
+       ]}?,
+  element Name {
+    xsd:string
+    >> a:documentation [
+         spectrum:unitName [ "Organisation's main body" ]
+         spectrum:description [ "The name of an Organisation." ]
+       ]},
+  element NameAdditions {
+    xsd:string
+    >> a:documentation [
+         spectrum:unitName [ "Organisation's additions to name" ]
+         spectrum:description [ "Additional information about the identity of an Organisation." ]
+       ]}?,
+  element OrganisationsAssociation {
+    xsd:string
+    >> a:documentation [
+         spectrum:unitName [ "Organisation's association" ]
+         spectrum:description [ "The way in which an Organisation is associated with an object." ]
+       ]}?,
+  element OrganisationsDissolutionDate {
+    Date
+    >> a:documentation [
+         spectrum:unitName [ "Organisation's dissolution date" ]
+         spectrum:description [ "The date on which an Organisation formally ceased to be. This may be the date on which it was taken over or wound up." ]
+       ]}?,
+  element OrganisationsFoundationDate {
+    Date
+    >> a:documentation [
+         spectrum:unitName [ "Organisation's foundation date" ]
+         spectrum:description [ "The date on which an Organisation formally came into being." ]
+       ]}?,
+  element OrganisationsFoundationPlace {
+    Place
+    >> a:documentation [
+         spectrum:unitName [ "Organisation's foundation place" ]
+         spectrum:description [ "Information about the place where an Organisation came into being." ]
+       ]}?,
+  element OrganisationsFunction {
+    xsd:string
+    >> a:documentation [
+         spectrum:unitName [ "Organisation's function" ]
+         spectrum:description [ "The activities which make up the main business of an organisation." ]
+       ]}?,
+  element Reference {
+    xsd:string
+    >> a:documentation [
+         spectrum:unitName [ "Organisation's reference number" ]
+         spectrum:description [ "A code identifying an Organisation associated with an object." ]
+       ]}?,
+  element SubBody {
+    Organisation
+    >> a:documentation [
+         spectrum:unitName [ "Organisation's sub-body" ]
+         spectrum:description [ "The name of the sub-body of an Organisation." ]
+       ]}*
+
+People =
+  element Culture {
+    xsd:string
+    >> a:documentation [
+         spectrum:unitName [ "People's culture" ]
+         spectrum:description [ "An identifiable type of civilisation." ]
+       ]}*,
+  element Group {
+    xsd:string
+    >> a:documentation [
+         spectrum:unitName [ "People's group" ]
+         spectrum:description [ "An identifiable community or division of a nation of People." ]
+       ]}*,
+  element LinguisticGroup {
+    xsd:string
+    >> a:documentation [
+         spectrum:unitName [ "People's linguistic group" ]
+         spectrum:description [ "A broad grouping of People identifiable by common linguistic roots." ]
+       ]}*,
+  element PeoplesAssociation {
+    xsd:string
+    >> a:documentation [
+         spectrum:unitName [ "People's association" ]
+         spectrum:description [ "The way in which a People are associated with a particular object." ]
+       ]}?
+
+Person =
+  element Address {
+    Address
+    >> a:documentation [
+         spectrum:unitName [ "Person's address" ]
+         spectrum:description [ "The address where a Person can be contacted." ]
+       ]}*,
+  element BiographicalNote {
+    xsd:string
+    >> a:documentation [
+         spectrum:unitName [ "Person's biographical note" ]
+         spectrum:description [ "Information about the personal history of a Person." ]
+       ]}*,
+  element Birth {
+    element Date {
+      Date
+      >> a:documentation [
+           spectrum:unitName [ "Person's birth date" ]
+           spectrum:description [ "The date on which a Person was born." ]
+         ]}?,
+    element Place {
+      Place
+      >> a:documentation [
+           spectrum:unitName [ "Person's place of birth" ]
+           spectrum:description [ "The Place where a Person was born." ]
+         ]}?}?,
+  element Death {
+    element Date {
+      Date
+      >> a:documentation [
+           spectrum:unitName [ "Person's death date" ]
+           spectrum:description [ "The date on which a Person died." ]
+         ]}?,
+    element Place {
+      Place
+      >> a:documentation [
+           spectrum:unitName [ "Person's place of death" ]
+           spectrum:description [ "The Place where a Person died." ]
+         ]}?}?,
+  element Gender {
+    xsd:string
+    >> a:documentation [
+         spectrum:unitName [ "Person's gender" ]
+         spectrum:description [ "The sex of a Person." ]
+       ]}?,
+  element Group {
+    xsd:string
+    >> a:documentation [
+         spectrum:unitName [ "Person's group" ]
+         spectrum:description [ "The group (social, ethnic, cultural, faith, gender orientation) to which a Person belongs or which he/she identifies him/herself." ]
+       ]}*,
+  element Name {
+    element Additions {
+      xsd:string
+      >> a:documentation [
+           spectrum:unitName [ "Person's additions to name" ]
+           spectrum:description [ "Terms of honour used when the Person is referred to in relation to their position or work." ]
+         ]}?,
+    element Forename {
+      xsd:string
+      >> a:documentation [
+           spectrum:unitName [ "Person's forenames" ]
+           spectrum:description [ "A Person's given name." ]
+         ]}*,
+    element Initials {
+      xsd:string
+      >> a:documentation [
+           spectrum:unitName [ "Person's initials" ]
+           spectrum:description [ "The initial letters of the Person's forenames and Person's surnames." ]
+         ]}?,
+    element Note {
+      xsd:string
+      >> a:documentation [
+           spectrum:unitName [ "Person's name notes" ]
+           spectrum:description [ "A note primarily for documentation purposes to explain why the particular form of name was chosen; notes to distinguish this Person from others with the same name." ]
+         ]}*,
+    element Surname {
+      xsd:string
+      >> a:documentation [
+           spectrum:unitName [ "Person's surname" ]
+           spectrum:description [ "A Person's family name." ]
+         ]}},
+  element Nationality {
+    xsd:string
+    >> a:documentation [
+         spectrum:unitName [ "Person's nationality" ]
+         spectrum:description [ "A Person's official current nationality." ]
+       ]}*,
+  element Occupation {
+    xsd:string
+    >> a:documentation [
+         spectrum:unitName [ "Person's occupation" ]
+         spectrum:description [ "The occupation or employment of a Person." ]
+       ]}*,
+  element PersonsAssociation {
+    xsd:string
+    >> a:documentation [
+         spectrum:unitName [ "Person's association" ]
+         spectrum:description [ "The way in which a Person is associated with a particular object." ]
+       ]}?,
+  element PersonTitle {
+    xsd:string
+    >> a:documentation [
+         spectrum:unitName [ "Person's title" ]
+         spectrum:description [ "The form of address used by a Person." ]
+       ]}*,
+  element Reference {
+    xsd:string
+    >> a:documentation [
+         spectrum:unitName [ "Person's reference number" ]
+         spectrum:description [ "A code identifying a Person associated with an object." ]
+       ]}?,
+  element Salutation {
+    xsd:string
+    >> a:documentation [
+         spectrum:unitName [ "Person's salutation" ]
+         spectrum:description [ "The form of greeting used in correspondence." ]
+       ]}?,
+  element SchoolStyle {
+    xsd:string
+    >> a:documentation [
+         spectrum:unitName [ "Person's school/style" ]
+         spectrum:description [ "The primary styles in which the Person worked." ]
+       ]}*
+
+Place =
+  element Coordinates {
+    element Qualifier {
+      xsd:string
+      >> a:documentation [
+           spectrum:unitName [ "Place coordinates qualifier" ]
+           spectrum:description [ "The measurement of accuracy of a given for Place coordinates." ]
+         ]}?,
+    element Type {
+      xsd:string
+      >> a:documentation [
+           spectrum:unitName [ "Place coordinates type" ]
+           spectrum:description [ "The locating system used to describe the coordinates of a Place." ]
+         ]}?,
+    element Value {
+      xsd:string
+      >> a:documentation [
+           spectrum:unitName [ "Place coordinates" ]
+           spectrum:description [ "The precise location of a place expressed according to a chosen system." ]
+         ]}}*,
+  element EnvironmentalDetails {
+    xsd:string
+    >> a:documentation [
+         spectrum:unitName [ "Place environmental details" ]
+         spectrum:description [ "Environmental information relevant to an object, such as details about preservation conditions of the surrounding matrix." ]
+       ]}*,
+  element Feature {
+    element Date {
+      Date
+      >> a:documentation [
+           spectrum:unitName [ "Place feature date" ]
+           spectrum:description [ "The date of the Place feature." ]
+         ]}?,
+    element Keyword {
+      xsd:string
+      >> a:documentation [
+           spectrum:unitName [ "Place feature" ]
+           spectrum:description [ "The name by which a feature associated with an object is normally known." ]
+         ]},
+    element PlaceTypeSystem {
+      xsd:string
+      >> a:documentation [
+           spectrum:unitName [ "Place type system" ]
+           spectrum:description [ "The classification system from which the Place feature type is taken." ]
+         ]}?,
+    element Type {
+      xsd:string
+      >> a:documentation [
+           spectrum:unitName [ "Place feature type" ]
+           spectrum:description [ "The nature or category of Place feature recorded." ]
+         ]}?}*,
+  element Name {
+    xsd:string
+    >> a:documentation [
+         spectrum:unitName [ "Place name" ]
+         spectrum:description [ "The name or title by which the Place is normally known." ]
+       ]}?,
+  element NameType {
+    xsd:string
+    >> a:documentation [
+         spectrum:unitName [ "Place name type" ]
+         spectrum:description [ "The nature or category of Place recorded." ]
+       ]}?,
+  element Note {
+    xsd:string
+    >> a:documentation [
+         spectrum:unitName [ "Place note" ]
+         spectrum:description [ "Additional information about Place which has not been recorded elsewhere using controlled terminology." ]
+       ]}*,
+  element Owner {
+    empty
+    >> a:documentation [
+         spectrum:unitName [ "Place owner" ]
+         spectrum:description [ "The name of the owner of a Place associated with an object." ]
+       ]}*,
+  element PlaceAssociation {
+    xsd:string
+    >> a:documentation [
+         spectrum:unitName [ "Place association" ]
+         spectrum:description [ "The way in which a Place is associated with the object." ]
+       ]}?,
+  element Reference {
+    element Number {
+      xsd:string
+      >> a:documentation [
+           spectrum:unitName [ "Place reference number" ]
+           spectrum:description [ "A code describing a Place associated with an object, excavation or specimen." ]
+         ]},
+    element Type {
+      xsd:string
+      >> a:documentation [
+           spectrum:unitName [ "Place reference number type" ]
+           spectrum:description [ "The category of Place reference number recorded." ]
+         ]}?}?,
+  element Status {
+    xsd:string
+    >> a:documentation [
+         spectrum:unitName [ "Place status" ]
+         spectrum:description [ "A formal administrative or scientific status assigned to a place." ]
+       ]}?
