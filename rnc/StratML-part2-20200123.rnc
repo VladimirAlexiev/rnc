@@ -1,0 +1,200 @@
+# Schema agency: stratml.us
+# Schema version: 2.2.7
+# Schema date: January 23, 2020
+# Commented out the <Descriptor> element.
+# Made the <DescriptorValue> element a direct child of <TargetResult> and <ActualResult>.
+# Corrected <RoleType> cardinality from 0 to unbounded to 0 to 2.
+# Disclaimer:  This document and the information contained herein is provided on an "as is" basis and the StratML Community disclaims all warranties, express 
+# or implied, including but not limited to any warranty that the use of the information herein will not infringe any rights or any 
+# rights or any implied warranties of merchantability or fitness for a particular purpose. 
+namespace a = "http://relaxng.org/ns/compatibility/annotations/1.0"
+namespace rng = "http://relaxng.org/ns/structure/1.0"
+default namespace stratml = "urn:ISO:std:iso:17469:tech:xsd:PerformancePlanOrReport"
+namespace xsd = "http://www.w3.org/2001/XMLSchema"
+
+# xmlns:stratml="urn:ISO:std:iso:17469:tech:xsd:stratml_core"
+# Root Element
+start |= PerformancePlanOrReport
+
+PerformancePlanOrReport =
+ ## A document identifying inputs and processes required to accomplish objectives and establishing metrics by which progress will be assessed within a single budgetary planning and resource allocation cycle.
+ element PerformancePlanOrReport {
+   Name, Description?, OtherInformation?, StrategicPlanCore, AdministrativeInformation?, Submitter?,
+   attribute Type {"Strategic_Plan" | "Performance_Plan" | "Performance_Report"}}
+
+# Elements A-Z
+
+Acronym =
+ ## An abbreviation of a proper name usually composed of the first letters of each word in the name.
+ element Acronym {xsd:string}
+
+ActualResult =
+ ## A result achieved on or before a specified date.
+ element ActualResult {StartDate?, EndDate?, NumberOfUnits?, DescriptorValue?, Description?}
+
+AdministrativeInformation =
+ ## Useful information that is not essential and thus not part of the core of the plans or reports.
+ element AdministrativeInformation {AdministrativeInformationType}
+
+Description =
+ ## A sentence or short paragraph defining and explaining a concept.
+ element Description {xsd:string}
+
+DescriptorName =
+ ## A word (i.e., a noun or adjective), phrase, letter (e.g. a grade) or other type of rating applied to designate a type of descriptor.
+ element DescriptorName {xsd:string}
+
+DescriptorValue =
+ ## A noun, adjective, phrase, letter grade, or other type of rating assigned to a descriptor.
+ element DescriptorValue {xsd:string}
+
+EmailAddress =
+ ## The Email address of the person submitting the plan or report.
+ element EmailAddress {xsd:string}
+
+EndDate =
+ ## The year, month, and day the element with which it is associated is projected to cease, if it is not subsequently extended. Typically the end of a calendar or fiscal year.
+ element EndDate {DateTypeType}
+
+GivenName =
+ ## The given name of the person submitting the plan or report.
+ element GivenName {xsd:string}
+
+Goal =
+ ## A relatively broad statement of intended results to be achieved over more than one resource allocation and performance measurement cycle.
+ ## Supports Mission
+ element Goal {GoalType, Objective*}
+
+Identifier =
+ ## A string of alphanumeric characters by which the content an element is uniquely distinguished and may be explicitly referenced on the Web.
+ element Identifier {xsd:ID}
+
+MeasurementDimension =
+ ## The aspect of reality to be measured.
+ element MeasurementDimension {xsd:string}
+
+MeasurementInstance =
+ ## A measurement at a point in time.
+ element MeasurementInstance {TargetResult*, ActualResult*}
+
+Mission =
+ ## A brief description of the basic purpose of the organization.
+ element Mission {Description?, Identifier?}
+
+Name =
+ ## A word or short phrase intended to identify a concept within the context in which is it being applied.
+ element Name {xsd:string}
+
+NumberOfUnits =
+ ## A numeric value (number) associated with a type of measurement.
+ element NumberOfUnits {NumberOfUnitsType}
+
+Objective =
+ ## A target level of results against which achievement is to be measured within a single resource allocation and performance execution cycle.
+ element Objective {ObjectiveType}
+
+Organization =
+ ## The legal or logical entity to which the plan or report applies.
+ element Organization {Name?, Acronym?, Identifier?, Description?, Stakeholder*}
+
+OtherInformation =
+ ## Additional explanation or guidance that is not expressly addressed in other elements of the schema.
+ element OtherInformation {xsd:string}
+
+PerformanceIndicator =
+ ## A measurement dimension, unit of measurement, and measurement instance specifying target and actual results, e.g., of inputs applied, outputs produced, processes conducted, and outcomes realized.
+ element PerformanceIndicator {
+   SequenceIndicator?, MeasurementDimension, UnitOfMeasurement, Identifier?, Relationship*, MeasurementInstance*, OtherInformation?,
+   attribute ValueChainStage {ValueChainStageType}?,
+   attribute PerformanceIndicatorType {PerformanceIndicatorTypeType}?}
+
+PhoneNumber =
+ ## The telephone number of the person submitting the plan.
+ element PhoneNumber {xsd:string}
+
+PublicationDate =
+ ## The day, month, and year a plan or report was published in its current form.
+ element PublicationDate {DateTypeType}
+
+ReferentIdentifier =
+ ## The Identifier of the target (object) of a relationship.
+ element ReferentIdentifier {xsd:string}
+
+Relationship =
+ ## A conceptual association between two elements.
+ element Relationship {
+   Identifier?, ReferentIdentifier*, Name?, Description?,
+   attribute RelationshipType {RelationshipTypeType}?}
+
+Role =
+ ## A complex element containing other elements enabling the naming, description, and categorization of different kinds of interests individuals and groups may have in the achievement of goals and objectives.
+ element Role {Name, Description?, RoleType?}
+
+RoleType =
+ ## An attribute designating whether a stakeholder is a prospective beneficiary or a performer of actions required to achieve an objective, or both a performer and a beneficiary.
+ element RoleType {"Performer" | "Beneficiary"}
+
+SequenceIndicator =
+ ## An alphanumeric identifier applied to an element to designate its order in a series.
+ element SequenceIndicator {xsd:string}
+
+Source =
+ ## The Web address (URL) for the authoritative source of this document.
+ element Source {xsd:anyURI}
+
+Stakeholder =
+ ## An individual whose interests may be affected by or whose action may be required to achieve a goal or objective.
+ element Stakeholder {Name,
+   Description?,
+   Role*,
+   ## An attribute indicating whether the stakeholder is an individual person, an organization, or a generic group of people.
+   attribute StakeholderTypeType {  "Person" | "Organization" | "Generic_Group"}?}
+
+StartDate =
+ ## The year, month and day the element with which it is associated is scheduled to begin.
+ element StartDate {DateTypeType}
+
+StrategicPlanCore =
+ ## A complex element comprised if Mission, Vision, Values, Goals, Objectives and Stakeholders, together with the children of those core elements.
+ element StrategicPlanCore {Organization*, Vision?, Mission?, Value*, Goal+}
+
+Submitter =
+ ## The person submitting the plan or report in StratML format.
+ element Submitter {ContactInformationType}
+
+Surname =
+ ## The family name of the person submitting the plan or report.
+ element Surname {xsd:string}
+
+TargetResult =
+ ## A result to be achieved on or before a specified date.
+ element TargetResult {StartDate?, EndDate?, NumberOfUnits?, DescriptorValue?, Description?}
+
+UnitOfMeasurement =
+ ## The scale by which measurements are divided into increments.
+ element UnitOfMeasurement {xsd:string}
+
+Value =
+ ## A principle that is important and helps to define the essential character of the organization.
+ element Value {Name?, Description?}
+
+Vision =
+ ## A concise and inspirational statement implicitly relating an organization's purpose to its values, thus motivating its actions toward a future state it strives to achieve.
+ element Vision {Description?, Identifier?}
+
+# Complex Types A - Z
+
+AdministrativeInformationType = Identifier?, StartDate?, EndDate?, PublicationDate?, Source?
+ContactInformationType = Identifier?, GivenName?, Surname?, PhoneNumber?, EmailAddress?
+GoalType = Name, Description, Identifier?, SequenceIndicator?, Stakeholder*, OtherInformation?
+ObjectiveType = Name?, Description?, Identifier?, SequenceIndicator?, Stakeholder*, OtherInformation?, PerformanceIndicator*
+
+# Simple Types A - Z
+
+EmptyStringType = ""
+DateTypeType = xsd:date | EmptyStringType
+NumberOfUnitsType = NumberOfUnitsTypeType
+NumberOfUnitsTypeType = xsd:decimal | EmptyStringType
+PerformanceIndicatorTypeType = "Quantitative" | "Qualitative"
+RelationshipTypeType = "Broader_Than" | "Peer_To" | "Narrower_Than"
+ValueChainStageType = "Outcome" | "Output_Processing" | "Output" | "Input_Processing" | "Input"

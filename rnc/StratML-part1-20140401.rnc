@@ -1,0 +1,119 @@
+# Schema agency: ISO AIIM Schema version: 1.1 Schema date: April 1, 2014 Disclaimer: This document and the information contained herein is provided on an "as is" basis and AIIM disclaims all warranties, express or implied, including but not limited to any warranty that the use of the information herein will not infringe any rights or any rights or any implied warranties of merchantability or fitness for a particular purpose.
+namespace a = "http://relaxng.org/ns/compatibility/annotations/1.0"
+namespace rng = "http://relaxng.org/ns/structure/1.0"
+default namespace stratml =
+ "urn:ISO:std:iso:17469:tech:xsd:stratml_core"
+namespace xsd = "http://www.w3.org/2001/XMLSchema"
+
+start |= StrategicPlan
+
+Acronym =
+ ## An abbreviation of a proper name, usually composed of the first letters of each word in the name.
+ element Acronym {xsd:string}
+
+AdministrativeInformation =
+ element AdministrativeInformation {AdministrativeInformationType}
+
+Description =
+ ## A sentence or short paragraph defining and explaining a concept.
+ element Description {xsd:string}
+
+EmailAddress =
+ ## The Email address of the person submitting the plan.
+ element EmailAddress {xsd:string}
+
+EndDate =
+ ## The year, month, and day the element with which it is associated is projected to cease, if it is not subsequently extended. Typically the end of a calendar or fiscal year.
+ element EndDate {xsd:date}
+
+GivenName =
+ ## The given name of the person submitting the plan.
+ element GivenName {xsd:string}
+
+Goal =
+  ## General Goal
+  ## A relatively broad statement of intended results to be achieved over more than one resource allocation and performance measurement cycle.
+  ## Supports Mission
+ element Goal {Name, Description, Identifier?, SequenceIndicator?, Stakeholder*, OtherInformation?, Objective*}
+
+Identifier =
+ ## A string of alphanumeric characters by which the information contained within an element is distinguished from other versions of the same information as well as information contained in other instances of the same element.
+ element Identifier {xsd:ID}
+
+Mission =
+  ## A brief description of the basic purpose of the organization.
+ element Mission {Description?, Identifier?}
+
+Name =
+ ## A word or short phrase intended to identify a concept within the context in which is it being applied.
+ element Name {xsd:string}
+
+Objective =
+  ## Performance Goal
+  ## Strategy
+  ## A target level of results expressed in units against which achievement is to be measured within a single resource allocation and performance execution cycle.
+ element Objective {Name?, Description?, Identifier?, SequenceIndicator?, Stakeholder*, OtherInformation?}
+
+Organization =
+  ## The legal or logical entity to which the plan or report applies.
+ element Organization {
+   Name?, Acronym?, Identifier?, Description?, Stakeholder*}
+
+OtherInformation =
+ ## Additional explanation or guidance that is not expressly addressed in other elements of the schema.
+ element OtherInformation {xsd:string}
+
+PhoneNumber =
+ ## The telephone number of the person submitting the plan.
+ element PhoneNumber {xsd:string}
+
+PublicationDate =
+ ## The day, month, and year a strategic plan was published in its current form.
+ element PublicationDate {xsd:date}
+
+SequenceIndicator =
+ ## An alphanumeric identifier applied to an element to designate its order in a series.
+ element SequenceIndicator {xsd:string}
+
+Source =
+ ## The Web address (URL) for the authoritative source of this document.
+ element Source {xsd:anyURI}
+
+Stakeholder =
+  ## An individual, organization, or generic group whose interests may be affected by or whose action may be required to achieve a goal or objective.
+ element Stakeholder {
+   Name, Description?,
+   ## An attribute indicating whether the stakeholder is an individual person, an organization, or a generic group of people.
+   attribute StakeholderTypeType {"Person" | "Organization" | "Generic_Group"}?}
+
+StartDate =
+ ## The year, month and day the element with which it is associated is scheduled to begin.
+ element StartDate {xsd:date}
+
+StrategicPlan =
+ element StrategicPlan {Name, Description?, OtherInformation?, StrategicPlanCore, AdministrativeInformation?}
+
+StrategicPlanCore =
+ element StrategicPlanCore {Organization*, Vision?, Mission?, Value*, Goal+}
+
+Submitter =
+ ## The person submitting the plan in StratML format.
+ element Submitter {ContactInformationType}
+
+Surname =
+ ## The family name of the person submitting the plan.
+ element Surname {xsd:string}
+
+Value =
+  ## A principle that is important and helps to define the essential character of the organization.
+ element Value {Name?, Description?}
+
+Vision =
+  ## A concise and inspirational statement implicitly relating an organization's purpose to its values, thus motivating its actions toward a future state it strives to achieve.
+ element Vision {Description?, Identifier?}
+
+AdministrativeInformationType =
+ StartDate?, EndDate?, PublicationDate?, Source?, Submitter?
+
+ContactInformationType =
+ GivenName?, Surname?, PhoneNumber?, EmailAddress?

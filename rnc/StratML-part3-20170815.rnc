@@ -1,0 +1,518 @@
+# Schema agency: StratML Committee
+# Schema version: 3.1
+# Schema date: August 15, 2017
+# Disclaimer:  This document and the information contained herein is provided on an "as is" basis and the StratML Committee disclaims all warranties, express or implied, including but not limited to any warranty that the use of the information herein will not infringe any rights or any rights or any implied warranties of merchantability or fitness for a particular purpose. 
+namespace a = "http://relaxng.org/ns/compatibility/annotations/1.0"
+namespace rng = "http://relaxng.org/ns/structure/1.0"
+default namespace stratml = "http://stratml.net/Part3"
+namespace xsd = "http://www.w3.org/2001/XMLSchema"
+
+# Root Element
+start |= PerformancePlanOrReport
+
+PerformancePlanOrReport =
+ ## A document identifying inputs and processes required to accomplish objectives and establishing metrics by which progress will be assessed within a single budgetary planning and resource allocation cycle.
+ element PerformancePlanOrReport {
+   NameDescription,
+   Organization*,
+   Vision?,
+   Mission?,
+   Value*,
+   Goal+,
+   StrategyFramework*,
+   OtherInformation*,
+   AdministrativeInformation?,
+   Submitter?,
+   ## An attribute indicating whether the document is a strategic plan, a performance plan, or a performance report.
+   attribute DocumentType {"Strategic_Plan" | "Performance_Plan" | "Performance_Report"},
+   ## The ISO code for the language of the text of the document.
+   [ a:defaultValue = "en" ]
+   attribute Language {"en" | "es" | "de" | "fr" | "it" | "ja" | "pt" | "ru" | "zh"}?}
+
+# Elements A-Z
+
+Acronym =
+ ## An abbreviation of a proper name usually composed of the first letters of each word in the name.
+ element Acronym {xsd:string}
+
+ActualResult =
+ ## A measurable result achieved on or before a specified date.
+ element ActualResult {
+   SequenceIndicator?,
+   Description?,
+   RatingType?,
+   NumberOfUnits?,
+   OtherInformation*,
+   attr_StartDate,
+   attr_StartTime,
+   attr_EndDate,
+   attr_EndTime}
+
+AdministrativeInformation =
+ ## Information that is not essential to the content of plans or reports but is useful for managing them.
+ element AdministrativeInformation {AdministrativeInformationType}
+
+Authority =
+ ## An accepted source of power to compel compliance.
+ element Authority {AuthorityType}
+
+Categorization =
+ ## The application of terms from a controlled vocabulary to distinguish items from each other based upon their characteristics.
+ element Categorization {CategorizationType}
+
+Category =
+ ## The term selected from a controlled vocabulary in order to distinguish an item from others in its set.
+ element Category {CategoryType}
+
+Competency =
+ ## A capability that is unique to the organization, difficult for competitors to duplicate, can be leveraged broadly in multiple products or services, and contributes perceived value to beneficiary stakeholders.
+ element Competency {CompetencyType}
+
+Description =
+ ## A sentence or short paragraph defining and explaining a concept.
+ element Description {xsd:string}
+
+Descriptor =
+ ## An evaluative characterization of a result that is qualitative, i.e., not subject to measurement on a numeric scale by observation and may be subject to human judgment.
+ element Descriptor {DescriptorName?, DescriptorValue?}
+
+DescriptorName =
+ ## A word (i.e., a noun or adjective), phrase, letter (e.g. a grade) or other type of rating applied to designate a type of descriptor.
+ element DescriptorName {xsd:string}
+
+DescriptorValue =
+ ## A noun, adjective, phrase, letter grade, or other type of rating assigned to a descriptor.
+ element DescriptorValue {xsd:string}
+
+DrivingForce =
+ ## A dynamic that may powerfully influence the achievement of goals.
+ element DrivingForce {
+   NameDescription?,
+   ## An attribute enabling the designation of driving forces as being supportive or in opposition to the achievement of goals.
+   attribute InhibitingOrEnabling {"Enabling" | "Inhibiting"}?,
+   ## An attribute enabling the designation of success factors and driving forces as being within or outside of the direct control of the organization compiling the plan or report.
+   attribute InternalOrExternal {"Internal" | "External"}?}
+
+EconomicFactor =
+ ## A condition in the economy that may affect the achievement of a goal.
+ element EconomicFactor {NameDescriptionType}
+
+EmailAddress =
+ ## The E-mail address of a person or office.
+ element EmailAddress {xsd:string}
+
+attr_EndDate =
+ ## The year, month, and day the element with which it is associated is projected to cease, if it is not subsequently extended.
+ attribute EndDate {DateTypeType}?
+
+attr_EndTime =
+ ## The hour, minute, and second the element with which it is associated is projected to cease, if it is not subsequently extended. Typically the end of a calendar or fiscal year.
+ attribute EndTime {TimeTypeType}?
+
+EnvironmentalFactor =
+ ## A condition in the environment that may affect the achievement of a goal.
+ element EnvironmentalFactor {NameDescriptionType}
+
+GivenName =
+ ## The given name of the person submitting the plan or report.
+ element GivenName {xsd:string}
+
+FiveLevelType =
+ ## A subjective rating scale comprised of five levels.
+ element FiveLevelType {FiveLevelTypeType}
+
+FunctionType =
+ ## An ongoing activity conducted by an organization in support of its mission.
+ element FunctionType {NameDescription?}
+
+Goal =
+ ## A relatively broad statement of intended results to be achieved over more than one resource allocation and performance measurement cycle.
+ ## Supports Mission.
+ element Goal {GoalType, Objective*}
+
+Identifier =
+ ## A string of alphanumeric characters by which the information contained within an element is distinguished from other versions of the same information as well as information contained in other instances of the same element.
+ element Identifier {xsd:string}
+
+LegalFactor =
+ ## A matter of law that may affect the achievement of a goal.
+ element LegalFactor {NameDescriptionType}
+
+ManagementChallenge =
+ ## A relatively difficult issue to be addressed or obstacle to be overcome in order to achieve an objective.
+ element ManagementChallenge {
+   NameDescription?,
+   ## An attribute documenting the likelihood that a management challenge will occur.
+   attribute Probability {"To_Be_Determined" | "High" | "Medium" | "Low"},
+   ## An attribute documenting the scope of the effect of a management challenge, if were to occur.
+   attribute Impact {"To_Be_Determined" | "High" | "Medium" | "Low"}}
+
+MeasurementDimension =
+ ## The aspect of reality to be measured.
+ element MeasurementDimension {xsd:string}
+
+MeasurementInstance =
+ ## A measurement at a point in time.
+ element MeasurementInstance {TargetResult*, ActualResult*}
+
+Mission =
+ ## A brief description of the basic purpose of the organization.
+ element Mission {Description?, Identifier?, FunctionType*}
+
+Name =
+ ## A word or short phrase intended to identify a concept within the context in which is it being applied.
+ element Name {xsd:string}
+
+NameDescription =
+ ## A complex element comprised of name, acronym, description, sequence indicator, identifier, and Web address.
+ element NameDescription {NameDescriptionType}
+
+NumberOfUnits =
+ ## A numeric value (number) associated with a type of measurement.
+ element NumberOfUnits {NumberOfUnitsType}
+
+Objective =
+ ## A target level of results against which achievement is to be measured within a single resource allocation and performance execution cycle.
+ ## Supports Goal.
+ element Objective {
+   ObjectiveType}
+
+Opportunity =
+ ## A condition upon which an organization may wish to capitalize to benefit its stakeholders.
+ element Opportunity {NameDescriptionType}
+
+Organization =
+ ## The legal or logical entity to which the plan or report applies.
+ element Organization {
+   NameDescription?,
+   Stakeholder*,
+   Competency*,
+   ValueProposition*,
+   SpecialOrganizationType?}
+
+OtherInformation =
+ ## Additional explanation or guidance that is not expressly addressed in other elements of the schema.
+ element OtherInformation {OtherInformationType}
+
+PerformanceIndicator =
+ ## A measurement dimension, unit of measurement, and measurement instance specifying target and actual results, e.g., of inputs applied, outputs produced, processes conducted, and outcomes realized.
+ element PerformanceIndicator {
+   SequenceIndicator?,
+   MeasurementDimension,
+   UnitOfMeasurement,
+   Identifier?,
+   Relationship*,
+   MeasurementInstance*,
+   Categorization*,
+   OtherInformation*,
+   attribute ValueChainStage {ValueChainStageType}?,
+   attribute PerformanceIndicatorType {PerformanceIndicatorTypeType}?,
+   ## An attribute enabling designation of the importance of a performance indicator, such as for monitoring by the top managers of the organization.
+   attribute Keyness {"To_Be_Determined" | "Key" | "Secondary" | "Ancillary"}?}
+
+PESTLE =
+ ## Political, economic, social, technological, legal and environmental factors.
+ element PESTLE {
+   PoliticalFactor*,
+   EconomicFactor*,
+   SocialFactor*,
+   TechnologicalFactor*,
+   LegalFactor*,
+   EnvironmentalFactor*}
+
+PhoneNumber =
+ ## The telephone number of the person submitting the plan.
+ element PhoneNumber {xsd:string}
+
+Place =
+ ## The named geographical area to which a goal applies.
+ element Place {NameDescription?}
+
+PointOfContact =
+ ## The person or office to be contacted for further information or to submit comments.
+ element PointOfContact {ContactInformationType}
+
+PoliticalFactor =
+ ## A condition influenced by politics that may affect the achievement of a goal.
+ element PoliticalFactor {NameDescriptionType}
+
+attr_PublicationDate =
+ ## The day, month, and year a plan, report, or an individual objective statement was published in its current form.
+ attribute PublicationDate {xsd:date}?
+
+RatingType =
+ ## A multi-level scale by which the quality of an actual result may be evaluated in relation to the desired target result.
+ element RatingType {TwoLevelType? | ThreeLevelType? | FiveLevelType? | SevenLevelType? | TenLevelType?}
+
+ReferentIdentifier =
+ ## The Identifier of the target (object) of a relationship.
+ element ReferentIdentifier {xsd:string}
+
+Relationship =
+ ## A conceptual connection between two elements that have Identifiers.
+ element Relationship {
+   NameDescription?,
+   ## The target (object) of a designated relationship.
+   element Referent {NameDescription?}+,
+   attribute RelationshipType {RelationshipTypeType}?}
+
+SequenceIndicator =
+ ## An alphanumeric identifier applied to an element to designate its order in a series.
+ element SequenceIndicator {xsd:string}
+
+SevenLevelType =
+ ## A subjective rating scale comprised of seven levels.
+ element SevenLevelType {SevenLevelTypeType}
+
+SocialFactor =
+ ## A condition in society that may affect the achievement of a goal.
+ element SocialFactor {NameDescriptionType}
+
+Source =
+ ## The Web address (URL) for the authoritative source of the information to which it refers.
+ element Source {xsd:anyURI}
+
+Stakeholder =
+ ## An individual whose interests may be affected by or whose action may be required to achieve a goal or objective.
+ element Stakeholder {StakeholderType}
+
+attr_StartDate =
+ ## The year, month and day the element with which it is associated is scheduled to begin.
+ attribute StartDate {DateTypeType}?
+
+attr_StartTime =
+ ## The hour, minute and second the element with which it is associated is scheduled to begin.
+ attribute StartTime {TimeTypeType}?
+
+StrategyFramework =
+ ## The methodology used to determine goals and objectives.
+ element StrategyFramework {DrivingForce? | SWOT? | PESTLE?}
+
+Strength =
+ ## A positive aspect of an organization that may provide a competitive advantage.
+ element Strength {NameDescriptionType}
+
+Submitter =
+ ## The person submitting the plan or report in StratML format.
+ element Submitter {ContactInformationType}
+
+SuccessFactor =
+ ## A condition that contributes to the achievement of a goal.
+ element SuccessFactor {
+   NameDescription?,
+   ## An attribute enabling the designation of success factors as being of one of two types based upon relative importance.
+   attribute Criticality {"Critical" | "Contributory"}?,
+   ## An attribute enabling the designation of success factors and driving forces as being within or outside of the direct control of the organization compiling the plan or report.
+   attribute InternalOrExternal {"Internal" | "External"}?}
+
+Surname =
+ ## The family name of the person submitting the plan or report.
+ element Surname {xsd:string}
+
+SWOT =
+ ## Strengths, weaknesses, opportunities, and threats.
+ element SWOT {Strength*, Weakness*, Opportunity*, Threat*}
+
+TargetResult =
+ ## A measurable result to be achieved on or before a specified date.
+ element TargetResult {
+   SequenceIndicator?,
+   Description,
+   NumberOfUnits?,
+   OtherInformation*,
+   attr_StartDate,
+   attr_StartTime,
+   attr_EndDate,
+   attr_EndTime,
+   ## An attribute enabling the designation of a performance indicator as being a certain percentage of a total performance rating score.
+   attribute Weighting {PercentageType}?}
+
+TechnologicalFactor =
+ ## A condition associated with technology that may affect the achievement of a goal.
+ element TechnologicalFactor {NameDescriptionType}
+
+Threat =
+ ## A condition that may negatively impact the achievement of a goal.
+ element Threat {NameDescriptionType}
+
+TenLevelType =
+ ## A subjective rating scale comprised of ten levels.
+ element TenLevelType {TenLevelTypeType}
+
+ThreeLevelType =
+ ## A subjective rating scale comprised of three levels.
+ element ThreeLevelType {ThreeLevelTypeType}
+
+TwoLevelType =
+ ## A subjective rating scale comprised of two levels.
+ element TwoLevelType {TwoLevelTypeType}
+
+UnitOfMeasurement =
+ ## The scale by which measurements are divided into increments.
+ element UnitOfMeasurement {xsd:string}
+
+Value =
+ ## A principle that is important and helps to define the essential character of the organization.
+ element Value {NameDescription?}
+
+ValueProposition =
+ ## A statement of value to be delivered by an organization and a belief on the part of intended beneficiary stakeholders that such value will be realized.
+ element ValueProposition {ValuePropositionType}
+
+Vision =
+ ## A concise and inspirational statement implicitly relating an organization's purpose to its values, thus motivating its actions toward a future state it strives to achieve.
+ element Vision {Description?, Identifier?}
+
+Weakness =
+ ## A negative aspect of an organization that may place it at a competitive disadvantage.
+ element Weakness {NameDescriptionType}
+
+WebAddress =
+ ## The URL where the authoritative source or additional information can be found.
+ element WebAddress {xsd:string}
+
+# Complex Types A-Z
+
+## A complex element enabling the documentation of information that is not essential to the content of the plan or report itself but may provide useful context.
+AdministrativeInformationType =
+ Identifier?,
+ Source?,
+ attr_StartDate,
+ attr_EndDate,
+ attr_PublicationDate
+
+## A complex element enabling the naming and description of an authority.
+AuthorityType = NameDescription?
+
+## A complex element enabling the naming of a category within a taxonomy as well as the association of an identifier and/or a Web address with the category.
+CategoryType =
+ Identifier,
+ Name,
+ element WebAddress {xsd:string}?
+
+## A complex element enabling the naming of a taxonomy and the designation of a category from the taxonomy.
+CategorizationType = Name?, Category+
+
+## A complex element enabling the naming and description of competencies with attribution as being one of three types.
+CompetencyType =
+ NameDescription?,
+ ## An attribute enabling the designation of competencies as being one of three types.
+ attribute CompetencyTypeType {"Core" | "Supporting" | "Ancillary"}
+
+## A complex element enabling the documentation of point of contact information.
+ContactInformationType =
+ Identifier?,
+ GivenName?,
+ Surname?,
+ PhoneNumber?,
+ EmailAddress?,
+ WebAddress?
+
+## A complex element enabling the naming, description, prioritization, and categorization of goals as well as the identification of stakeholders, places affected, and success factors.
+GoalType =
+ NameDescription?,
+ Place*,
+ Stakeholder*,
+ Authority*,
+ SuccessFactor*,
+ OtherInformation*,
+ ## An attribute enabling the designation of goals as being of one of three qualitative degrees of importance.
+ attribute Priority {"To_Be_Determined" | "High" | "Medium" | "Low"}?
+
+## A complex element that is used in multiple instances to enable the naming and description of concepts.
+NameDescriptionType =
+ SequenceIndicator?,
+ Name?,
+ Acronym?,
+ Description?,
+ Identifier*,
+ WebAddress?
+
+## A complex element enabling the naming, description, and categorization of objectives as well as the identification of stakeholders and management challenges.
+ObjectiveType =
+ NameDescription?,
+ Stakeholder*,
+ Categorization*,
+ ManagementChallenge*,
+ OtherInformation*,
+ PerformanceIndicator*,
+ attr_PublicationDate
+
+OtherInformationType = NameDescription?
+
+RoleType =
+ ## A complex element containing other elements enabling the naming, description, and categorization of different kinds of interests individuals and groups may have in the achievement of goals and objectives.
+ element RoleType {
+   NameDescription,
+   ## An attribute enabling designation of stakeholders as either prospective beneficiaries or performers of actions required to achieve an objective, or both performers and beneficiaries.
+   attribute PerformerOrBeneficiary {"Performer" | "Beneficiary"}?,
+   ## An attribute enabling the designation of a roles as being of one of five types, commonly known as RASCI.
+   attribute RASCI {"Responsible" | "Accountable" | "Supportive" | "to_be_Consulted" | "to_be_Informed"}?}
+
+SpecialOrganizationType =
+ ## An element enabling the naming of other strategic planning and performance reporting entities that are not commonly considered to be organizations and not yet included in the controlled vocabulary of special types of organizations in the context of the StratML standard.
+ ## Such entities may be candidates for inclusion in the controlled vocabulary for special types of organizations in subsequent releases of the StratML standard.
+ ## The OtherOrganizationType attribute may be used to indicate that the name of the type of planning entity is not yet listed in the controlled vocabulary for special types of organizations in the context of the StratML standard.
+ element SpecialOrganizationType {
+   SpecialOrganizationTypeType,
+   ## An attribute enabling the naming of a type of organization not yet included in the enumerated listing of special types not commonly considered to be organizations.
+   attribute OtherOrganizationTypeName {xsd:string}?}
+
+StakeholderType =
+ ## A complex element enabling the naming and categorization of stakeholders as well as the specification of their roles and points of contact.
+ element StakeholderType {
+   NameDescription,
+   RoleType?,
+   Categorization*,
+   PointOfContact?,
+   ## An attribute indicating whether the stakeholder is an individual person, an organization, or a generic group of people.
+   attribute StakeholderTypeType {"Person" | "Organization" | "Generic_Group"}?}
+
+## A complex element enabling the naming and description of value propositions.
+ValuePropositionType = NameDescription?
+
+
+
+# Simple Types A - Z
+EmptyStringType = xsd:string {length = "0"} # or simply ""
+DateTypeType = xsd:date | EmptyStringType
+TimeTypeType = xsd:time | EmptyStringType
+NumberOfUnitsType = NumberOfUnitsTypeType
+NumberOfUnitsTypeType = xsd:decimal | EmptyStringType
+
+TwoLevelTypeType = "0" | "1"
+ThreeLevelTypeType = "0" | "1" | "2"
+FiveLevelTypeType = "1" | "2" | "3" | "4" | "5"
+SevenLevelTypeType = "1" | "2" | "3" | "4" | "5" | "6" | "7"
+TenLevelTypeType = "1" | "2" | "3" | "4" | "5" | "6" | "7" | "8" | "9" | "10"
+
+## An element enabling the designation of an individual qualitative performance indicator as comprising from zero to 100 percent of an overall subjective performance assessment rating based upon the sum of a set of one or more qualitative performance indicators totaling 100 percent.
+PercentageType = xsd:string {pattern = "((100)|(\d{0,2}))"}
+
+## An attribute enabling the designation of a performance indicator as being either subject to objective measurement or based upon a subjective determination made by an individual or group of people empowered to render such judgment.
+PerformanceIndicatorTypeType = "Quantitative" | "Qualitative"
+
+## An attribute enabling the designation of a relationship as being of one of three enumerated types.  
+RelationshipTypeType = "Broader_Than" | "Peer_To" | "Narrower_Than"
+
+SpecialOrganizationTypeType =
+ "Board_of_Directors"
+ | "Committee"
+ | "Conference"
+ | "Consortium"
+ | "Cooperative"
+ | "Exposition"
+ | "Family"
+ | "Individual"
+ | "Initiative"
+ | "Investment"
+ | "Program"
+ | "Project"
+ | "Student"
+ | "System"
+ | "Virtual"
+ | "Work_Group"
+ | "Other"
+
+## An element enabling the designation of a performance indicator as being of one of five enumerated types.  When combined in serial order, the five types comprise the full chain for the delivery of value to stakeholders.
+ValueChainStageType = "Outcome" | "Output_Processing" | "Output" | "Input_Processing" | "Input"
